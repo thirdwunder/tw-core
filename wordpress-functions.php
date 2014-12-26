@@ -4,6 +4,122 @@
  *
  */
 
+/******************************************************
+************* Theme Support Functions ****************
+******************************************************/
+
+/**
+ * Registers Menu and Theme Support options
+ */
+if(!function_exists('tw_theme_support')){
+  function tw_theme_support() {
+  	add_theme_support('post-thumbnails');      // wp thumbnails (sizes handled in functions.php)
+  	//set_post_thumbnail_size(125, 125, true);   // default thumb size
+  	//add_theme_support( 'custom-background' );  // wp custom background
+  	add_theme_support('automatic-feed-links'); // rss thingy
+
+  	add_theme_support( 'menus' );            // wp menus
+  	register_nav_menus(                      // wp3+ menus
+  		array(
+    		'top' => 'Top Menu',
+    		'mobile' => 'Mobile Menu',    // mobile main navigation
+    		'primary' => 'Primary Menu',  // main nav in header
+  			'footer' => 'Footer Menu'     // secondary nav in footer
+  		)
+  	);
+  }
+  add_action('after_setup_theme','tw_theme_support');
+}
+
+/**
+ * Registers Post Formats
+ */
+if(!function_exists('tw_post_formats')){
+  function tw_post_formats(){
+    //$mh_theme_blog_post_formats = get_option('mh_theme_blog_post_formats');
+    $post_formats = array(
+  			'aside',   // title less blurb
+  			'gallery', // gallery of images
+  			'link',    // quick link to other site
+  			'image',   // an image
+  			'quote',   // a quick quote
+  			'status',  // a Facebook like status update
+  			'video',   // video
+  			'audio',   // audio
+  			'chat'     // chat transcript
+  		);
+    //$enabled_post_formats = array();
+    //foreach($post_formats as $pf){
+    //  if($mh_theme_blog_post_formats[$pf]){
+    //    $enabled_post_formats[] = $pf;
+    //  }
+    //}
+    //add_theme_support( 'post-formats',$enabled_post_formats);
+    add_theme_support( 'post-formats',$post_formats);
+  }
+  add_action('after_setup_theme','tw_post_formats');
+}
+
+/******************************************************
+******************* User Functions ********************
+******************************************************/
+
+/**
+ * Sets extra contact info to Wordpress Users
+ * @param  array $contactmethods
+ * @return array $contactmethods
+ */
+if(!function_exists('tw_extra_contact_info')){
+  function tw_extra_contact_info($contactmethods) {
+      unset($contactmethods['aim']);
+      unset($contactmethods['yim']);
+      unset($contactmethods['jabber']);
+      $contactmethods['facebook']   = 'Facebook';
+      $contactmethods['twitter']    = 'Twitter';
+      $contactmethods['googleplus'] = 'Google+';
+      $contactmethods['linkedin']   = 'LinkedIn';
+      $contactmethods['flickr']     = 'Flickr';
+      $contactmethods['pinterest']  = 'Pinterest';
+      $contactmethods['instagram']  = 'Instagram';
+      $contactmethods['youtube']    = 'Youtube';
+      $contactmethods['soundcloud'] = 'SoundCloud';
+
+      return $contactmethods;
+  }
+  add_filter('user_contactmethods', 'tw_extra_contact_info');
+}
+
+
+
+/******************************************************
+***************** Header Functions ********************
+******************************************************/
+
+/**
+ * Sets favicon url in header
+ */
+if(!function_exists('tw_favicon')){
+  function tw_favicon(){?>
+    <link rel="icon" type="image/png" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/favicon.png" />
+  <?php
+  }
+  add_action( 'wp_head', 'tw_favicon', 10 );
+}
+
+/***** Add apple icons ****/
+/**
+ * Sets Apple iOS icons url in header
+ */
+if(!function_exists('tw_apple_icon')){
+  function tw_apple_icon() { ?>
+    		<link rel="apple-touch-icon" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/apple-touch-icon.png" />
+      <link rel="apple-touch-icon" sizes="72x72" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/apple-touch-icon-72x72.png" />
+      <link rel="apple-touch-icon" sizes="114x114" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/apple-touch-icon-114x114.png" />
+      <link rel="apple-touch-icon" sizes="144x144" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/apple-touch-icon-144x144.png" />
+  	<?php
+  }
+  add_action( 'wp_head', 'tw_apple_icon', 10 );
+}
 
 /******************************************************
 ******************* Post Functions ********************
@@ -137,6 +253,7 @@ if(!function_exists('tw_comments')){
  */
 if(!function_exists('tw_comment_placeholders')){
   function tw_comment_placeholders( $fields ){
+      error_log('placeholders');
       $fields['author'] = str_replace( '<input', '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span><input placeholder="'
               . _x( 'First and last name or a nick name *', 'comment form placeholder', 'tw' ) . '"', $fields['author'] );
       $fields['author'] = str_replace( '<p class="comment-form-author">', '<p class="comment-form-author form-group">', $fields['author'] );
@@ -154,7 +271,7 @@ if(!function_exists('tw_comment_placeholders')){
       $fields['url'] = str_replace( '<label ', '<label class="sr-only"', $fields['url'] );
       return $fields;
   }
-  add_filter( 'comment_form_default_fields', 'mh_comment_placeholders' );
+  add_filter( 'comment_form_default_fields', 'tw_comment_placeholders' );
 }
 
 
