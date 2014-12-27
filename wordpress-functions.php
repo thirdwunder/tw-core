@@ -163,16 +163,22 @@ if(!function_exists('tw_post_nav')){
   	if ( ! $next && ! $previous )
   		return;
   	?>
-  	<nav class="navigation post-navigation" role="navigation">
+  	<nav class="navigation post-navigation" role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
   		<h3 class="sr-only"><?php _e( 'Post navigation', 'tw' ); ?></h3>
       <ul class="pager nav-links">
         <?php
           if($previous){
-            previous_post_link( '<li class="previous">%link</li>', _x( '<i class="fa fa-chevron-circle-left"></i> %title', 'Previous Article', 'tw' ) );
+            ?>
+            <li class="previous" itemprop="url"><a href="<?= get_permalink($previous->ID);?>" title="<?= $previous->post_title;?>"><i class="fa fa-long-arrow-left"></i> <?php _e('Previous Article','tw'); ?></a></li>
+            <?php
+            //previous_post_link( '<li class="previous" itemprop="url">%link</li>', _x( '<i class="fa fa-long-arrow-left"></i> Previous Article', 'Previous Article', 'tw' ) );
           }
 
           if($next){
-            next_post_link( '<li class="next">%link</li>', _x( '%title <i class="fa fa-chevron-circle-right"></i>', 'Next Article', 'tw' ) );
+            ?>
+            <li class="next" itemprop="url"><a href="<?= get_permalink($next->ID);?>" title="<?= $next->post_title;?>"><?php _e('Next Article','tw'); ?> <i class="fa fa-long-arrow-right"></i></a></li>
+            <?php
+            //next_post_link( '<li class="next" itemprop="url">%link</li>', _x( '%title <i class="fa fa-long-arrow-right"></i>', 'Next Article', 'tw' ) );
           }
 			  ?>
       </ul>
@@ -186,15 +192,15 @@ if(!function_exists('tw_post_nav')){
 /******************************************************
 ********************* Comments ************************
 ******************************************************/
-
 /**
  * Returns user avatar class with Bootstrap cirle classes
  * @param string $class
  * @return string $class
  */
+
 add_filter('get_avatar','tw_round_avatar_css');
 function tw_round_avatar_css($class) {
-  $class = str_replace("class='avatar", "class='avatar img-circle media-object", $class) ;
+  $class = str_replace("class='avatar", "itemprop='image' class='avatar img-circle media-object", $class) ;
   return $class;
 }
 
@@ -219,20 +225,23 @@ function tw_reply_link_class($class){
 if(!function_exists('tw_comments')){
   function tw_comments($comment, $args, $depth) {
      $GLOBALS['comment'] = $comment; ?>
-     <li id="comment-<?php comment_ID(); ?>" class="comment-author vcard clearfix media">
-        <a href="<?php echo get_comment_author_url();?>" title="<?php echo get_comment_author() ;?>" target="_blank" class="pull-left" >
+     <li id="comment-<?php comment_ID(); ?>" class="clearfix media" itemscope itemtype="http://schema.org/UserComments">
+        <a href="<?php echo get_comment_author_url();?>" title="<?php echo get_comment_author() ;?>" target="_blank" class="pull-left">
           <?php echo get_avatar( $comment, $size='75' ); ?>
         </a>
         <div class="media-body">
-          <?php printf('<h4 class="media-heading">%s</h4>', get_comment_author_link()) ?>
+          <h4 class="media-heading comment-author vcard">
+          <?php printf('<span itemprop="creator">%s</span>', get_comment_author_link()) ?>
+          </h4>
+
           <?php if ($comment->comment_approved == '0') : ?>
       				<div class="alert alert-success">
           				<p><?php _e('Your comment is awaiting moderation.','tw') ?></p>
       				</div>
           <?php endif; ?>
-  				<?php comment_text() ?>
+  				<div class="comment-content" itemprop="commentText"><?php comment_text() ?></div>
 
-  				<time datetime="<?php echo comment_time('Y-m-j'); ?>"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php comment_time('F jS, Y'); ?> </a></time>
+  				<time itemprop="commentTime" datetime="<?= comment_time('Y-m-j'); ?>T<?= comment_time('H:i:s'); ?>"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php comment_time('g:ia F jS, Y'); ?> </a></time>
 
   				<div class="row comment-options">
               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 comment-reply">
@@ -253,7 +262,6 @@ if(!function_exists('tw_comments')){
  */
 if(!function_exists('tw_comment_placeholders')){
   function tw_comment_placeholders( $fields ){
-      error_log('placeholders');
       $fields['author'] = str_replace( '<input', '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span><input placeholder="'
               . _x( 'First and last name or a nick name *', 'comment form placeholder', 'tw' ) . '"', $fields['author'] );
       $fields['author'] = str_replace( '<p class="comment-form-author">', '<p class="comment-form-author form-group">', $fields['author'] );
@@ -313,6 +321,7 @@ if(!function_exists('tw_pagination')){
 
 
 
+
 /******************************************************
 *********************** Footer ************************
 ******************************************************/
@@ -326,4 +335,34 @@ if(!function_exists('tw_copyright')){
 	function tw_copyright(){
 	  echo '&copy; '.date('Y').' '.get_bloginfo('name').' '.__('All Rights Reserved','tw');
 	}
+}
+
+/******************************************************
+*********************** Other ************************
+******************************************************/
+/**
+ * Echos schema.org tag
+ */
+if(!function_exists('html_tag_schema')){
+  function html_tag_schema($type=null){
+    $schema = 'http://schema.org/';
+    if(is_null($type) || $type=='' ){
+      if(is_single()){
+        // Is single post
+        $type = "Article";
+        //$type = "BlogPosting";
+      } elseif( is_author() ){
+        // Is author page
+        $type = 'ProfilePage';
+      }elseif( is_search() ){
+        // Is search results page
+        $type = 'SearchResultsPage';
+      }else{
+        $type = 'WebPage';
+      }
+
+    }
+
+    echo 'itemscope="itemscope" itemtype="' . $schema . $type . '"';
+  }
 }
