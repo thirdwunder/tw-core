@@ -4,6 +4,9 @@
  *
  */
 
+
+
+
 if(!function_exists('get_theme_contact_address')){
   function get_theme_contact_address(){
     $contact_info  = get_option('tw_theme_contact_options');
@@ -76,6 +79,57 @@ if(!function_exists('get_theme_social_options')){
 /******************************************************
 ************* Theme Support Functions ****************
 ******************************************************/
+
+/**
+ * Adds custom image sizes based on parameteres
+ * @param string  $ratio
+ * @param integer $size
+ * @param boolean $hardcrop - default true
+ * @param boolean $unlimited_height - default false
+ * @param array   $postion
+ */
+function tw_add_image_size($ratio, $size, $hard_crop = true, $unlimited_height = false, $postion = array()){
+  $img_widths = array(
+                      'xlarge'=>2048,
+                      'large'=>1024,
+                      'medium'=>800,
+                      'small'=>400,
+                      'xthumb'=>50
+                    );
+  $img_ratios = array(
+                      '16x6'     =>array('w'=>16, 'h'=>9),
+                      '16x9'     =>array('w'=>16, 'h'=>9),
+                      '9x16'     =>array('w'=>9,  'h'=>16),
+                      '4x3'      =>array('w'=>4,  'h'=>3),
+                      '3x4'      =>array('w'=>3,  'h'=>4),
+                      '3x2'      =>array('w'=>3,  'h'=>2),
+                      '2x3'      =>array('w'=>2,  'h'=>3),
+                      'square'   =>array('w'=>1,  'h'=>1),
+                    );
+
+  $r_w = $img_ratios[$ratio]['w'];
+  $r_h = $img_ratios[$ratio]['h'];
+
+  $width = $img_widths[$size];
+
+  if($unlimited_height){
+    $height = 999;
+  }else{
+    $height = ($r_h*$width)/$r_w;
+  }
+
+  if($unlimited_height){
+    $hard_crop  = false;
+    add_image_size( $ratio.'-'.$size.'-auto', $width, $height, $hard_crop, array('center','center'));
+  }elseif(count($postion)>0){
+    add_image_size( $ratio.'-'.$size, $width, $height, false, $postion );
+  }elseif($hard_crop){
+    add_image_size( $ratio.'-'.$size, $width, $height, $hard_crop, array('center','center'));
+  }else{
+    add_image_size( $ratio.'-'.$size, $width, $height, array('center','center'));
+  }
+}
+
 
 /**
  * Registers Menu and Theme Support options
