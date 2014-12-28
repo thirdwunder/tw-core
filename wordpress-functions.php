@@ -4,6 +4,75 @@
  *
  */
 
+if(!function_exists('get_theme_contact_address')){
+  function get_theme_contact_address(){
+    $contact_info  = get_option('tw_theme_contact_options');
+  }
+}
+
+if(!function_exists('get_theme_social_options')){
+  function get_theme_social_options(){
+     $social_info   = get_option('tw_theme_social_options');
+     $social = array();
+     foreach($social_info as $network => $value){
+        $username = '';
+        if($network!=='fb_app_id'){
+
+          switch ($network) {
+          case 'fb_page':
+              $network = 'facebook';
+              $icon = 'fa-facebook-square';
+              break;
+          case 'twitter':
+              $username = $value;
+              $url  = 'http://twitter.com/'.$value;
+              $icon = 'fa-twitter-square';
+              break;
+          case 'instagram':
+              $username = $value;
+              $url  = 'http://instagram.com/'.$value;
+              $icon = 'fa-instagram';
+              break;
+          case 'pinterest':
+              $icon = 'fa-pinterest-square';
+              break;
+          case 'linkedin':
+              $icon = 'fa-linkedin-square';
+              break;
+          case 'googleplus':
+              $icon = 'fa-google-plus-square';
+              break;
+          case 'youtube':
+              $icon = 'fa-youtube-square';
+              break;
+          case 'vimeo':
+              $icon = 'fa-vimeo-square';
+              break;
+          case 'flickr':
+              $icon = 'fa-flickr';
+              break;
+          case 'slideshare':
+              $icon = 'fa-slideshare';
+              break;
+          case 'tumblr':
+              $icon = 'fa-tumblr-square';
+              break;
+        }
+          $social[$network] = array(
+                                'url' =>$value,
+                                'icon'=>$icon
+                              );
+          if($username){
+            $social[$network]['username'] = $username;
+          }
+
+        }
+     }
+     return $social;
+  }
+}
+
+
 /******************************************************
 ************* Theme Support Functions ****************
 ******************************************************/
@@ -15,8 +84,45 @@ if(!function_exists('tw_theme_support')){
   function tw_theme_support() {
   	add_theme_support('post-thumbnails');      // wp thumbnails (sizes handled in functions.php)
   	//set_post_thumbnail_size(125, 125, true);   // default thumb size
-  	//add_theme_support( 'custom-background' );  // wp custom background
+
+    /*
+    * Make theme available for translation.
+    * Translations can be filed in the /languages/ directory.
+    * If you're building a theme based on twentyfifteen, use a find and replace
+    * to change 'twentyfifteen' to the name of your theme in all the template files
+    */
+    load_theme_textdomain( 'tw', get_template_directory() . '/languages' );
+
+  	//$defaults = array(
+    //	'default-color'          => '#fff',
+    //	'default-image'          => '',
+    //	'wp-head-callback'       => '_custom_background_cb',
+    //	'admin-head-callback'    => '',
+    //	'admin-preview-callback' => ''
+    //);
+    //add_theme_support( 'custom-background', $defaults ); // wp custom background
+
+    //add_theme_support( 'custom-header' );
+
+    // Add default posts and comments RSS feed links to head.
   	add_theme_support('automatic-feed-links'); // rss thingy
+
+    /*
+	 * Let WordPress manage the document title.
+	 * By adding theme support, we declare that this theme does not use a
+	 * hard-coded <title> tag in the document head, and expect WordPress to
+	 * provide it for us.
+	 */
+    add_theme_support( "title-tag" );
+
+
+    /*
+    * Switch default core markup for search form, comment form, and comments
+    * to output valid HTML5.
+    */
+    add_theme_support( 'html5', array(
+      'search-form', 'comment-form', 'comment-list', 'gallery', 'caption'
+    ) );
 
   	add_theme_support( 'menus' );            // wp menus
   	register_nav_menus(                      // wp3+ menus
@@ -36,7 +142,7 @@ if(!function_exists('tw_theme_support')){
  */
 if(!function_exists('tw_post_formats')){
   function tw_post_formats(){
-    //$mh_theme_blog_post_formats = get_option('mh_theme_blog_post_formats');
+    $tw_blog_options = get_option('tw_theme_blog_options');
     $post_formats = array(
   			'aside',   // title less blurb
   			'gallery', // gallery of images
@@ -48,14 +154,13 @@ if(!function_exists('tw_post_formats')){
   			'audio',   // audio
   			'chat'     // chat transcript
   		);
-    //$enabled_post_formats = array();
-    //foreach($post_formats as $pf){
-    //  if($mh_theme_blog_post_formats[$pf]){
-    //    $enabled_post_formats[] = $pf;
-    //  }
-    //}
-    //add_theme_support( 'post-formats',$enabled_post_formats);
-    add_theme_support( 'post-formats',$post_formats);
+    $enabled_post_formats = array();
+    foreach($post_formats as $pf){
+      if($tw_blog_options[$pf]){
+        $enabled_post_formats[] = $pf;
+      }
+    }
+    add_theme_support( 'post-formats',$enabled_post_formats);
   }
   add_action('after_setup_theme','tw_post_formats');
 }
@@ -169,14 +274,14 @@ if(!function_exists('tw_post_nav')){
         <?php
           if($previous){
             ?>
-            <li class="previous" itemprop="url"><a href="<?= get_permalink($previous->ID);?>" title="<?= $previous->post_title;?>"><i class="fa fa-long-arrow-left"></i> <?php _e('Previous Article','tw'); ?></a></li>
+            <li class="previous" itemprop="url"><a href="<?php echo get_permalink($previous->ID);?>" title="<?php echo $previous->post_title;?>"><i class="fa fa-long-arrow-left"></i> <?php _e('Previous Article','tw'); ?></a></li>
             <?php
             //previous_post_link( '<li class="previous" itemprop="url">%link</li>', _x( '<i class="fa fa-long-arrow-left"></i> Previous Article', 'Previous Article', 'tw' ) );
           }
 
           if($next){
             ?>
-            <li class="next" itemprop="url"><a href="<?= get_permalink($next->ID);?>" title="<?= $next->post_title;?>"><?php _e('Next Article','tw'); ?> <i class="fa fa-long-arrow-right"></i></a></li>
+            <li class="next" itemprop="url"><a href="<?php echo get_permalink($next->ID);?>" title="<?php echo $next->post_title;?>"><?php _e('Next Article','tw'); ?> <i class="fa fa-long-arrow-right"></i></a></li>
             <?php
             //next_post_link( '<li class="next" itemprop="url">%link</li>', _x( '%title <i class="fa fa-long-arrow-right"></i>', 'Next Article', 'tw' ) );
           }
@@ -241,7 +346,7 @@ if(!function_exists('tw_comments')){
           <?php endif; ?>
   				<div class="comment-content" itemprop="commentText"><?php comment_text() ?></div>
 
-  				<time itemprop="commentTime" datetime="<?= comment_time('Y-m-j'); ?>T<?= comment_time('H:i:s'); ?>"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php comment_time('g:ia F jS, Y'); ?> </a></time>
+  				<time itemprop="commentTime" datetime="<?php echo comment_time('Y-m-j'); ?>T<?php echo comment_time('H:i:s'); ?>"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php comment_time('g:ia F jS, Y'); ?> </a></time>
 
   				<div class="row comment-options">
               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 comment-reply">
