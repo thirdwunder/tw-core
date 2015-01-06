@@ -485,6 +485,97 @@ if(!function_exists('tw_copyright')){
 ***************** General Functions *******************
 ******************************************************/
 
+if(!function_exists('tw_get_image_src')){
+  function tw_get_image_src($image_id, $image_sizes = array()){
+
+    $sizes = array(
+                    '4x3-small',
+                    '4x3-medium',
+                    '4x3-large',
+                  );
+    for($i=0;$i<count($image_sizes); $i++){
+      $sizes[$i] = $image_sizes[$i];
+    }
+    $img_size = $sizes[1];
+    if(class_exists('Mobile_Detect')){
+      $detect = new Mobile_Detect;
+      $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
+      switch($deviceType){
+        case 'phone';
+          $img_size = $sizes[0];
+          break;
+        case 'tablet';
+          $img_size = $sizes[1];
+          break;
+        case 'computer';
+          $img_size = $sizes[2];
+          break;
+      }
+    }
+    $img_src = wp_get_attachment_image_src($image_id, $img_size);
+    return $img_src[0];
+  }
+}
+
+/**
+ * Returns image html based on given array of sizes
+ * @param: array image_sizes
+ * @param: array attributes
+ * @return: image html output
+ */
+if(!function_exists('tw_the_post_thumbnail')){
+  function tw_the_post_thumbnail($image_sizes = array(), $attr = array() ){
+    global $post;
+
+    $sizes = array(
+                    '4x3-small',
+                    '4x3-medium',
+                    '4x3-large',
+                  );
+    for($i=0;$i<count($image_sizes); $i++){
+      $sizes[$i] = $image_sizes[$i];
+    }
+
+    $img_id = get_post_thumbnail_id($post->ID);
+    $img_size = $sizes[1];
+
+    $alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
+
+    $html = '<img ';
+    if(class_exists('Mobile_Detect')){
+      $detect = new Mobile_Detect;
+      $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
+      switch($deviceType){
+        case 'phone';
+          $img_size = $sizes[0];
+          break;
+        case 'tablet';
+          $img_size = $sizes[1];
+          break;
+        case 'computer';
+          $img_size = $sizes[2];
+          break;
+      }
+    }
+
+    $src = wp_get_attachment_image_src($img_id, $img_size);
+
+    $html .= 'src="'.$src[0].'" width="'.$src[1].'" height="'.$src[2].'" alt="'.$alt.'"';
+    $class = 'attachment-'.$img_size.' wp-post-image';
+    foreach($attr as $k=>$v){
+      if($k=='class'){
+        $class .= ' '.$v;
+      }else{
+       $html .= $k.'="'.$v.'"';
+      }
+    }
+    $html .= ' class="'.$class.'"';
+
+    $html .= ' />';
+    return $html;
+  }
+}
+
 /**
  * Echos schema.org tag
  */
