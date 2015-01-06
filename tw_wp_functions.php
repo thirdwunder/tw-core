@@ -4,78 +4,6 @@
  *
  */
 
-
-
-
-if(!function_exists('get_theme_contact_address')){
-  function get_theme_contact_address(){
-    $contact_info  = get_option('tw_theme_contact_options');
-  }
-}
-
-if(!function_exists('get_theme_social_options')){
-  function get_theme_social_options(){
-     $social_info   = get_option('tw_theme_social_options');
-     $social = array();
-     foreach($social_info as $network => $value){
-        $username = '';
-        if($network!=='fb_app_id'){
-
-          switch ($network) {
-          case 'fb_page':
-              $network = 'facebook';
-              $icon = 'fa-facebook-square';
-              break;
-          case 'twitter':
-              $username = $value;
-              $url  = 'http://twitter.com/'.$value;
-              $icon = 'fa-twitter-square';
-              break;
-          case 'instagram':
-              $username = $value;
-              $url  = 'http://instagram.com/'.$value;
-              $icon = 'fa-instagram';
-              break;
-          case 'pinterest':
-              $icon = 'fa-pinterest-square';
-              break;
-          case 'linkedin':
-              $icon = 'fa-linkedin-square';
-              break;
-          case 'googleplus':
-              $icon = 'fa-google-plus-square';
-              break;
-          case 'youtube':
-              $icon = 'fa-youtube-square';
-              break;
-          case 'vimeo':
-              $icon = 'fa-vimeo-square';
-              break;
-          case 'flickr':
-              $icon = 'fa-flickr';
-              break;
-          case 'slideshare':
-              $icon = 'fa-slideshare';
-              break;
-          case 'tumblr':
-              $icon = 'fa-tumblr-square';
-              break;
-        }
-          $social[$network] = array(
-                                'url' =>$value,
-                                'icon'=>$icon
-                              );
-          if($username){
-            $social[$network]['username'] = $username;
-          }
-
-        }
-     }
-     return $social;
-  }
-}
-
-
 /******************************************************
 ************* Theme Support Functions ****************
 ******************************************************/
@@ -97,7 +25,7 @@ function tw_add_image_size($ratio, $size, $hard_crop = true, $unlimited_height =
                       'xthumb'=>50
                     );
   $img_ratios = array(
-                      '16x6'     =>array('w'=>16, 'h'=>9),
+                      '16x6'     =>array('w'=>16, 'h'=>6),
                       '16x9'     =>array('w'=>16, 'h'=>9),
                       '9x16'     =>array('w'=>9,  'h'=>16),
                       '4x3'      =>array('w'=>4,  'h'=>3),
@@ -145,7 +73,7 @@ if(!function_exists('tw_theme_support')){
     * If you're building a theme based on twentyfifteen, use a find and replace
     * to change 'twentyfifteen' to the name of your theme in all the template files
     */
-    load_theme_textdomain( 'tw', get_template_directory() . '/languages' );
+    load_theme_textdomain( 'tw', get_template_directory() . '/language' );
 
   	//$defaults = array(
     //	'default-color'          => '#fff',
@@ -178,15 +106,23 @@ if(!function_exists('tw_theme_support')){
       'search-form', 'comment-form', 'comment-list', 'gallery', 'caption'
     ) );
 
+    $theme_general_options = get_option('tw_theme_general_options') ? get_option('tw_theme_general_options') : null;
+    $theme_menus = array(
+                    'mobile' => 'Mobile Menu',    // mobile main navigation
+                		'primary' => 'Primary Menu',  // main nav in header
+                  );
+    if(!is_null($theme_general_options) && is_array($theme_general_options)){
+      if(isset($theme_general_options['enable_top_menu']) && $theme_general_options['enable_top_menu']==true){
+        $theme_menus['top'] = 'Top Menu';
+      }
+      if(isset($theme_general_options['enable_footer_menu']) && $theme_general_options['enable_footer_menu']==true){
+        $theme_menus['footer'] = 'Footer Menu';
+      }
+    }
+
   	add_theme_support( 'menus' );            // wp menus
-  	register_nav_menus(                      // wp3+ menus
-  		array(
-    		'top' => 'Top Menu',
-    		'mobile' => 'Mobile Menu',    // mobile main navigation
-    		'primary' => 'Primary Menu',  // main nav in header
-  			'footer' => 'Footer Menu'     // secondary nav in footer
-  		)
-  	);
+  	register_nav_menus( $theme_menus );      // wp3+ menus
+
   }
   add_action('after_setup_theme','tw_theme_support');
 }
@@ -218,6 +154,51 @@ if(!function_exists('tw_post_formats')){
   }
   add_action('after_setup_theme','tw_post_formats');
 }
+
+
+/******************************************************
+********************** Widgets ************************
+******************************************************/
+
+if(!function_exists('tw_register_sidebars')){
+  function tw_register_sidebars() {
+    $theme_general_options = get_option('tw_theme_general_options') ? get_option('tw_theme_general_options') : null;
+    $primary_sidebar = $theme_general_options['enable_sidebar'];
+    if($primary_sidebar){
+      register_sidebar(array(
+      	'id' => 'primary',
+      	'name' => 'Primary Sidebar',
+      	'description' => 'Primary Footer Area',
+      	'before_widget' => '<div id="%1$s" class="widget %2$s">',
+      	'after_widget' => '</div>',
+      	'before_title' => '<h4 class="widget-title">',
+      	'after_title' => '</h4>',
+      ));
+    }
+
+
+    $footer_widgets = $theme_general_options['enable_footer_widgets'];
+
+    if($footer_widgets>0){
+     for($i=1; $i<=$footer_widgets; $i++){
+      register_sidebar(array(
+      	'id' => 'footer-'.$i,
+      	'name' => 'Footer Widget Area '.$i,
+      	'description' => '',
+      	'before_widget' => '<div id="%1$s" class="widget %2$s">',
+      	'after_widget' => '</div>',
+      	'before_title' => '<h4 class="widget-title">',
+      	'after_title' => '</h4>',
+      ));
+      }
+    }
+
+
+  }
+  add_action( 'widgets_init', 'tw_register_sidebars' );
+}
+
+
 
 /******************************************************
 ******************* User Functions ********************
@@ -427,15 +408,19 @@ if(!function_exists('tw_comment_placeholders')){
       $fields['author'] = str_replace( '</p>', '</div></p>', $fields['author'] );
       $fields['author'] = str_replace( '<label ', '<label class="sr-only"', $fields['author'] );
 
-      $fields['email'] = str_replace( '<input id="email" name="email" type="text"', '<div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span><input type="email" placeholder="contact@example.com *"  id="email" name="email"', $fields['email'] );
-      $fields['email'] = str_replace( '<p class="comment-form-email">', '<p class="comment-form-email form-group">', $fields['email'] );
+
+      $fields['email'] = str_replace( '<input', '<div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span><input placeholder="'
+              . _x( 'contact@example.com *', 'comment form placeholder', 'tw' ) . '"', $fields['email'] );
+      $fields['email'] = str_replace( '<p class="comment-form-email">', '<p class="comment-form-author form-group">', $fields['email'] );
       $fields['email'] = str_replace( '</p>', '</div></p>', $fields['email'] );
       $fields['email'] = str_replace( '<label ', '<label class="sr-only"', $fields['email'] );
 
-      $fields['url'] = str_replace( '<input id="url" name="url" type="text"', '<div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span><input placeholder="http://example.com" id="url" name="url" type="url"', $fields['url'] );
-      $fields['url'] = str_replace( '<p class="comment-form-url">', '<p class="comment-form-url form-group">', $fields['url'] );
+      $fields['url'] = str_replace( '<input', '<div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span><input placeholder="'
+              . _x( 'http://example.com', 'comment form placeholder', 'tw' ) . '"', $fields['url'] );
+      $fields['url'] = str_replace( '<p class="comment-form-email">', '<p class="comment-form-author form-group">', $fields['url'] );
       $fields['url'] = str_replace( '</p>', '</div></p>', $fields['url'] );
       $fields['url'] = str_replace( '<label ', '<label class="sr-only"', $fields['url'] );
+
       return $fields;
   }
   add_filter( 'comment_form_default_fields', 'tw_comment_placeholders' );
@@ -497,13 +482,14 @@ if(!function_exists('tw_copyright')){
 }
 
 /******************************************************
-*********************** Other ************************
+***************** General Functions *******************
 ******************************************************/
+
 /**
  * Echos schema.org tag
  */
-if(!function_exists('html_tag_schema')){
-  function html_tag_schema($type=null){
+if(!function_exists('tw_html_tag_schema')){
+  function tw_html_tag_schema($type=null){
     $schema = 'http://schema.org/';
     if(is_null($type) || $type=='' ){
       if(is_single()){
@@ -523,5 +509,76 @@ if(!function_exists('html_tag_schema')){
     }
 
     echo 'itemscope="itemscope" itemtype="' . $schema . $type . '"';
+  }
+}
+
+
+/**
+ * Returns array of social network information formatted for easily display from Theme Options
+ * @return array social
+ */
+if(!function_exists('tw_get_theme_social_options')){
+  function tw_get_theme_social_options(){
+     $social_info   = get_option('tw_theme_social_options');
+     $social = array();
+     foreach($social_info as $network => $value){
+        $username = '';
+        if($network!=='fb_app_id'){
+
+          switch ($network) {
+            case 'fb_page':
+                $network = 'facebook';
+                $icon = 'fa-facebook-square';
+                break;
+            case 'twitter':
+                $username = $value;
+                $url  = 'http://twitter.com/'.$value;
+                $icon = 'fa-twitter-square';
+                break;
+            case 'instagram':
+                $username = $value;
+                $url  = 'http://instagram.com/'.$value;
+                $icon = 'fa-instagram';
+                break;
+            case 'pinterest':
+                $icon = 'fa-pinterest-square';
+                break;
+            case 'linkedin':
+                $icon = 'fa-linkedin-square';
+                break;
+            case 'googleplus':
+                $icon = 'fa-google-plus-square';
+                break;
+            case 'youtube':
+                $icon = 'fa-youtube-square';
+                break;
+            case 'vimeo':
+                $icon = 'fa-vimeo-square';
+                break;
+            case 'flickr':
+                $icon = 'fa-flickr';
+                break;
+            case 'slideshare':
+                $icon = 'fa-slideshare';
+                break;
+            case 'tumblr':
+                $icon = 'fa-tumblr-square';
+                break;
+          }
+
+          if(!empty($value)){
+            $social[$network] = array(
+                                  'url' =>$value,
+                                  'icon'=>$icon
+                                );
+            if($username){
+              $social[$network]['username'] = $username;
+            }
+          }
+
+
+        }
+     }
+     return $social;
   }
 }

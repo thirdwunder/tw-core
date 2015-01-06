@@ -136,6 +136,61 @@ function tw_fa_file_icon($extension){
 }
 
 /**
+ * Returns Youtube or Vimeo embed iframe from url
+ * @param  string $url
+ * @param  string $autoplay
+ * @return string $iframe
+ */
+function tw_videoURL_to_embedCode($url, $autoplay=false){
+  $iframe = null;
+  if(preg_match('/youtube/',$url)){
+    $iframe = tw_youtubeURL_to_embedCode($url, $autoplay);
+  }elseif(preg_match('/vimeo/',$url)){
+    $iframe = tw_vimeoURL_to_embedCode($url, $autoplay);
+  }
+  return $iframe;
+}
+
+/**
+ * Returns Vimeo embed iframe from url
+ * @param  string $url
+ * @param  string $autoplay
+ * @return string $iframe
+ */
+function tw_vimeoURL_to_embedCode($url, $autoplay=false){
+  $regex = '~
+		# Match Vimeo link and embed code
+		(?:<iframe [^>]*src=")?         # If iframe match up to first quote of src
+		(?:                             # Group vimeo url
+				https?:\/\/             # Either http or https
+				(?:[\w]+\.)*            # Optional subdomains
+				vimeo\.com              # Match vimeo.com
+				(?:[\/\w]*\/videos?)?   # Optional video sub directory this handles groups links also
+				\/                      # Slash before Id
+				([0-9]+)                # $1: VIDEO_ID is numeric
+				[^\s]*                  # Not a space
+		)                               # End group
+		"?                              # Match end quote if part of src
+		(?:[^>]*></iframe>)?            # Match the end of the iframe
+		(?:<p>.*</p>)?                  # Match any title information stuff
+		~ix';
+
+	preg_match( $regex, $url, $matches );
+  $vedio_id = $matches[1];
+
+  $embedurl = "//player.vimeo.com/video/".$vedio_id;
+  if($autoplay){
+    $embedurl = $embedurl.'?autoplay=1';
+  }
+
+  $width = '640';
+  $height = '385';
+  $iframe = '&lt;iframe class="embed-responsive-item" width="'.$width.'" height="'.$height.'" src="'.$embedurl.'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen &gt;&lt;/iframe>';
+
+  return $iframe;
+}
+
+/**
  * Returns Youtube embed iframe from url
  * @param  string $url
  * @param  string $autoplay
@@ -152,7 +207,7 @@ function tw_youtubeURL_to_embedCode($url, $autoplay=false){
 
   $width = '640';
   $height = '385';
-  $iframe = '&lt;iframe width="' . $width . '" height="' . $height . '" src="http://www.youtube.com/embed/' . $id . '?autoplay='.$autoplay.'" frameborder="0" allowfullscreen&gt;&lt;/iframe>';
+  $iframe = '&lt;iframe class="embed-responsive-item" width="' . $width . '" height="' . $height . '" src="http://www.youtube.com/embed/' . $id . '?autoplay='.$autoplay.'" frameborder="0" allowfullscreen&gt;&lt;/iframe>';
   return $iframe;
 }
 

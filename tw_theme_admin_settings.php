@@ -150,21 +150,6 @@ function tw_theme_display( $active_tab = '' ) {
 
 
 /**
- * Provides default values for the General Options.
- */
-function tw_theme_default_general_options() {
-
-	$defaults = array(
-		'show_header'		=>	'',
-		'show_content'		=>	'',
-		'show_footer'		=>	'',
-	);
-
-	return apply_filters( 'tw_theme_default_general_options', $defaults );
-
-} // end tw_theme_default_general_options
-
-/**
  * Provides default values for the Input Options.
  */
 function tw_theme_default_input_options() {
@@ -181,69 +166,7 @@ function tw_theme_default_input_options() {
 
 } // end tw_theme_default_input_options
 
-/**
- * Initializes the theme's display options page by registering the Sections,
- * Fields, and Settings.
- *
- * This function is registered with the 'admin_init' hook.
- */
-function tw_initialize_theme_options() {
 
-	// If the theme options don't exist, create them.
-	if( false == get_option( 'tw_theme_general_options' ) ) {
-		add_option( 'tw_theme_general_options', apply_filters( 'tw_theme_default_general_options', tw_theme_default_general_options() ) );
-	} // end if
-
-	// First, we register a section. This is necessary since all future options must belong to a
-	add_settings_section(
-		'general_settings_section',			// ID used to identify this section and with which to register options
-		__( 'General Options', 'tw' ),		// Title to be displayed on the administration page
-		'tw_general_options_callback',	// Callback used to render the description of the section
-		'tw_theme_general_options'		// Page on which to add this section of options
-	);
-
-	// Next, we'll introduce the fields for toggling the visibility of content elements.
-	add_settings_field(
-		'show_header',						// ID used to identify the field throughout the theme
-		__( 'Header', 'tw' ),							// The label to the left of the option interface element
-		'tw_toggle_header_callback',	// The name of the function responsible for rendering the option interface
-		'tw_theme_general_options',	// The page on which this option will be displayed
-		'general_settings_section',			// The name of the section to which this field belongs
-		array(								// The array of arguments to pass to the callback. In this case, just a description.
-			__( 'Activate this setting to display the header.', 'tw' ),
-		)
-	);
-
-	add_settings_field(
-		'show_content',
-		__( 'Content', 'tw' ),
-		'tw_toggle_content_callback',
-		'tw_theme_general_options',
-		'general_settings_section',
-		array(
-			__( 'Activate this setting to display the content.', 'tw' ),
-		)
-	);
-
-	add_settings_field(
-		'show_footer',
-		__( 'Footer', 'tw' ),
-		'tw_toggle_footer_callback',
-		'tw_theme_general_options',
-		'general_settings_section',
-		array(
-			__( 'Activate this setting to display the footer.', 'tw' ),
-		)
-	);
-
-	// Finally, we register the fields with WordPress
-	register_setting(
-		'tw_theme_general_options',
-		'tw_theme_general_options'
-	);
-
-} // end tw_initialize_theme_options
-add_action( 'admin_init', 'tw_initialize_theme_options' );
 
 
 /**
@@ -318,17 +241,6 @@ add_action( 'admin_init', 'tw_theme_initialize_input_examples' );
 /* ------------------------------------------------------------------------ *
  * Section Callbacks
  * ------------------------------------------------------------------------ */
-
-/**
- * This function provides a simple description for the General Options page.
- *
- * It's called from the 'tw_initialize_theme_options' function by being passed as a parameter
- * in the add_settings_section function.
- */
-function tw_general_options_callback() {
-	echo '<p>' . __( 'Select which areas of content you wish to display.', 'tw' ) . '</p>';
-} // end tw_general_options_callback
-
 
 /**
  * This function provides a simple description for the Input Examples page.
@@ -508,6 +420,230 @@ function tw_theme_validate_input_examples( $input ) {
 
 
 
+/* ------------------------------------------------------------------------ *
+ * General Options
+ * ------------------------------------------------------------------------ */
+
+/**
+ * Provides default values for the General Options.
+ */
+function tw_theme_default_general_options() {
+	$defaults = array();
+	return apply_filters( 'tw_theme_default_general_options', $defaults );
+
+} // end tw_theme_default_general_options
+
+/**
+ * This function provides a simple description for the General Options page.
+ *
+ * It's called from the 'tw_initialize_theme_options' function by being passed as a parameter
+ * in the add_settings_section function.
+ */
+function tw_general_options_callback() {
+	echo '<p>' . __( 'Theme General Options', 'tw' ) . '</p>';
+} // end tw_general_options_callback
+
+function tw_general_widget_options_callback() {
+	echo '<p>' . __( 'Theme Sidebar & Widget Options', 'tw' ) . '</p>';
+} // end tw_general_widget_options_callback
+
+function tw_general_menu_options_callback() {
+	echo '<p>' . __( 'Theme Menu Options', 'tw' ) . '</p>';
+} // end tw_general_menu_options_callback
+
+
+/**
+ * Initializes the theme's display options page by registering the Sections,
+ * Fields, and Settings.
+ *
+ * This function is registered with the 'admin_init' hook.
+ */
+function tw_initialize_theme_options() {
+
+	// If the theme options don't exist, create them.
+	if( false == get_option( 'tw_theme_general_options' ) ) {
+		add_option( 'tw_theme_general_options', apply_filters( 'tw_theme_default_general_options', tw_theme_default_general_options() ) );
+	} // end if
+
+	// First, we register a section. This is necessary since all future options must belong to a
+	add_settings_section(
+		'general_settings_section',			// ID used to identify this section and with which to register options
+		__( 'General Options', 'tw' ),		// Title to be displayed on the administration page
+		'tw_general_options_callback',	// Callback used to render the description of the section
+		'tw_theme_general_options'		// Page on which to add this section of options
+	);
+
+	// Next, we'll introduce the fields for toggling the visibility of content elements.
+	add_settings_field(
+		'show_header',						// ID used to identify the field throughout the theme
+		__( 'Header', 'tw' ),							// The label to the left of the option interface element
+		'tw_toggle_header_callback',	// The name of the function responsible for rendering the option interface
+		'tw_theme_general_options',	// The page on which this option will be displayed
+		'general_settings_section',			// The name of the section to which this field belongs
+		array(								// The array of arguments to pass to the callback. In this case, just a description.
+			__( 'Activate this setting to display the header.', 'tw' ),
+		)
+	);
+
+	add_settings_field(
+		'show_content',
+		__( 'Content', 'tw' ),
+		'tw_toggle_content_callback',
+		'tw_theme_general_options',
+		'general_settings_section',
+		array(
+			__( 'Activate this setting to display the content.', 'tw' ),
+		)
+	);
+
+	add_settings_field(
+		'show_footer',
+		__( 'Footer', 'tw' ),
+		'tw_toggle_footer_callback',
+		'tw_theme_general_options',
+		'general_settings_section',
+		array(
+			__( 'Activate this setting to display the footer.', 'tw' ),
+		)
+	);
+
+
+
+  /**
+  * Menu Options
+  */
+
+	add_settings_section(
+		'menu_settings_section',			// ID used to identify this section and with which to register options
+		__( 'Menu Options', 'tw' ),		// Title to be displayed on the administration page
+		'tw_general_menu_options_callback',	// Callback used to render the description of the section
+		'tw_theme_general_options'		// Page on which to add this section of options
+	);
+
+  add_settings_field(
+		'enable_top_menu',
+		__( 'Top Menu', 'tw' ),
+		'tw_enable_top_menu_callback',
+		'tw_theme_general_options',
+		'menu_settings_section',
+		array(
+			__( 'Enable a menu area above the main navigation.', 'tw' ),
+		)
+	);
+	add_settings_field(
+		'enable_footer_menu',
+		__( 'Footer Menu', 'tw' ),
+		'tw_enable_footer_menu_callback',
+		'tw_theme_general_options',
+		'menu_settings_section',
+		array(
+			__( 'Enable a menu area in the footer.', 'tw' ),
+		)
+	);
+
+
+  /**
+  * Sidebar & Widgets Options
+  */
+
+	add_settings_section(
+		'widget_settings_section',			// ID used to identify this section and with which to register options
+		__( 'Sidebars & widgets Options', 'tw' ),		// Title to be displayed on the administration page
+		'tw_general_widget_options_callback',	// Callback used to render the description of the section
+		'tw_theme_general_options'		// Page on which to add this section of options
+	);
+
+	add_settings_field(
+		'enable_sidebar',
+		__( 'Primary Sidebar', 'tw' ),
+		'tw_enable_sidebar_callback',
+		'tw_theme_general_options',
+		'widget_settings_section',
+		array(
+			__( 'Enable the primary sidebar area.', 'tw' ),
+		)
+	);
+
+  add_settings_field(
+		'enable_footer_widgets',
+		__( 'Footer Widgets', 'tw' ),
+		'tw_footer_widgets_callback',
+		'tw_theme_general_options',
+		'widget_settings_section',
+		array(
+			__( 'Enable the primary sidebar area.', 'tw' ),
+		)
+	);
+
+
+	// Finally, we register the fields with WordPress
+	register_setting(
+		'tw_theme_general_options',
+		'tw_theme_general_options'
+	);
+
+
+} // end tw_initialize_theme_options
+add_action( 'admin_init', 'tw_initialize_theme_options' );
+
+
+function tw_enable_top_menu_callback($args) {
+
+	// First, we read the options collection
+	$options = get_option('tw_theme_general_options');
+
+	// Next, we update the name attribute to access this element's ID in the context of the display options array
+	// We also access the show_header element of the options collection in the call to the checked() helper function
+	$html = '<input type="checkbox" id="enable_top_menu" name="tw_theme_general_options[enable_top_menu]" value="1" ' . checked( 1, isset( $options['enable_top_menu'] ) ? $options['enable_top_menu'] : 0, false ) . '/>';
+
+	// Here, we'll take the first argument of the array and add it to a label next to the checkbox
+	$html .= '<label for="enable_top_menu">&nbsp;'  . $args[0] . '</label>';
+
+	echo $html;
+
+} // end tw_enable_top_menu_callback
+
+function tw_enable_footer_menu_callback($args) {
+
+	// First, we read the options collection
+	$options = get_option('tw_theme_general_options');
+
+	// Next, we update the name attribute to access this element's ID in the context of the display options array
+	// We also access the show_header element of the options collection in the call to the checked() helper function
+	$html = '<input type="checkbox" id="enable_footer_menu" name="tw_theme_general_options[enable_footer_menu]" value="1" ' . checked( 1, isset( $options['enable_footer_menu'] ) ? $options['enable_footer_menu'] : 0, false ) . '/>';
+
+	// Here, we'll take the first argument of the array and add it to a label next to the checkbox
+	$html .= '<label for="enable_footer_menu">&nbsp;'  . $args[0] . '</label>';
+
+	echo $html;
+
+} // end tw_enable_top_menu_callback
+
+function tw_enable_sidebar_callback($args) {
+
+	// First, we read the options collection
+	$options = get_option('tw_theme_general_options');
+	$html = '<input type="checkbox" id="enable_sidebar" name="tw_theme_general_options[enable_sidebar]" value="1" ' . checked( 1, isset( $options['enable_sidebar'] ) ? $options['enable_sidebar'] : 0, false ) . '/>';
+	$html .= '<label for="enable_sidebar">&nbsp;'  . $args[0] . '</label>';
+	echo $html;
+
+} // end tw_enable_sidebar_callback
+
+function tw_footer_widgets_callback() {
+
+	$options = get_option( 'tw_theme_general_options' );
+
+	$html = '<select id="enable_footer_widgets" name="tw_theme_general_options[enable_footer_widgets]">';
+		$html .= '<option value="0">' . __( 'Select the number of footer widget areas', 'tw' ) . '</option>';
+		$html .= '<option value="0"' . selected( $options['enable_footer_widgets'], '0', false) . '>' . __( 'No Footer Widgets', 'tw' ) . '</option>';
+		//$html .= '<option value="1"' . selected( $options['footer_widgets'], '1', false) . '>' . __( '1 Footer Widget Areas', 'tw' ) . '</option>';
+		$html .= '<option value="2"' . selected( $options['enable_footer_widgets'], '2', false) . '>' . __( '2 Footer Widget Areas', 'tw' ) . '</option>';
+		$html .= '<option value="3"' . selected( $options['enable_footer_widgets'], '3', false) . '>' . __( '3 Footer Widget Areas', 'tw' ) . '</option>';
+		$html .= '<option value="4"' . selected( $options['enable_footer_widgets'], '4', false) . '>' . __( '4 Footer Widget Areas', 'tw' ) . '</option>';	$html .= '</select>';
+
+	echo $html;
+
+} // end tw_radio_element_callback
 
 /* ------------------------------------------------------------------------ *
  * Blog Options
