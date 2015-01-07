@@ -678,6 +678,9 @@ function tw_theme_default_blog_options() {
 function tw_blog_options_callback() {
 	echo '<p>' . __( 'Choose the blog options', 'tw' ) . '</p>';
 } // end tw_general_options_callback
+function tw_blog_comments_callback() {
+	echo '<p>' . __( '', 'tw' ) . '</p>';
+} // end tw_blog_comments_callback
 
 /**
  * Initializes the theme's blog options by registering the Sections,
@@ -721,6 +724,24 @@ function tw_theme_initialize_blog_options() {
   	);
   }
 
+  add_settings_section(
+		'blog_comments_settings_section',			// ID used to identify this section and with which to register options
+		__( 'Comments Options', 'tw' ),		// Title to be displayed on the administration page
+		'tw_blog_comments_callback',	// Callback used to render the description of the section
+		'tw_theme_blog_options'		// Page on which to add this section of options
+	);
+
+
+	add_settings_field(
+		'enable_fb_comments',
+		__( 'Enable Facebook Comments', 'tw' ),
+		'tw_enable_facebook_comments_callback',
+		'tw_theme_blog_options',
+		'blog_comments_settings_section',
+		array(
+			__( 'Replace Wordpress comments with Facebook Comments.<br/> Needs to have a valid Facebook App ID entered in the Social Settings.', 'tw' ),
+		)
+	);
 
 	register_setting(
 		'tw_theme_blog_options',
@@ -747,6 +768,16 @@ function tw_post_format_field_callback($args) {
 	echo $html;
 
 }
+
+function tw_enable_facebook_comments_callback($args) {
+
+	// First, we read the options collection
+	$options = get_option('tw_theme_blog_options');
+	$html = '<input type="checkbox" id="tw_theme_blog_options" name="tw_theme_blog_options[enable_fb_comments]" value="1" ' . checked( 1, isset( $options['enable_fb_comments'] ) ? $options['enable_fb_comments'] : 0, false ) . '/>';
+	$html .= '<label for="tw_theme_blog_options">&nbsp;'  . $args[0] . '</label>';
+	echo $html;
+
+} // end tw_enable_sidebar_callback
 
 /* ------------------------------------------------------------------------ *
  * Social Options
