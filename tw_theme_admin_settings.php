@@ -58,14 +58,14 @@ function tw_theme_menu() {
 		create_function( null, 'tw_theme_display( "social_options" );' )
 	);
 
-	add_submenu_page(
-		'tw_theme_menu',
-		__( 'Input Examples', 'tw' ),
-		__( 'Input Examples', 'tw' ),
-		'administrator',
-		'tw_theme_input_examples',
-		create_function( null, 'tw_theme_display( "input_examples" );' )
-	);
+	//add_submenu_page(
+	//	'tw_theme_menu',
+	//	__( 'Input Examples', 'tw' ),
+	//	__( 'Input Examples', 'tw' ),
+	//	'administrator',
+	//	'tw_theme_input_examples',
+	//	create_function( null, 'tw_theme_display( "input_examples" );' )
+	//);
 
 
 } // end tw_theme_menu
@@ -91,8 +91,8 @@ function tw_theme_display( $active_tab = '' ) {
 			$active_tab = 'blog_options';
 		} else if( $active_tab == 'social_options' ) {
 			$active_tab = 'social_options';
-		} else if( $active_tab == 'input_examples' ) {
-			$active_tab = 'input_examples';
+		//} else if( $active_tab == 'input_examples' ) {
+			//$active_tab = 'input_examples';
 		} else {
 			$active_tab = 'display_options';
 		} // end if/else ?>
@@ -102,7 +102,7 @@ function tw_theme_display( $active_tab = '' ) {
 			<a href="?page=tw_theme_options&tab=contact_options" class="nav-tab <?php echo $active_tab == 'contact_options' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Contact Options', 'tw' ); ?></a>
 			<a href="?page=tw_theme_options&tab=blog_options" class="nav-tab <?php echo $active_tab == 'blog_options' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Blog Options', 'tw' ); ?></a>
 			<a href="?page=tw_theme_options&tab=social_options" class="nav-tab <?php echo $active_tab == 'social_options' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Social Options', 'tw' ); ?></a>
-			<a href="?page=tw_theme_options&tab=input_examples" class="nav-tab <?php echo $active_tab == 'input_examples' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Input Examples', 'tw' ); ?></a>
+			<!-- <a href="?page=tw_theme_options&tab=input_examples" class="nav-tab <?php echo $active_tab == 'input_examples' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Input Examples', 'tw' ); ?></a> -->
 		</h2>
 
 		<form method="post" action="options.php">
@@ -128,12 +128,10 @@ function tw_theme_display( $active_tab = '' ) {
 					settings_fields( 'tw_theme_social_options' );
 					do_settings_sections( 'tw_theme_social_options' );
 
-				} else {
-
-					settings_fields( 'tw_theme_input_examples' );
-					do_settings_sections( 'tw_theme_input_examples' );
-
-				} // end if/else
+				}// else {
+				//	settings_fields( 'tw_theme_input_examples' );
+				//	do_settings_sections( 'tw_theme_input_examples' );
+				//} // end if/else
 
 				submit_button();
 
@@ -165,8 +163,6 @@ function tw_theme_default_input_options() {
 	return apply_filters( 'tw_theme_default_input_options', $defaults );
 
 } // end tw_theme_default_input_options
-
-
 
 
 /**
@@ -444,11 +440,11 @@ function tw_general_options_callback() {
 } // end tw_general_options_callback
 
 function tw_general_widget_options_callback() {
-	echo '<p>' . __( 'Theme Sidebar & Widget Options', 'tw' ) . '</p>';
+	echo '<p>' . __( 'Enable sidebars and widget areas', 'tw' ) . '</p>';
 } // end tw_general_widget_options_callback
 
 function tw_general_menu_options_callback() {
-	echo '<p>' . __( 'Theme Menu Options', 'tw' ) . '</p>';
+	echo '<p>' . __( 'Select extra menus to enable', 'tw' ) . '</p>';
 } // end tw_general_menu_options_callback
 
 
@@ -474,38 +470,38 @@ function tw_initialize_theme_options() {
 	);
 
 	// Next, we'll introduce the fields for toggling the visibility of content elements.
-	add_settings_field(
-		'show_header',						// ID used to identify the field throughout the theme
-		__( 'Header', 'tw' ),							// The label to the left of the option interface element
-		'tw_toggle_header_callback',	// The name of the function responsible for rendering the option interface
-		'tw_theme_general_options',	// The page on which this option will be displayed
-		'general_settings_section',			// The name of the section to which this field belongs
-		array(								// The array of arguments to pass to the callback. In this case, just a description.
-			__( 'Activate this setting to display the header.', 'tw' ),
-		)
-	);
+	//add_settings_field(
+	// 'show_header',						// ID used to identify the field throughout the theme
+	// __( 'Header', 'tw' ),							// The label to the left of the option interface element
+	// 'tw_toggle_header_callback',	// The name of the function responsible for rendering the option interface
+	// 'tw_theme_general_options',	// The page on which this option will be displayed
+	// 'general_settings_section',			// The name of the section to which this field belongs
+	// array(								// The array of arguments to pass to the callback. In this case, just a description.
+	// 	__( 'Activate this setting to display the header.', 'tw' ),
+	// )
+	//);
 
-	add_settings_field(
-		'show_content',
-		__( 'Content', 'tw' ),
-		'tw_toggle_content_callback',
-		'tw_theme_general_options',
-		'general_settings_section',
-		array(
-			__( 'Activate this setting to display the content.', 'tw' ),
-		)
-	);
+	//add_settings_field(
+	//	'show_content',
+	//	__( 'Content', 'tw' ),
+	//	'tw_toggle_content_callback',
+	//	'tw_theme_general_options',
+	//	'general_settings_section',
+	//	array(
+	//		__( 'Activate this setting to display the content.', 'tw' ),
+	//	)
+	//);
 
-	add_settings_field(
-		'show_footer',
-		__( 'Footer', 'tw' ),
-		'tw_toggle_footer_callback',
-		'tw_theme_general_options',
-		'general_settings_section',
-		array(
-			__( 'Activate this setting to display the footer.', 'tw' ),
-		)
-	);
+	//add_settings_field(
+	//	'show_footer',
+	//	__( 'Footer', 'tw' ),
+	//	'tw_toggle_footer_callback',
+	//	'tw_theme_general_options',
+	//	'general_settings_section',
+	//	array(
+	//		__( 'Activate this setting to display the footer.', 'tw' ),
+	//	)
+	//);
 
 
 
@@ -676,11 +672,16 @@ function tw_theme_default_blog_options() {
  * in the add_settings_section function.
  */
 function tw_blog_options_callback() {
-	echo '<p>' . __( 'Choose the blog options', 'tw' ) . '</p>';
+	echo '<p>' . __( 'Post format options', 'tw' ) . '</p>';
 } // end tw_general_options_callback
 function tw_blog_comments_callback() {
 	echo '<p>' . __( '', 'tw' ) . '</p>';
 } // end tw_blog_comments_callback
+
+function tw_blog_related_posts_callback() {
+	echo '<p>' . __( '', 'tw' ) . '</p>';
+} // end tw_blog_related_posts_callback
+
 
 /**
  * Initializes the theme's blog options by registering the Sections,
@@ -708,7 +709,7 @@ function tw_theme_initialize_blog_options() {
 
 	add_settings_section(
 		'blog_settings_section',			// ID used to identify this section and with which to register options
-		__( 'Blog Options', 'tw' ),		// Title to be displayed on the administration page
+		__( 'Blog Post Formats', 'tw' ),		// Title to be displayed on the administration page
 		'tw_blog_options_callback',	// Callback used to render the description of the section
 		'tw_theme_blog_options'		// Page on which to add this section of options
 	);
@@ -724,6 +725,26 @@ function tw_theme_initialize_blog_options() {
   	);
   }
 
+
+  add_settings_section(
+		'blog_related_posts_settings_section',			// ID used to identify this section and with which to register options
+		__( 'Related Posts Options', 'tw' ),		// Title to be displayed on the administration page
+		'tw_blog_related_posts_callback',	// Callback used to render the description of the section
+		'tw_theme_blog_options'		// Page on which to add this section of options
+	);
+
+
+  add_settings_field(
+		'enable_related_posts',
+		__( 'Related Posts', 'tw' ),
+		'tw_enable_related_posts_callback',
+		'tw_theme_blog_options',
+		'blog_related_posts_settings_section',
+		array(
+			__( 'Enabled Related Posts in a single blog post', 'tw' ),
+		)
+	);
+
   add_settings_section(
 		'blog_comments_settings_section',			// ID used to identify this section and with which to register options
 		__( 'Comments Options', 'tw' ),		// Title to be displayed on the administration page
@@ -734,7 +755,7 @@ function tw_theme_initialize_blog_options() {
 
 	add_settings_field(
 		'enable_fb_comments',
-		__( 'Enable Facebook Comments', 'tw' ),
+		__( 'Facebook Comments', 'tw' ),
 		'tw_enable_facebook_comments_callback',
 		'tw_theme_blog_options',
 		'blog_comments_settings_section',
@@ -768,6 +789,16 @@ function tw_post_format_field_callback($args) {
 	echo $html;
 
 }
+
+function tw_enable_related_posts_callback($args) {
+
+	// First, we read the options collection
+	$options = get_option('tw_theme_blog_options');
+	$html = '<input type="checkbox" id="tw_theme_blog_options" name="tw_theme_blog_options[enable_related_posts]" value="1" ' . checked( 1, isset( $options['enable_related_posts'] ) ? $options['enable_related_posts'] : 0, false ) . '/>';
+	$html .= '<label for="tw_theme_blog_options">&nbsp;'  . $args[0] . '</label>';
+	echo $html;
+
+} // end tw_enable_sidebar_callback
 
 function tw_enable_facebook_comments_callback($args) {
 

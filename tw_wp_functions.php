@@ -329,9 +329,12 @@ if(!function_exists('tw_post_nav')){
 
 
 /******************************************************
-**************** Post Formats Metaboxes ***************
+***********************  Metaboxes ********************
 ******************************************************/
 if(class_exists('AT_Meta_Box')){
+  $post_id = $_GET['post'] ? $_GET['post'] : $_POST['post_ID'] ;
+  $template_file = get_post_meta($post_id,'_wp_page_template', TRUE);
+
   $blog_options = get_option('tw_theme_blog_options') ? get_option('tw_theme_blog_options') : null;
   if(is_array($blog_options)){
     $prefix = 'tw_';
@@ -350,7 +353,7 @@ if(class_exists('AT_Meta_Box')){
         'priority'       => 'high',            // order of meta box: high (default), low; optional
         'fields'         => array(),            // list of meta fields (can be added by field arrays)
         'local_images'   => false,          // Use local or hosted images (meta box images for add/remove)
-        'use_with_theme' => false          //change path if used with theme set to true, false for a plugin or anything else for a custom path(default false).
+        'use_with_theme' => get_stylesheet_directory_uri() . '/includes/My-Meta-Box/meta-box-class',
       );
       $video_post_meta =  new AT_Meta_Box($video_config);
       $video_post_meta->addText($prefix.'video_url',array('name'=> 'Video URL', 'desc'=>'Enter a Youtube or Vimeo URL. <br/>Video will be shown when the Video post format is selected.'));
@@ -366,7 +369,7 @@ if(class_exists('AT_Meta_Box')){
         'priority'       => 'high',            // order of meta box: high (default), low; optional
         'fields'         => array(),            // list of meta fields (can be added by field arrays)
         'local_images'   => false,          // Use local or hosted images (meta box images for add/remove)
-        'use_with_theme' => false          //change path if used with theme set to true, false for a plugin or anything else for a custom path(default false).
+        'use_with_theme' => get_stylesheet_directory_uri() . '/includes/My-Meta-Box/meta-box-class',
       );
       $quote_post_meta =  new AT_Meta_Box($quote_config);
       $quote_post_meta->addText($prefix.'quote_author',array('name'=> 'Author', 'desc'=>''));
@@ -385,7 +388,7 @@ if(class_exists('AT_Meta_Box')){
         'priority'       => 'high',            // order of meta box: high (default), low; optional
         'fields'         => array(),            // list of meta fields (can be added by field arrays)
         'local_images'   => false,          // Use local or hosted images (meta box images for add/remove)
-        'use_with_theme' => false          //change path if used with theme set to true, false for a plugin or anything else for a custom path(default false).
+        'use_with_theme' => get_stylesheet_directory_uri() . '/includes/My-Meta-Box/meta-box-class',
       );
       $audio_post_meta =  new AT_Meta_Box($audio_config);
       $audio_post_meta->addText($prefix.'audio_title',array('name'=> 'Audio File Title'));
@@ -394,6 +397,41 @@ if(class_exists('AT_Meta_Box')){
     }
 
   }
+
+  if($template_file =='template-homepage.php'){
+    $homepage_config = array(
+        'id'             => 'homepage_metabox',          // meta box id, unique per meta box
+        'title'          => 'Homepage Options',          // meta box title
+        'pages'          => array('page'),      // post types, accept custom post types as well, default is array('post'); optional
+        'context'        => 'normal',            // where the meta box appear: normal (default), advanced, side; optional
+        'priority'       => 'high',            // order of meta box: high (default), low; optional
+        'fields'         => array(),            // list of meta fields (can be added by field arrays)
+        'local_images'   => false,          // Use local or hosted images (meta box images for add/remove)
+        'use_with_theme' => get_stylesheet_directory_uri() . '/includes/My-Meta-Box/meta-box-class',
+      );
+    $homepage_post_meta =  new AT_Meta_Box($homepage_config);
+
+    $jumbotron_fields[] = $homepage_post_meta->addText($prefix.'jumbotron_title',array('name'=> 'Title'),true);
+    $jumbotron_fields[] = $homepage_post_meta->addTextarea($prefix.'jumbotron_text',array('name'=> 'Text'),true);
+    $jumbotron_fields[] = $homepage_post_meta->addText($prefix.'jumbotron_button_title',array('name'=> 'CTA Title'),true);
+    $jumbotron_fields[] = $homepage_post_meta->addText($prefix.'jumbotron_button_url',array('name'=> 'CTA URL'),true);
+    $jumbotron_fields[] = $homepage_post_meta->addImage($prefix.'jumbotron_bg_image',array('name'=> 'Background Image'), true);
+    $jumbotron_fields[] = $homepage_post_meta->addRadio($prefix.'jumbotron_color',array('light'=>'Light','dark'=>'Dark'),array('name'=> 'Text Color','desc'=>'Choose the body text colour based on the background image.', 'std'=> array('dark')), true);
+    $jumbotron_fields[] = $homepage_post_meta->addText($prefix.'jumbotron_video_url',array('name'=> 'Video URL','desc'=>'Add a youtube or vimeo video to your jumbotron. **optional'),true);
+    $jumbotron_fields[] = $homepage_post_meta->addImage($prefix.'jumbotron_video_poster',array('name'=> 'Video Poster','desc'=>'Poster image to overlay over video. **optional'), true);
+
+    $homepage_post_meta->addCondition($prefix.'homepage_jumbotron',
+      array(
+        'name'   => __('Jumbotron','tw'),
+        'desc'   => __('<small>Enable a large sized jumobtron area at the header of this page.</small>','mmb'),
+        'fields' => $jumbotron_fields,
+        'std'    => false
+      ));
+
+    $homepage_post_meta->Finish();
+
+  }
+
 }
 
 /******************************************************
