@@ -328,6 +328,73 @@ if(!function_exists('tw_post_nav')){
 }
 
 
+/******************************************************
+**************** Post Formats Metaboxes ***************
+******************************************************/
+if(class_exists('AT_Meta_Box')){
+  $blog_options = get_option('tw_theme_blog_options') ? get_option('tw_theme_blog_options') : null;
+  if(is_array($blog_options)){
+    $prefix = 'tw_';
+
+    $video_pf = isset($blog_options['video']) ? !! $blog_options['video'] : false;
+    $quote_pf = isset($blog_options['quote']) ? !! $blog_options['quote'] : false;
+    $audio_pf = isset($blog_options['audio']) ? !! $blog_options['audio'] : false;
+    // Video Post Format Options
+    if($video_pf){
+
+      $video_config = array(
+        'id'             => 'video_metabox',          // meta box id, unique per meta box
+        'title'          => 'Video Post Format Options',          // meta box title
+        'pages'          => array('post'),      // post types, accept custom post types as well, default is array('post'); optional
+        'context'        => 'normal',            // where the meta box appear: normal (default), advanced, side; optional
+        'priority'       => 'high',            // order of meta box: high (default), low; optional
+        'fields'         => array(),            // list of meta fields (can be added by field arrays)
+        'local_images'   => false,          // Use local or hosted images (meta box images for add/remove)
+        'use_with_theme' => false          //change path if used with theme set to true, false for a plugin or anything else for a custom path(default false).
+      );
+      $video_post_meta =  new AT_Meta_Box($video_config);
+      $video_post_meta->addText($prefix.'video_url',array('name'=> 'Video URL', 'desc'=>'Enter a Youtube or Vimeo URL. <br/>Video will be shown when the Video post format is selected.'));
+      $video_post_meta->Finish();
+    }
+
+    if($quote_pf){
+      $quote_config = array(
+        'id'             => 'quote_metabox',          // meta box id, unique per meta box
+        'title'          => 'Quote Post Format Options',          // meta box title
+        'pages'          => array('post'),      // post types, accept custom post types as well, default is array('post'); optional
+        'context'        => 'normal',            // where the meta box appear: normal (default), advanced, side; optional
+        'priority'       => 'high',            // order of meta box: high (default), low; optional
+        'fields'         => array(),            // list of meta fields (can be added by field arrays)
+        'local_images'   => false,          // Use local or hosted images (meta box images for add/remove)
+        'use_with_theme' => false          //change path if used with theme set to true, false for a plugin or anything else for a custom path(default false).
+      );
+      $quote_post_meta =  new AT_Meta_Box($quote_config);
+      $quote_post_meta->addText($prefix.'quote_author',array('name'=> 'Author', 'desc'=>''));
+      $quote_post_meta->addText($prefix.'quote_source',array('name'=> 'Source', 'desc'=>'Publication or origin source'));
+      $quote_post_meta->addText($prefix.'quote_source_url',array('name'=> 'Source URL', 'desc'=>'URL to the quotes original source.'));
+      $quote_post_meta->addTextarea($prefix.'quote',array('name'=> 'Quote', 'desc'=>''));
+      $quote_post_meta->Finish();
+    }
+
+    if($audio_pf){
+      $audio_config = array(
+        'id'             => 'audio_metabox',          // meta box id, unique per meta box
+        'title'          => 'Audio Post Format Options',          // meta box title
+        'pages'          => array('post'),      // post types, accept custom post types as well, default is array('post'); optional
+        'context'        => 'normal',            // where the meta box appear: normal (default), advanced, side; optional
+        'priority'       => 'high',            // order of meta box: high (default), low; optional
+        'fields'         => array(),            // list of meta fields (can be added by field arrays)
+        'local_images'   => false,          // Use local or hosted images (meta box images for add/remove)
+        'use_with_theme' => false          //change path if used with theme set to true, false for a plugin or anything else for a custom path(default false).
+      );
+      $audio_post_meta =  new AT_Meta_Box($audio_config);
+      $audio_post_meta->addText($prefix.'audio_title',array('name'=> 'Audio File Title'));
+      $audio_post_meta->addText($prefix.'audio_source',array('name'=> 'Audio File URL', 'desc'=>'Audio player will be shown when the Audio post format is selected.'));
+      $audio_post_meta->Finish();
+    }
+
+  }
+}
 
 /******************************************************
 ********************* Comments ************************
@@ -464,8 +531,6 @@ if(!function_exists('tw_pagination')){
 }
 
 
-
-
 /******************************************************
 *********************** Footer ************************
 ******************************************************/
@@ -482,9 +547,81 @@ if(!function_exists('tw_copyright')){
 }
 
 /******************************************************
-***************** General Functions *******************
+***************** Image Functions *******************
 ******************************************************/
 
+if(!function_exists( 'tw_get_post_images' ) ) {
+	function tw_get_post_images( $image_sizes = array(), $offset = 1 ) {
+    global $post;
+
+
+    $sizes = array(
+                    '4x3-small',
+                    '4x3-medium',
+                    '4x3-large',
+                  );
+    for($i=0;$i<count($image_sizes); $i++){
+      $sizes[$i] = $image_sizes[$i];
+    }
+    $img_size = $sizes[1]; // The WP "size" to use for the large image
+    if(class_exists('Mobile_Detect')){
+      $detect = new Mobile_Detect;
+      $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
+      switch($deviceType){
+        case 'phone';
+          $img_size = $sizes[0];
+          break;
+        case 'tablet';
+          $img_size = $sizes[1];
+          break;
+        case 'computer';
+          $img_size = $sizes[2];
+          break;
+      }
+    }
+
+
+		// Arguments
+		$repeat = 100; 				// Number of maximum attachments to get
+		$output = array();
+
+		$attachments = get_children( array(
+  		'post_parent' => get_the_id(),
+  		'numberposts' => $repeat,
+  		'post_type' => 'attachment',
+  		'post_mime_type' => 'image',
+  		'order' => 'ASC',
+  		'orderby' => 'menu_order date' )
+		);
+		if ( !empty($attachments) ) :
+			$output = array();
+			$count = 0;
+			foreach ( $attachments as $att_id => $attachment ) {
+				$count++;
+				if ($count <= $offset) continue;
+				$url = wp_get_attachment_image_src($att_id, $img_size, true);
+				$alt = trim(strip_tags( get_post_meta($att_id, '_wp_attachment_image_alt', true) ));
+
+				$output[] = array(
+				    'id' => $att_id,
+  				  'alt'=>$alt ,
+				    'url' => $url[0],
+  				  'caption' => $attachment->post_excerpt,
+  				  'description'=>$attachment->post_content,
+
+				  );
+			}
+		endif;
+		return $output;
+	} // End woo_get_post_images()
+}
+
+/**
+ * Returns Image src based on given array of sizes and device type
+ * @param: int image_id
+ * @param: array image_sizes
+ * @return: image source
+ */
 if(!function_exists('tw_get_image_src')){
   function tw_get_image_src($image_id, $image_sizes = array()){
 
@@ -518,7 +655,7 @@ if(!function_exists('tw_get_image_src')){
 }
 
 /**
- * Returns image html based on given array of sizes
+ * Returns image html based on given array of sizes and device type
  * @param: array image_sizes
  * @param: array attributes
  * @return: image html output
@@ -575,6 +712,11 @@ if(!function_exists('tw_the_post_thumbnail')){
     return $html;
   }
 }
+
+
+/******************************************************
+***************** General Functions *******************
+******************************************************/
 
 /**
  * Echos schema.org tag

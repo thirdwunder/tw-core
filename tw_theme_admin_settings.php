@@ -654,15 +654,15 @@ function tw_footer_widgets_callback() {
 function tw_theme_default_blog_options() {
 
 	$defaults = array(
-		'aside',   // title less blurb
+		//'aside',   // title less blurb
 		'gallery', // gallery of images
-		'link',    // quick link to other site
-		'image',   // an image
+		//'link',    // quick link to other site
+		//'image',   // an image
 		'quote',   // a quick quote
-		'status',  // a Facebook like status update
+		//'status',  // a Facebook like status update
 		'video',   // video
 		'audio',   // audio
-		'chat'     // chat transcript
+		//'chat'     // chat transcript
 	);
 
 	return apply_filters( 'tw_theme_default_blog_options', $defaults );
@@ -695,15 +695,15 @@ function tw_theme_initialize_blog_options() {
 	} // end if
 
   $post_formats = array(
-		'aside'   => 'Aside',   // title less blurb
+		//'aside'   => 'Aside',   // title less blurb
 		'gallery' => 'Gallery', // gallery of images
-		'link'    => "Link",    // quick link to other site
-		'image'   => "Image",   // an image
+		//'link'    => "Link",    // quick link to other site
+		//'image'   => "Image",   // an image
 		'quote'   => "Quote",   // a quick quote
-		'status'  => "Status",  // a Facebook like status update
+		//'status'  => "Status",  // a Facebook like status update
 		'video'   => "Video",   // video
 		'audio'   => "Audio",   // audio
-		'chat'    => "Chat" // chat transcript
+		//'chat'    => "Chat" // chat transcript
 	);
 
 	add_settings_section(
