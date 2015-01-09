@@ -168,7 +168,20 @@ if(!function_exists('tw_register_sidebars')){
       register_sidebar(array(
       	'id' => 'primary',
       	'name' => 'Primary Sidebar',
-      	'description' => 'Primary Footer Area',
+      	'description' => 'Primary Widget Area',
+      	'before_widget' => '<div id="%1$s" class="widget %2$s">',
+      	'after_widget' => '</div>',
+      	'before_title' => '<h4 class="widget-title">',
+      	'after_title' => '</h4>',
+      ));
+    }
+
+    $homepage_sidebar = $theme_general_options['enable_homepage_sidebar'];
+    if($homepage_sidebar){
+      register_sidebar(array(
+      	'id' => 'homepage',
+      	'name' => 'Homepage Widget Area',
+      	'description' => 'Homepage Widget Area. Widgets here will show in the widgetized homepage template.',
       	'before_widget' => '<div id="%1$s" class="widget %2$s">',
       	'after_widget' => '</div>',
       	'before_title' => '<h4 class="widget-title">',

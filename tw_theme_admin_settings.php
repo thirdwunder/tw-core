@@ -560,6 +560,17 @@ function tw_initialize_theme_options() {
 		)
 	);
 
+	add_settings_field(
+		'enable_homepage_sidebar',
+		__( 'Homepage Widget Area', 'tw' ),
+		'tw_enable_homepage_widget_callback',
+		'tw_theme_general_options',
+		'widget_settings_section',
+		array(
+			__( 'Enable the homepage template widget area', 'tw' ),
+		)
+	);
+
   add_settings_field(
 		'enable_footer_widgets',
 		__( 'Footer Widgets', 'tw' ),
@@ -621,6 +632,16 @@ function tw_enable_sidebar_callback($args) {
 	$options = get_option('tw_theme_general_options');
 	$html = '<input type="checkbox" id="enable_sidebar" name="tw_theme_general_options[enable_sidebar]" value="1" ' . checked( 1, isset( $options['enable_sidebar'] ) ? $options['enable_sidebar'] : 0, false ) . '/>';
 	$html .= '<label for="enable_sidebar">&nbsp;'  . $args[0] . '</label>';
+	echo $html;
+
+} // end tw_enable_sidebar_callback
+
+function tw_enable_homepage_widget_callback($args) {
+
+	// First, we read the options collection
+	$options = get_option('tw_theme_general_options');
+	$html = '<input type="checkbox" id="enable_homepage_sidebar" name="tw_theme_general_options[enable_homepage_sidebar]" value="1" ' . checked( 1, isset( $options['enable_homepage_sidebar'] ) ? $options['enable_homepage_sidebar'] : 0, false ) . '/>';
+	$html .= '<label for="enable_homepage_sidebar">&nbsp;'  . $args[0] . '</label>';
 	echo $html;
 
 } // end tw_enable_sidebar_callback
