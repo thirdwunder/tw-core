@@ -1,0 +1,261 @@
+/********************
+****** Widgets ******
+********************/
+.sidebar{
+  .widget-area{
+    .widget{
+      border-bottom: 1px solid @color-line-light;
+      h4{
+        border-bottom: 1px solid @color-line-light;
+        padding: 5px 0 10px 0;
+      }
+
+      ul{
+        list-style: none;
+        padding-left: 5px;
+        li{
+          margin: 3px 0;
+        }
+      }
+    }
+  }
+}
+
+.footer-widgets{
+  .widget-area{
+    .widget{
+      color: @color-inverse-body;
+      h4{
+        color: @color-inverse-body;
+        border-bottom: 1px solid @color-inverse-line;
+        padding: 5px 0 10px 0;
+      }
+      a{
+        color: @color-inverse-link;
+        &:hover{
+          color: @color-inverse-link-hover
+        }
+      }
+    }
+
+    .widget_recent_entries{
+      li{
+        border-bottom: 1px solid @color-inverse-line;
+      }
+    }
+  }
+}
+
+.widget_search{
+  .widget-title{
+    display: none;
+  }
+  #searchform{
+    .form-group{
+      width: 100%;
+      .input-group{
+        width: 100%;
+      }
+    }
+  }
+
+}
+
+.widget_tw_fb_like_box_widget,
+.widget_tw_social_widget,
+.widget_pages,
+.widget_categories,
+.widget_tag_cloud,
+.widget_archive,
+.widget_calendar,
+.widget_recent_entries,
+.widget_recent_comments,
+.widget_rss,
+.widget_meta{
+  .widget-title{
+    &::before{
+      font-family: @font-fontawesome;
+      margin-right: 5px;
+    }
+  }
+}
+
+.widget_tw_fb_like_box_widget{
+  .widget-title{
+    &::before{
+      content: @fa-var-facebook-square;
+      color: @color-facebook;
+    }
+  }
+}
+.widget_tw_social_widget{
+  .social-icons-list();
+}
+.widget_pages{
+  .widget-title{
+    &::before{
+      content: @fa-var-file;
+    }
+  }
+}
+.widget_meta{
+  .widget-title{
+    &::before{
+      content: @fa-var-wrench;
+    }
+  }
+}
+.widget_categories{
+  .widget-title{
+    &::before{
+      content: @fa-var-bookmark;
+    }
+  }
+  .postform{
+    .form-control();
+  }
+
+}
+.widget_tag_cloud{
+  .widget-title{
+    &::before{
+      content: @fa-var-tags;
+    }
+  }
+}
+.widget_archive{
+  .widget-title{
+    &::before{
+      content: @fa-var-archive;
+    }
+  }
+}
+.widget_calendar{
+  .widget-title{
+    &::before{
+      content: @fa-var-calendar;
+    }
+  }
+
+  #calendar_wrap{
+    #wp-calendar{
+      width: 100%;
+      caption{
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+  }
+
+  #wp-calendar{
+    td, th{
+      text-align: center;
+
+    }
+    td{
+
+    }
+    #today{
+      background: #cccccc;
+      .border-radius(100em);
+      color: white;
+      a{
+        color: white;
+      }
+    }
+    #prev{
+      text-align: left;
+    }
+    #next{
+      text-align: right;
+    }
+  }
+}
+.widget_recent_entries{
+  .widget-title{
+    &::before{
+      content: @fa-var-clock-o;
+    }
+  }
+  li{
+    border-bottom: 1px solid @color-line-light;
+    padding: 0 0 5px 0;
+    margin-bottom: 5px;
+
+    .post-date{
+      display: block;
+      font-size: 0.6em !important;
+      &::before{
+        font-family: @font-fontawesome;
+/*         content: @fa-var-clock-o; */
+        margin-right: 5px;
+      }
+    }
+  }
+
+}
+.widget_recent_comments{
+  .widget-title{
+    &::before{
+      content: @fa-var-comments;
+    }
+  }
+}
+.widget_rss{
+  .widget-title{
+    a.rsswidget img{
+      display: none;
+    }
+    &::before{
+      content: @fa-var-rss;
+    }
+  }
+  ul{
+    li{
+      margin-bottom: 5px !important;
+      padding-bottom: 5px !important;
+
+      cite{
+        width: 100%;
+        font-style: italic;
+        font-size: 0.8em !important;
+        &::before{
+          content: '-';
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+
+  .rss-date{
+    display: block;
+    font-size: 0.6em;
+    margin: 3px 0;
+    &::before{
+      font-family: @font-fontawesome;
+/*       content: @fa-var-clock-o; */
+      margin-right: 5px;
+    }
+  }
+
+}
+
+.widget{
+  padding: 15px 0;
+  ul{
+    list-style: none;
+    padding-left: 5px;
+
+    ul.children{
+      padding-left: 10px;
+      li{
+        border-left: 1px dotted @color-line-dark;
+        padding-left: 10px;
+      }
+    }
+
+    &.fa-ul{
+      margin-left: 1.5em;
+    }
+  }
+}
