@@ -6,17 +6,26 @@ jQuery(function() {
             conts   = elm.contents(),
             le      = conts.length,
             ifr     = null;
-
+        elm_id = elm.attr('id');
         for(var i = 0; i<le; i++){
           if(conts[i].nodeType === 8){ ifr = conts[i].textContent; }
         }
-        jQuery(".section-video").css("background", "");
+        jQuery(".section-"+elm_id).css("background", "");
         elm.addClass("player").html(ifr);
         elm.off("click");
+        jQuery('.carousel').carousel('pause');
     });
 });
 
 /*** Scroll to Top ***/
+function scrollToTop() {
+	verticalOffset = typeof(verticalOffset) !== 'undefined' ? verticalOffset : 0;
+	element = jQuery('body');
+	offset = element.offset();
+	offsetTop = offset.top;
+	jQuery('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
+}
+
 jQuery(function(){
 
 	jQuery(document).on( 'scroll', function(){
@@ -28,18 +37,22 @@ jQuery(function(){
 		}
 	});
 
-	jQuery('.scroll-top-wrapper').on('click', scrollToTop);
+	jQuery('.scroll-top-inner').on('click', scrollToTop);
 });
 
-function scrollToTop() {
-	verticalOffset = typeof(verticalOffset) !== 'undefined' ? verticalOffset : 0;
-	element = jQuery('body');
-	offset = element.offset();
-	offsetTop = offset.top;
-	jQuery('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
-}
 
 
+jQuery('#scroll-to-top-wrapper').affix({
+  offset: {
+    top: 100,
+    bottom: function () {
+      return (this.bottom = jQuery('#site-footer').outerHeight(true));
+    }
+  }
+});
+
+
+/*** Carousel ***/
 jQuery(document).bind('keyup', function(e) {
   if(e.which === 39){
     jQuery('.carousel').carousel('next');
@@ -49,11 +62,6 @@ jQuery(document).bind('keyup', function(e) {
   }
 });
 
-jQuery('#scroll-to-top-wrapper').affix({
-  offset: {
-    top: 100,
-    bottom: function () {
-      return (this.bottom = jQuery('#site-footer').outerHeight(true));
-    }
-  }
+jQuery('.carousel').carousel({
+    pause: "hover",
 });

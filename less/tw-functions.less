@@ -166,6 +166,14 @@
 
 }
 
+.generate-widths(@n, @i: 1) when (@i =< @n) {
+  &.width-@{i} {
+    //font-size: (@i * 100% / @n);
+    font-size: 2.5em - @i/@n;
+  }
+  .generate-widths(@n, (@i + 1));
+}
+
 .social-icons-list(){
   ul{
      list-style: none;
@@ -176,30 +184,7 @@
        display: inline-block;
 
        .social-link-colors();
-
-       &.width-1,
-       &.width-2,
-       &.width-3,
-       &.width-4,
-       &.width-5,
-       &.width-6{
-         font-size: 2.2em;
-         margin-right: 5px;
-       }
-
-       &.width-7,
-       &.width-8{
-         font-size: 1.75em;
-         margin-right: 5px;
-       }
-
-       &.width-9,
-       &.width-10{
-         font-size: 1.6em;
-         margin-right: 0px;
-       }
-
-
+       .generate-widths(10);
      }
    }
 }
@@ -211,6 +196,9 @@
     position: relative;
     padding-bottom: 52.25%; /* 16:9 */
     height: 0;
+    background-color: black;
+    background-color: fade(black, 25%);
+    border: 1px solid fade(#666, 75%);
 
     img{
       width: 100%;
@@ -221,8 +209,8 @@
     &:after {
       content: @fa-var-play;
       font-family: @font-fontawesome;
-      font-size: 8em;
-      color: rgba(255,255,255,0.7);
+      font-size: 6em;
+      color: rgba(255,255,255,0.75);
       display: block;
       position: absolute;
       top:50%;
@@ -235,11 +223,14 @@
       height: 100px;
       z-index: 30;
       cursor: pointer;
+      .transition(all,0.25s, ease-in-out);
     }
     &:hover{
-
+      cursor: pointer !important;
       &:after{
-        color: rgba(255,255,255,0.9);
+        .transition(all,0.25s, ease-in-out);
+        font-size: 8em;
+        color: rgba(255,255,255,0.95);
         cursor: pointer !important;
       }
     }

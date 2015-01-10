@@ -433,6 +433,8 @@ if(class_exists('AT_Meta_Box')){
     $jumbotron_fields[] = $homepage_post_meta->addText($prefix.'jumbotron_video_url',array('name'=> 'Video URL','desc'=>'Add a youtube or vimeo video to your jumbotron. **optional'),true);
     $jumbotron_fields[] = $homepage_post_meta->addImage($prefix.'jumbotron_video_poster',array('name'=> 'Video Poster','desc'=>'Poster image to overlay over video. **optional'), true);
 
+    $homepage_post_meta->addCheckbox($prefix.'homepage_show_content',array('name'=> 'Show content','desc'=>'Show the content of this page.'));
+
     $homepage_post_meta->addCondition($prefix.'homepage_jumbotron',
       array(
         'name'   => __('Jumbotron','tw'),

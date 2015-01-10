@@ -1,11 +1,12 @@
 .widget_twslideswidget{
+  padding: 0;
   .carousel-inner{
     height: 100%;
     .item{
 
       .carousel-caption{
-        background-color: black;
-        background-color: rgba(0,0,0,0.7);
+        background-color: @color-inverse-bg;
+        background-color: fade(@color-inverse-bg, 70%);
         position: absolute;
         left: 15%;
         bottom:0;
@@ -26,8 +27,16 @@
         p{
           font-size: 0.8em;
         }
-      }
 
+        .section-video{
+          background-position: center center;
+          background-repeat: no-repeat !important;
+          background-size: cover !important;
+          margin-bottom: 15px;
+          .clickable-video();
+        }
+
+      }
       img{
         width: 100%;
         max-height: 100%;
@@ -35,12 +44,19 @@
       }
     }
   }
+  .carousel-indicators{
+    width: auto;
+    left: auto;
+    right: 5%;
+    margin-left: 0;
+    bottom: 0px;
+  }
 }
 
 
 .widget-area{
   .widget_twslideswidget{
-    .carousel-caption{
+    .carousel-caption, .carousel-indicators{
       display: none;
       visibility: hidden;
     }
@@ -61,21 +77,21 @@
 
 @media only screen and (max-width: @screen-sm){
   .widget_twslideswidget{
-
     .carousel-inner{
       .item{
         .carousel-caption{
           position: relative;
           width: 100%;
           height: auto;
-          background-color: black;
-          //background-color: rgba(0,0,0, 0.75);
+          background-color: @color-inverse-bg;
+          //background-color: fade(@color-inverse-bg, 75%);
           left: 0;
           right: 0;
           bottom: 0;
           text-align: center;
-          padding: 10px 15px;
+          padding: 10px 15px 50px 15px;
           min-height: 45px;
+
           h2,h3{
             color: white;
             font-size: 1.1em;
@@ -85,6 +101,8 @@
           p{
             font-size: 0.8em;
           }
+
+
         }
       }
     }

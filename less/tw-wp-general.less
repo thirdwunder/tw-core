@@ -61,9 +61,17 @@ blockquote{
 }
 
 .breadcrumb{
+  background-color: @color-breadcrumb-bg;
+  color: @color-breadcrumb-body;
   & > li{
     width: 100% !important;
     max-width: 100% !important;
+    a{
+      color: @color-breadcrumb-link;
+      &:hover{
+        color: @color-breadcrumb-link-hover;
+      }
+    }
   }
 }
 
@@ -151,6 +159,78 @@ blockquote{
   }
 }
 
+.navbar-inverse{
+
+  .navbar-toggle{
+    color: @color-inverse-body;
+    &:hover,
+    &:focus{
+      background-color: @color-menu-bg-inverse-hover;
+    }
+  }
+
+  background: @color-inverse-bg;
+  border-color: @color-inverse-line;
+  .navbar-nav{
+    & > li{
+      & > a{
+        color: @color-inverse-body;
+        background-color: @color-inverse-bg;
+
+
+        &:hover,
+        &:focus{
+          color: @color-inverse-body;
+          background-color: @color-menu-bg-inverse-hover;
+        }
+      }
+    }
+
+    & > .active{
+      & > a{
+        color: @color-inverse-body;
+        background-color: @color-menu-bg-inverse-selected;
+        &:hover,
+        &:focus{
+          color: @color-inverse-body;
+          background-color: @color-menu-bg-inverse-selected;
+        }
+      }
+    }
+  }
+}
+
+.navbar-default{
+  background: @color-menu-bg-base;
+  border-color: @color-menu-border;
+  .navbar-nav{
+    & > li{
+      & > a{
+        background-color: @color-menu-bg;
+        color: @color-menu-body;
+
+        &:hover,
+        &:focus{
+          color: @color-menu-body-hover;
+          background-color: @color-menu-bg-hover;
+        }
+      }
+    }
+
+    & > .active{
+      & > a{
+        color: @color-menu-body-selected;
+        background-color: @color-menu-bg-selected;
+        &:hover,
+        &:focus{
+          color: @color-menu-body-selected;
+          background-color: @color-menu-bg-selected;
+        }
+      }
+    }
+  }
+}
+
 /********************
 **** Homepage  ******
 ********************/
@@ -162,6 +242,7 @@ blockquote{
     background-size: cover !important;
     //background-attachment: fixed !important;
     min-height: 400px;
+    margin-bottom: 0;
     .border-radius(0);
 
     .section-video{
@@ -291,11 +372,19 @@ blockquote{
 
     &.left, &.right{
       .fa{
-        font-size: 2.5em;
+        font-size: 2em;
         position: absolute;
         top: 50%;
         z-index: 5;
         display: inline-block;
+        .transition(all, 0.25s, ease-in-out);
+      }
+      &:hover{
+        .fa{
+          top: 47.5%;
+          font-size: 3em;
+        }
+        .transition(all, 0.25s, ease-in-out);
       }
     }
     &.left{
@@ -325,8 +414,8 @@ blockquote{
         position: relative;
         width: 100%;
         height: auto;
-        background-color: black;
-        //background-color: rgba(0,0,0, 0.75);
+        background-color: @color-inverse-bg;
+        //background-color: fade(@color-inverse-bg, 75%);
         left: 0;
         right: 0;
         bottom: 0;
@@ -512,8 +601,8 @@ blockquote{
         bottom:0;
         right: 0;
         color: white;
-        background-color: black;
-        background-color: rgba(0,0,0,0.75);
+        background-color: @color-inverse-bg;
+        background-color: fade(@color-inverse-bg, 75%);
         padding: 10px 15px;
         max-width: 100%;
         height: auto;
@@ -809,7 +898,7 @@ img.alignright{
   background-color: @color-inverse-bg;
   color: @color-inverse-body;
   padding: 10px 0;
-  margin-top: 25px;
+  //margin-top: 25px;
   a{
     color: @color-inverse-link;
     &:hover{
@@ -858,23 +947,6 @@ img.alignright{
 /********************
 **** Back to Top ****
 ********************/
-
-#top-link-block{
-  &.affix-top {
-    position: absolute; /* allows it to "slide" up into view */
-    bottom: -82px;
-    right: 15px;
-    z-index: 1001;
-  }
-  &.affix {
-    position: fixed; /* keeps it on the bottom once in view */
-    bottom: 35px;
-    right: 15px;
-    z-index: 1001;
-  }
-}
-
-
 .scroll-top-wrapper {
   -webkit-backface-visibility: hidden;
   position: fixed;
@@ -905,7 +977,8 @@ img.alignright{
   &.affix-bottom{
     position: relative;
     text-align: right;
-    margin-bottom: -25px;
+    margin-top: -32px;
+    margin-bottom: 0;
     top: 0 !important;
   }
 }
@@ -941,7 +1014,14 @@ img.alignright{
     }
   }
 
+  .scroll-top-wrapper {
+    &.affix-bottom{
+      margin-bottom: -25px;
+    }
+  }
+
   #site-footer{
+    margin-top: 25px;
     padding: 25px inherit;
     .footer-container{
       #copyright{}
@@ -958,8 +1038,8 @@ img.alignright{
           position: relative;
           width: 100%;
           height: auto;
-          background-color: black;
-          //background-color: rgba(0,0,0, 0.75);
+          background-color: @color-inverse-bg;
+          //background-color: fade(@color-inverse-bg, 75%);
           left: 0;
           right: 0;
           bottom: 0;
