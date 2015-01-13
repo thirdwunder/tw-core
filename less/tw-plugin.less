@@ -57,12 +57,9 @@
 .widget_twserviceswidget{
   margin-top: 25px;
   margin-bottom: 25px;
-  .widget-title{
-    text-align: center;
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid @color-line-light;
-  }
+
+
+
 
   .thumbnail{
     .border-radius(0);
@@ -87,6 +84,26 @@
   }
 }
 
+#homepage-widgets{
+  .widget_twservicescategorywidget,
+  .widget_twserviceswidget{
+    .widget-title{
+      text-align: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid @color-line-light;
+    }
+    .services-container{
+      .container();
+      .more{
+        .btn-primary{
+          min-width:50%;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
 
 .widget-area{
   .widget_twslideswidget{
@@ -103,6 +120,38 @@
       }
     }
   }
+
+  .widget_twservicescategorywidget,
+  .widget_twserviceswidget{
+    .services-container{
+      .more{
+        .btn-primary{
+          width: 100%;
+          .btn-xs();
+        }
+      }
+    }
+
+    .service-category,
+    .service{
+      .caption{
+        padding-left: 0;
+        padding-right: 0;
+        h2, h3, p{
+          text-align: left;
+        }
+        h2, h3{
+          margin-top: 5px;
+          font-size: 1.2em;
+        }
+        p{
+          display: none;
+          visibility: hidden;
+        }
+      }
+    }
+  }
+
 }
 
 @screen-sm: 768px;

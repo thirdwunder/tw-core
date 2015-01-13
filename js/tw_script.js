@@ -1,3 +1,7 @@
+jQuery(function () {
+  jQuery('[data-toggle="tooltip"]').tooltip()
+})
+
 /*** Video Poster***/
 jQuery(function() {
     var videos  = jQuery(".video");
@@ -72,11 +76,15 @@ jQuery('.carousel').carousel({
 jQuery(window).load(function(){
   jQuery('.widget_twserviceswidget .services').isotope({ itemSelector: '.service', layoutMode : 'fitRows' });
   jQuery('.widget_twservicescategorywidget .service-categories').isotope({ itemSelector: '.service-category', layoutMode : 'fitRows' });
+  jQuery('.widget_tw_blog_widget .articles').isotope({ itemSelector: '.article', layoutMode : 'fitRows' });
+
   jQuery('#related-posts .related-post-inner').isotope({ itemSelector: '.related-post-container', layoutMode : 'fitRows' });
 });
 
 jQuery(window).smartresize(function(){
   jQuery('.widget_twserviceswidget .services').isotope({ itemSelector: '.service', layoutMode : 'fitRows' });
   jQuery('.widget_twservicescategorywidget .service-categories').isotope({ itemSelector: '.service-category', layoutMode : 'fitRows' });
+  jQuery('.widget_tw_blog_widget .articles').isotope({ itemSelector: '.article', layoutMode : 'fitRows' });
+
   jQuery('#related-posts .related-post-inner').isotope({ itemSelector: '.related-post-container', layoutMode : 'fitRows' });
 });

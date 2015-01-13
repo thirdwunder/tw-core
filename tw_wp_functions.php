@@ -920,7 +920,11 @@ function tw_is_fb_coments_enabled(){
   return $fb_comments;
 }
 
-
+function tw_is_blog_sidebar_enabled(){
+  $blog_options = get_option('tw_theme_blog_options');
+  $sidebar = (is_array($blog_options)&& isset($blog_options['enable_blog_sidebar']) ) ? !!$blog_options['enable_blog_sidebar'] : false;
+  return $sidebar;
+}
 
 function tw_is_related_posts_enabled(){
   $blog_options = get_option('tw_theme_blog_options');
