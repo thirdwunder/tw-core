@@ -4,9 +4,7 @@
 html, body{
   min-height: 100%;
   font-family: @font-body;
-  color: @color-body;
-  font-size: @base-font;
-  line-height: @base-line-height;
+  color: @text-color;
 }
 body{
   min-height: 100%;
@@ -67,9 +65,9 @@ blockquote{
     width: 100% !important;
     max-width: 100% !important;
     a{
-      color: @color-breadcrumb-link;
+      color: @link-color;
       &:hover{
-        color: @color-breadcrumb-link-hover;
+        color: @link-hover-color;
       }
     }
   }
@@ -257,7 +255,7 @@ blockquote{
     &.light{
       h1, h2, h3, h4, p, blockquote{
         color: @color-inverse-body;
-        text-shadow: 1px 1px 1px @color-body;
+        text-shadow: 1px 1px 1px @text-color;
       }
     }
     &.dark{
@@ -779,14 +777,14 @@ blockquote{
         border:none;
       }
       a{
-        color: @color-body;
+        color: @text-color;
       }
 
       &.facebook, &.twitter, &.googleplus, &.pinterest, &.email{
         position: relative;
-        color: @color-body;
+        color: @text-color;
         a{
-          color: @color-body !important;
+          color: @text-color !important;
         }
         .overlay{
           display: none;
@@ -899,7 +897,7 @@ blockquote{
     //background-color: rgba(255,255,255, 0.75);
     z-index: 1000;
     a{
-      color: @color-body;
+      color: @text-color;
     }
     li{
       position: relative;
@@ -921,7 +919,7 @@ blockquote{
         line-height: 64px;
         width: 50%;
         float: left;
-        color: @color-body;
+        color: @text-color;
         .overlay{
           display: none;
           position: absolute;
@@ -962,7 +960,7 @@ blockquote{
         }
         .view-title{
           .em-size(20,16);
-          color: @color-body
+          color: @text-color
         }
       }
       &.email{

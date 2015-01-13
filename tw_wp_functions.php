@@ -322,7 +322,7 @@ if(!function_exists('tw_post_nav')){
   	?>
   	<nav class="navigation post-navigation" role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
   		<h3 class="sr-only"><?php _e( 'Post navigation', 'tw' ); ?></h3>
-      <ul class="pager nav-links">
+      <ul class="hidden-print pager nav-links">
         <?php
           if($previous){
             ?>
@@ -568,7 +568,7 @@ if(!function_exists('tw_pagination')){
      }
 
      if(1 != $pages){
-         echo "<ul class=\"pagination\">";
+         echo "<ul class=\"hidden-print pagination\">";
          //echo "<span>Page ".$paged." of ".$pages."</span>";
          if($paged > 2 && $paged > $range+1 && $showitems < $pages) echo "<li><a href='".get_pagenum_link(1)."'>&laquo; First</a></li>";
          if($paged > 1 && $showitems < $pages) echo "<li><a href='".get_pagenum_link($paged - 1)."'>&lsaquo; Previous</a></li>";
@@ -822,12 +822,12 @@ if(!function_exists('tw_get_theme_social_options')){
                 break;
             case 'twitter':
                 $username = $value;
-                $url  = 'http://twitter.com/'.$value;
+                $value  = 'http://twitter.com/'.$username;
                 $icon = 'fa-twitter-square';
                 break;
             case 'instagram':
                 $username = $value;
-                $url  = 'http://instagram.com/'.$value;
+                $value  = 'http://instagram.com/'.$username;
                 $icon = 'fa-instagram';
                 break;
             case 'pinterest':
