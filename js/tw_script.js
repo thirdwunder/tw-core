@@ -65,3 +65,18 @@ jQuery(document).bind('keyup', function(e) {
 jQuery('.carousel').carousel({
     pause: "hover",
 });
+
+
+
+/**** Isotope ****/
+jQuery(window).load(function(){
+  jQuery('.widget_twserviceswidget .services').isotope({ itemSelector: '.service', layoutMode : 'fitRows' });
+  jQuery('.widget_twservicescategorywidget .service-categories').isotope({ itemSelector: '.service-category', layoutMode : 'fitRows' });
+  jQuery('#related-posts .related-post-inner').isotope({ itemSelector: '.related-post-container', layoutMode : 'fitRows' });
+});
+
+jQuery(window).smartresize(function(){
+  jQuery('.widget_twserviceswidget .services').isotope({ itemSelector: '.service', layoutMode : 'fitRows' });
+  jQuery('.widget_twservicescategorywidget .service-categories').isotope({ itemSelector: '.service-category', layoutMode : 'fitRows' });
+  jQuery('#related-posts .related-post-inner').isotope({ itemSelector: '.related-post-container', layoutMode : 'fitRows' });
+});

@@ -766,6 +766,7 @@ function tw_theme_initialize_blog_options() {
 		)
 	);
 
+/*
   add_settings_section(
 		'blog_comments_settings_section',			// ID used to identify this section and with which to register options
 		__( 'Comments Options', 'tw' ),		// Title to be displayed on the administration page
@@ -784,6 +785,7 @@ function tw_theme_initialize_blog_options() {
 			__( 'Replace Wordpress comments with Facebook Comments.<br/> Needs to have a valid Facebook App ID entered in the Social Settings.', 'tw' ),
 		)
 	);
+*/
 
 	register_setting(
 		'tw_theme_blog_options',
@@ -824,9 +826,9 @@ function tw_enable_related_posts_callback($args) {
 function tw_enable_facebook_comments_callback($args) {
 
 	// First, we read the options collection
-	$options = get_option('tw_theme_blog_options');
-	$html = '<input type="checkbox" id="tw_theme_blog_options" name="tw_theme_blog_options[enable_fb_comments]" value="1" ' . checked( 1, isset( $options['enable_fb_comments'] ) ? $options['enable_fb_comments'] : 0, false ) . '/>';
-	$html .= '<label for="tw_theme_blog_options">&nbsp;'  . $args[0] . '</label>';
+	$options = get_option('tw_theme_social_options');
+	$html = '<input type="checkbox" id="tw_theme_social_options" name="tw_theme_social_options[enable_fb_comments]" value="1" ' . checked( 1, isset( $options['enable_fb_comments'] ) ? $options['enable_fb_comments'] : 0, false ) . '/>';
+	$html .= '<label for="tw_theme_social_options">&nbsp;'  . $args[0] . '</label>';
 	echo $html;
 
 } // end tw_enable_sidebar_callback
@@ -853,14 +855,11 @@ function tw_theme_default_social_options() {
 
 }
 
-/**
- * This function provides a simple description for the Blog Options page.
- *
- * It's called from the 'tw_theme_initialize_blog_options' function by being passed as a parameter
- * in the add_settings_section function.
- */
 function tw_social_options_callback() {
 	echo '<p>' . __( 'Provide the details of each social network', 'tw' ) . '</p>';
+}
+function tw_social_api_options_callback() {
+	echo '<p>' . __( 'Social API Details', 'tw' ) . '</p>';
 }
 
 /**
@@ -875,8 +874,13 @@ function tw_theme_initialize_social_options() {
 		add_option( 'tw_theme_social_options', apply_filters( 'tw_theme_default_social_options', tw_theme_default_social_options() ) );
 	} // end if
 
+  $social_apis = array(
+    'fb_app_id'		=>	'Facebook App ID',
+    'sharedcount_id' => 'Shared Count API Key',
+  );
+
   $social_networks = array(
-		'fb_app_id'		=>	'Facebook App ID',
+		//'fb_app_id'		=>	'Facebook App ID',
 		'fb_page'		  =>	'Facebook Page URL',
 		'twitter'		  =>	'Twitter @name',
 		'instagram'		=>	'Instagram @name',
@@ -907,6 +911,35 @@ function tw_theme_initialize_social_options() {
   	);
   }
 
+  add_settings_section(
+		'social_api_settings_section',			// ID used to identify this section and with which to register options
+		__( 'Social API Options', 'tw' ),		// Title to be displayed on the administration page
+		'tw_social_api_options_callback',	// Callback used to render the description of the section
+		'tw_theme_social_options'		// Page on which to add this section of options
+	);
+
+  foreach($social_apis as $k => $v){
+    add_settings_field(
+  		$k,
+  		$v,
+  		'tw_social_api_field_callback',
+  		'tw_theme_social_options',
+  		'social_api_settings_section',
+  		array('api'=>$k)
+  	);
+  }
+
+	add_settings_field(
+		'enable_fb_comments',
+		__( 'Facebook Comments', 'tw' ),
+		'tw_enable_facebook_comments_callback',
+		'tw_theme_social_options',
+		'social_api_settings_section',
+		array(
+			__( 'Replace Wordpress comments with Facebook Comments.<br/> Needs to have a valid Facebook App ID entered in the Social Settings.', 'tw' ),
+		)
+	);
+
 	register_setting(
 		'tw_theme_social_options',
 		'tw_theme_social_options',
@@ -931,6 +964,11 @@ function tw_social_field_callback($args){
 	echo '<input type="text" id="'.$args['network'].'" name="tw_theme_social_options['.$args['network'].']" value="' . $url . '" />';
 }
 
+function tw_social_api_field_callback($args){
+  $options = get_option('tw_theme_social_options');
+
+  echo '<input type="text" id="'.$args['api'].'" name="tw_theme_social_options['.$args['api'].']" value="' . trim($options[$args['api']]) . '" />';
+}
 
 /* ------------------------------------------------------------------------ *
  * Contact Options

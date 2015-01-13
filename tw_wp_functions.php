@@ -132,7 +132,7 @@ if(!function_exists('tw_theme_support')){
  */
 if(!function_exists('tw_post_formats')){
   function tw_post_formats(){
-    $tw_blog_options = get_option('tw_theme_blog_options');
+    $tw_blog_options = tw_get_blog_options();
     $post_formats = array(
   			'aside',   // title less blurb
   			'gallery', // gallery of images
@@ -144,6 +144,7 @@ if(!function_exists('tw_post_formats')){
   			'audio',   // audio
   			'chat'     // chat transcript
   		);
+  if(is_array($tw_blog_options)){
     $enabled_post_formats = array();
     foreach($post_formats as $pf){
       if($tw_blog_options[$pf]){
@@ -151,6 +152,9 @@ if(!function_exists('tw_post_formats')){
       }
     }
     add_theme_support( 'post-formats',$enabled_post_formats);
+  }
+
+
   }
   add_action('after_setup_theme','tw_post_formats');
 }
@@ -184,8 +188,8 @@ if(!function_exists('tw_register_sidebars')){
       	'description' => 'Homepage Widget Area. Widgets here will show in the widgetized homepage template.',
       	'before_widget' => '<div id="%1$s" class="widget %2$s">',
       	'after_widget' => '</div>',
-      	'before_title' => '<h4 class="widget-title">',
-      	'after_title' => '</h4>',
+      	'before_title' => '<h2 class="widget-title">',
+      	'after_title' => '</h2>',
       ));
     }
 
@@ -867,4 +871,103 @@ if(!function_exists('tw_get_theme_social_options')){
      }
      return $social;
   }
+}
+
+
+/******************************************************
+****************** Option Functions *******************
+******************************************************/
+function tw_get_general_options(){
+  $general_options = get_option('tw_theme_general_options') ? get_option('tw_theme_general_options') : false;
+  return $general_options;
+}
+
+function tw_get_blog_options(){
+  $blog_options = get_option('tw_theme_blog_options') ? get_option('tw_theme_blog_options') : false;
+  return $blog_options;
+}
+
+function tw_get_social_options(){
+  $social_options = get_option('tw_theme_social_options') ? get_option('tw_theme_social_options') : false;
+  return $social_options;
+}
+
+function tw_is_top_menu_enabled(){
+  $general_options = tw_get_general_options();
+  $top_menu = isset($general_options['enable_top_menu']) ? !!$general_options['enable_top_menu'] : false;
+  return $top_menu;
+}
+
+function tw_is_footer_menu_enabled(){
+  $general_options = tw_get_general_options();
+  $footer_wigets = isset($general_options['enable_footer_menu']) ? !!$general_options['enable_footer_menu'] : false;
+  return $footer_wigets;
+}
+
+function tw_is_sidebar_enabled(){
+  $general_options = tw_get_general_options();
+  $sidebar = isset($general_options['enable_sidebar']) ? !!$general_options['enable_sidebar'] : false;
+  return $sidebar;
+}
+
+
+function tw_is_fb_coments_enabled(){
+  $fb_comments = false;
+  $social_options = tw_get_social_options();
+  if(is_array($social_options) && isset($social_options['enable_fb_comments'])){
+    $fb_comments = !!$social_options['enable_fb_comments'];
+  }
+  return $fb_comments;
+}
+
+
+
+function tw_is_related_posts_enabled(){
+  $blog_options = get_option('tw_theme_blog_options');
+  $related_posts = (is_array($blog_options)&& isset($blog_options['enable_related_posts']) ) ? !!$blog_options['enable_related_posts'] : false;
+  return $related_posts;
+}
+
+
+
+/******************************************************
+***************** Shared Count API *******************
+******************************************************/
+function get_get_sharedcount_api_key(){
+  $social_options = tw_get_social_options();
+  $api_key = (is_array($social_options) && isset($social_options['sharedcount_id']) && trim($social_options['sharedcount_id'])!=='' ) ? trim($social_options['sharedcount_id']) : false;
+  return $api_key;
+}
+
+function tw_get_sharedcount_json($url){
+  $api_key = get_get_sharedcount_api_key();
+  if($api_key){
+    $request = wp_remote_get("http://free.sharedcount.com/?url=" . rawurlencode($url) . "&apikey=" . $api_key);
+    try{
+      $response = wp_remote_retrieve_body( $request );
+      $json = json_decode($response, true);
+    }catch(Exception $e){
+      $json = null;
+    }
+
+    return $json;
+  }else{
+    return null;
+  }
+}
+
+function tw_get_sharedcount_total($url){
+  $total = 0;
+  $counts = tw_get_sharedcount_json($url);
+  if(!is_null($counts)){
+    $twitter = isset($counts['Twitter']) ? intval($counts["Twitter"]) : 0;
+    $facebook = (isset($counts['Facebook']) && isset($counts['Facebook']['like_count']) ) ? intval($counts['Facebook']['like_count']) : 0;
+    $gplus = isset($counts["GooglePlusOne"])? intval($counts["GooglePlusOne"]) : 0;
+    $pinterest = isset($counts["Pinterest"])? intval($counts["Pinterest"]) : 0;
+    $total = intval($twitter) + intval($facebook) + intval($gplus) + intval($pinterest);
+  }else{
+    $total= null;
+  }
+
+  return $total;
 }

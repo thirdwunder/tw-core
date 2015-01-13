@@ -364,6 +364,34 @@ blockquote{
   }
 }
 
+#post-meta-panel{
+  margin-top: 15px;
+  font-size: 0.8em;
+  text-align: center;
+
+  .profile-image{
+    .fullwidth-image();
+    width: 75px !important;
+    height: auto;
+    margin: 0 auto 10px auto;
+
+    //border: 1px solid @color-line-light;
+    //.border-radius(100em);
+    //padding: 5px;
+  }
+
+
+  ul{
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    li{
+      padding-top: 5px;
+      text-align: center;
+    }
+  }
+}
+
 /********************
 *** Image Slider  ***
 ********************/
@@ -591,6 +619,9 @@ blockquote{
 .type-post,
 .single{
   .entry-header{
+    border-bottom: 1px solid @color-line-light;
+    margin-bottom: 15px;
+
     .entry-image{
       position: relative;
       img{
@@ -611,7 +642,6 @@ blockquote{
       }
     }
 
-
     .section-video{
       text-align:center;
       background-size: cover !important;
@@ -626,7 +656,7 @@ blockquote{
     .post-entry-meta();
   }
   .article-quote{
-    margin-top: 25px;
+    margin-top: 15px;
     margin-bottom: 25px;
   }
   .article-audio{
@@ -701,10 +731,12 @@ blockquote{
   .related-post-inner{
     .related-post-container{
       .related-post{
-        min-height: 350px;
+        .border-radius(0);
+        padding: 0;
         .caption{
           h3{
             margin-top: 10px;
+            margin-bottom: 5px;
           }
           time.updated{
             font-size: 0.8em;
@@ -712,6 +744,287 @@ blockquote{
           }
         }
       }
+    }
+  }
+}
+
+
+/********************
+******* Sharing *****
+********************/
+.social-sharing{
+  clear: both;
+  margin:20px auto;
+  border: 1px solid @color-line-light;
+  ul{
+    clear: both;
+    width: 100%;
+    padding: 0;
+    margin: 0px auto;
+    list-style: none;
+
+    //background-color: #fff;
+    //background-color: rgba(255,255,255, 0.75);
+    li{
+      width: 20%;
+      display: inline-block;
+      float: left;
+      text-align: center;
+      background:white;
+      background: rgba(255,255,255,0.5);
+      font-size: 1em;
+      line-height: 64px;
+      border-left: 1px solid @color-line-light;
+      &::first-child{
+        border:none;
+      }
+      a{
+        color: @color-body;
+      }
+
+      &.facebook, &.twitter, &.googleplus, &.pinterest, &.email{
+        position: relative;
+        color: @color-body;
+        a{
+          color: @color-body !important;
+        }
+        .overlay{
+          display: none;
+          position: absolute;
+          top:0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          padding-top: 15px;
+          padding-bottom: 5px;
+          line-height: 16px;
+          color: #fff;
+          .shared-count{
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 3px;
+          }
+          .share-title{
+            font-size: 0.95em;
+          }
+        }
+        &:hover{
+          color: #fff;
+          .overlay{
+            display: block;
+            color: white;
+            a{
+              color: white;
+            }
+          }
+        }
+      }
+
+      &.email{
+        &:hover{
+          background-color: @color-line-dark;
+        }
+      }
+
+      &.facebook{
+        &:hover{
+          background-color: @color-facebook;
+          .overlay{
+            background-color: @color-facebook;
+            color: #fff;
+          }
+          a{
+            background-color: @color-facebook;
+            color: #fff !important;
+          }
+        }
+      }
+      &.twitter{
+        &:hover{
+          background-color: @color-twitter;
+          color: #fff;
+          .overlay{
+            background-color: @color-twitter;
+            color: #fff;
+          }
+          a{
+            color: #fff !important;
+          }
+        }
+      }
+
+      &.googleplus{
+        &:hover{
+          background-color: @color-googleplus;
+          color: #fff;
+          .overlay{
+            background-color: @color-googleplus;
+            color: #fff;
+          }
+          a{
+            color: #fff !important;
+          }
+        }
+      }
+
+      &.pinterest{
+        &:hover{
+          background-color: @color-pinterest;
+          color: #fff;
+          .overlay{
+            background-color: @color-pinterest;
+            color: #fff;
+          }
+          a{
+            color: #fff !important;
+          }
+        }
+      }
+
+    }
+  }
+}
+
+.social-panel{
+  margin: 20px auto;
+  z-index: 1000;
+  ul{
+    width: 128px;
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid @color-line-light;
+    //background-color: #fff;
+    //background-color: rgba(255,255,255, 0.75);
+    z-index: 1000;
+    a{
+      color: @color-body;
+    }
+    li{
+      position: relative;
+      background:white;
+      background: rgba(255,255,255,0.2);
+      display: inline-block;
+      text-align: center;
+      font-size: 1.2em;
+      margin-right: 0 !important;
+
+      &.views, &.email{
+        width: 100%;
+        float: none;
+        display: block;
+      }
+
+      &.facebook, &.twitter, &.googleplus, &.pinterest{
+        position: relative;
+        line-height: 64px;
+        width: 50%;
+        float: left;
+        color: @color-body;
+        .overlay{
+          display: none;
+          position: absolute;
+          top:0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          padding-top: 15px;
+          padding-bottom: 5px;
+          line-height: 16px;
+          color: #fff;
+          .shared-count{
+            font-weight: bold;
+            font-size: 1.1em;
+          }
+          .share-title{
+            font-size: 0.95em;
+          }
+        }
+        &:hover{
+          .overlay{
+            display: block;
+            color: white;
+          }
+        }
+      }
+
+      &.views{
+
+        padding: 15px 5px 10px 5px;
+        border-bottom: 1px solid @color-line-light;
+        .view-count, .view-title{
+          padding: 5px 0;
+        }
+        .view-count{
+          .em-size(32,16);
+          font-weight: bold;
+        }
+        .view-title{
+          .em-size(20,16);
+          color: @color-body
+        }
+      }
+      &.email{
+        width: 100%;
+        line-height: 64px;
+        clear: both;
+        border-top:1px solid @color-line-light;
+        &:hover{
+          color: #fff;
+          border: none;
+          background-color: @color-line-dark;
+        }
+      }
+
+      &.facebook{
+        border-bottom: 1px solid @color-line-light;
+        &:hover{
+          background-color: @color-facebook;
+          color: #fff;
+          .overlay{
+            background-color: @color-facebook;
+            color: #fff;
+          }
+        }
+      }
+      &.twitter{
+        border-bottom: 1px solid @color-line-light;
+        border-left: 1px solid @color-line-light;
+        &:hover{
+          background-color: @color-twitter;
+          color: #fff;
+          .overlay{
+            background-color: @color-twitter;
+            color: #fff;
+          }
+        }
+      }
+
+      &.googleplus{
+        &:hover{
+          background-color: @color-googleplus;
+          color: #fff;
+          .overlay{
+            background-color: @color-googleplus;
+            color: #fff;
+          }
+        }
+      }
+
+      &.pinterest{
+        border-left: 1px solid @color-line-light;
+
+        &:hover{
+          background-color: @color-pinterest;
+          color: #fff;
+          .overlay{
+            background-color: @color-pinterest;
+            color: #fff;
+          }
+        }
+      }
+
     }
   }
 }
@@ -1060,10 +1373,94 @@ img.alignright{
     }
   }
 
+  .social-panel{
+    margin-top: 15px;
+    clear: both;
+    display: block;
+    border:1px solid @color-line-light;
+    padding: 0;
+    ul{
+      width: 100%;
+      border:none;
+
+      li{
+        display: inline-block !important;
+
+        &.views{
+          width: 25%;
+          float: left !important;
+          display: inline-block;
+          padding: 0;
+          border: none;
+          .view-count, .view-title{
+            .em-size(14,@base-size);
+            display: inline-block;
+            padding: 0;
+            line-height: 64px;
+          }
+        }
+        &.facebook, &.twitter, &.googleplus, &.pinterest, &.email{
+          width: 20%;
+          float: left;
+          display: inline-block !important;
+          border: none;
+
+        }
+        &.email{
+           clear: none;
+        }
+      }
+    }
+  }
+
 }
 
+/* From Phone to Tablet */
+@media only screen and (min-width: @screen-sm) and (max-width: @screen-md){
+  .social-panel{
+    margin-top: 15px;
+    clear: both;
+    display: block;
+    border:1px solid @color-line-light;
+    padding: 0;
+    ul{
+      width: 100%;
+      border:none;
 
-@media only screen and (min-width: @screen-sm){
+      li{
+        display: inline-block !important;
+
+        &.views{
+          width: 25%;
+          float: left !important;
+          display: inline-block;
+          padding: 0;
+          border: none;
+          .view-count, .view-title{
+            .em-size(14,@base-size);
+            display: inline-block;
+            padding: 0;
+            line-height: 64px;
+          }
+        }
+        &.facebook, &.twitter, &.googleplus, &.pinterest, &.email{
+          width: 20%;
+          float: left;
+          display: inline-block !important;
+          border: none;
+
+        }
+        &.email{
+           clear: none;
+        }
+      }
+    }
+  }
+
+
+}
+
+@media only screen and (min-width: @screen-md){
 
 
 }
