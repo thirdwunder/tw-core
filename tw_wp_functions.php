@@ -813,7 +813,7 @@ if(!function_exists('tw_get_theme_social_options')){
      $social = array();
      foreach($social_info as $network => $value){
         $username = '';
-        if($network!=='fb_app_id'){
+        if($network!=='fb_app_id' && $network!=='sharedcount_id' && $network!=='enable_fb_comments'){
 
           switch ($network) {
             case 'fb_page':
