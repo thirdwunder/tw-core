@@ -67,15 +67,6 @@ function tw_theme_menu() {
 		create_function( null, 'tw_theme_display( "social_options" );' )
 	);
 
-	//add_submenu_page(
-	//	'tw_theme_menu',
-	//	__( 'Input Examples', 'tw' ),
-	//	__( 'Input Examples', 'tw' ),
-	//	'administrator',
-	//	'tw_theme_input_examples',
-	//	create_function( null, 'tw_theme_display( "input_examples" );' )
-	//);
-
 
 } // end tw_theme_menu
 add_action( 'admin_menu', 'tw_theme_menu' );
@@ -145,10 +136,7 @@ function tw_theme_display( $active_tab = '' ) {
 					settings_fields( 'tw_theme_social_options' );
 					do_settings_sections( 'tw_theme_social_options' );
 
-				}// else {
-				//	settings_fields( 'tw_theme_input_examples' );
-				//	do_settings_sections( 'tw_theme_input_examples' );
-				//} // end if/else
+				}
 
 				submit_button();
 
@@ -527,7 +515,9 @@ function delete_image( $image_url ) {
  * General Options
  * ------------------------------------------------------------------------ */
 function tw_theme_default_general_options() {
-	$defaults = array();
+	$defaults = array(
+  	'slide' =>'slide'
+	);
 	return apply_filters( 'tw_theme_default_general_options', $defaults );
 } // end tw_theme_default_general_options
 
@@ -550,16 +540,6 @@ function tw_initialize_theme_options() {
 	if( false == get_option( 'tw_theme_general_options' ) ) {
 		add_option( 'tw_theme_general_options', apply_filters( 'tw_theme_default_general_options', tw_theme_default_general_options() ) );
 	} // end if
-
-/*
-	add_settings_section(
-		'general_settings_section',			// ID used to identify this section and with which to register options
-		__( 'General Options', 'tw' ),		// Title to be displayed on the administration page
-		'tw_general_options_callback',	// Callback used to render the description of the section
-		'tw_theme_general_options'		// Page on which to add this section of options
-	);
-*/
-
 
   /**
   * Menu Options
@@ -635,6 +615,24 @@ function tw_initialize_theme_options() {
 		'widget_settings_section',
 		array(
 			__( 'Enable the primary sidebar area.', 'tw' ),
+		)
+	);
+
+  	add_settings_section(
+		'slide_settings_section',			// ID used to identify this section and with which to register options
+		__( 'Slider Options', 'tw' ),		// Title to be displayed on the administration page
+		'tw_slider_options_callback',	// Callback used to render the description of the section
+		'tw_theme_general_options'		// Page on which to add this section of options
+	);
+
+  add_settings_field(
+		'slider_style',
+		__( 'Slider Style', 'tw' ),
+		'tw_slider_style_callback',
+		'tw_theme_general_options',
+		'slide_settings_section',
+		array(
+			__( 'Select slider transition style', 'tw' ),
 		)
 	);
 
@@ -718,6 +716,23 @@ function tw_footer_widgets_callback() {
 	echo $html;
 
 } // end tw_radio_element_callback
+
+function tw_slider_style_callback($args){
+
+	$options = get_option( 'tw_theme_general_options' );
+
+	$html = '<input type="radio" id="slide" name="tw_theme_general_options[slider_style]" value="slide"' . checked( 'slide', $options['slider_style'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="slide">Slide</label>';
+	$html .= '&nbsp;';
+	$html .= '<input type="radio" id="fade" name="tw_theme_general_options[slider_style]" value="fade"' . checked( 'fade', $options['slider_style'], false ) . '/>';
+	$html .= '&nbsp;';
+	$html .= '<label for="fade">Fade</label>';
+  $html .= '<p class="description" >&nbsp;'  . $args[0] . '</p>';
+	echo $html;
+
+
+}
 
 /* ------------------------------------------------------------------------ *
  * Logos and Images

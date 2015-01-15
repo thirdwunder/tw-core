@@ -326,14 +326,14 @@ if(!function_exists('tw_post_nav')){
         <?php
           if($previous){
             ?>
-            <li class="previous" itemprop="url"><a href="<?php echo get_permalink($previous->ID);?>" title="<?php echo $previous->post_title;?>"><i class="fa fa-long-arrow-left"></i> <?php _e('Previous Article','tw'); ?></a></li>
+            <li class="previous" itemprop="url"><a href="<?php echo get_permalink($previous->ID);?>" title="<?php echo $previous->post_title;?>"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;&nbsp;<span class="nav-title"><?php _e('Previous Article','tw'); ?></span></a></li>
             <?php
             //previous_post_link( '<li class="previous" itemprop="url">%link</li>', _x( '<i class="fa fa-long-arrow-left"></i> Previous Article', 'Previous Article', 'tw' ) );
           }
 
           if($next){
             ?>
-            <li class="next" itemprop="url"><a href="<?php echo get_permalink($next->ID);?>" title="<?php echo $next->post_title;?>"><?php _e('Next Article','tw'); ?> <i class="fa fa-long-arrow-right"></i></a></li>
+            <li class="next" itemprop="url"><a href="<?php echo get_permalink($next->ID);?>" title="<?php echo $next->post_title;?>"><span class="nav-title"><?php _e('Next Article','tw'); ?></span>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a></li>
             <?php
             //next_post_link( '<li class="next" itemprop="url">%link</li>', _x( '%title <i class="fa fa-long-arrow-right"></i>', 'Next Article', 'tw' ) );
           }
@@ -967,6 +967,12 @@ function tw_is_sidebar_enabled(){
   $general_options = tw_get_general_options();
   $sidebar = isset($general_options['enable_sidebar']) ? !!$general_options['enable_sidebar'] : false;
   return $sidebar;
+}
+
+function tw_get_slider_style(){
+  $general_options = tw_get_general_options();
+  $style = isset($general_options['slider_style']) ? $general_options['slider_style'] : 'slide';
+  return $style;
 }
 
 

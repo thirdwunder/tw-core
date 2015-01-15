@@ -68,6 +68,7 @@ jQuery(document).bind('keyup', function(e) {
 
 jQuery('.carousel').carousel({
     pause: "hover",
+    keyboard: true,
 });
 
 
