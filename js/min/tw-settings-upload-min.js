@@ -1,0 +1,1 @@
+jQuery(document).ready(function($){jQuery("#upload_logo_button").click(function(){return tb_show("Upload a logo","media-upload.php?referer=tw-settings&type=image&TB_iframe=true&post_id=0",!1),!1})});

@@ -266,9 +266,9 @@ class tw_blog_widget extends WP_Widget {
       <div class="blog-container">
        <?php if ( $title )
           echo $before_title . $title . $after_title; ?>
-          <div id="<?php echo $args['widget_id'];?>-articles" class="articles row">
+          <div id="<?php echo $args['widget_id'];?>-articles" class="articles row" >
           <?php while ( $blog_query->have_posts() ): $blog_query->the_post(); ?>
-          <div id="article-<?php the_id();?>" class="article <?php echo $class;?>">
+          <div id="article-<?php the_id();?>" class="article <?php echo $class;?>" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="thumbnail">
               <?php
               if(has_post_thumbnail()):
@@ -289,9 +289,10 @@ class tw_blog_widget extends WP_Widget {
 
 
               <div class="caption">
-                <h3><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h3>
+                <h3 itemprop="headline"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h3>
+                <p class="time"><time class="updated" itemprop="datePublished" datetime="<?php echo get_the_time('Y-m-j'); ?>T<?php echo get_the_time('H:i:s'); ?>" pubdate><?php echo get_the_time('F j, Y'); ?></time></p>
                 <?php //if(has_excerpt()): ?>
-                <p><?php the_excerpt(); ?></p>
+                <p itemprop="description"><?php the_excerpt(); ?></p>
                 <?php //endif;?>
               </div>
             </div>

@@ -273,9 +273,8 @@
       h2, h3, p{
         text-align: left;
       }
-      h2, h3{
-        margin-top: 5px;
-        font-size: 1.2em;
+      p.time{
+        font-size: 0.8em;
       }
 
     }
@@ -290,9 +289,18 @@
   .widget_tw_blog_widget{
     .thumbnail{
       .caption{
+        h2, h3{
+          margin-top: 5px;
+          font-size: 1.2em;
+        }
         p{
           display: none;
           visibility: hidden;
+          &.time{
+            display: block;
+            visibility: visible;
+            text-align: left;
+          }
         }
       }
     }
@@ -326,6 +334,9 @@
         }
         p{
           text-align: justify;
+        }
+        p.time{
+          text-align: center;
         }
       }
       .more{

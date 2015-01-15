@@ -257,7 +257,7 @@ if(!function_exists('tw_extra_contact_info')){
  */
 if(!function_exists('tw_favicon')){
   function tw_favicon(){?>
-    <link rel="icon" type="image/png" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/favicon.png" />
+    <link rel="icon" type="image/png" href="<?php echo tw_get_favicon(); ?>" />
   <?php
   }
   add_action( 'wp_head', 'tw_favicon', 10 );
@@ -269,10 +269,10 @@ if(!function_exists('tw_favicon')){
  */
 if(!function_exists('tw_apple_icon')){
   function tw_apple_icon() { ?>
-    		<link rel="apple-touch-icon" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/apple-touch-icon.png" />
-      <link rel="apple-touch-icon" sizes="72x72" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/apple-touch-icon-72x72.png" />
-      <link rel="apple-touch-icon" sizes="114x114" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/apple-touch-icon-114x114.png" />
-      <link rel="apple-touch-icon" sizes="144x144" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/apple-touch-icon-144x144.png" />
+    		<link rel="apple-touch-icon" href="<?php echo tw_get_apple_icon();?>" />
+      <link rel="apple-touch-icon" sizes="72x72" href="<?php echo tw_get_apple_icon_72();?>" />
+      <link rel="apple-touch-icon" sizes="114x114" href="<?php echo tw_get_apple_icon_114();?>" />
+      <link rel="apple-touch-icon" sizes="144x144" href="<?php echo tw_get_apple_icon_144();?>" />
   	<?php
   }
   add_action( 'wp_head', 'tw_apple_icon', 10 );
@@ -882,6 +882,11 @@ function tw_get_general_options(){
   return $general_options;
 }
 
+function tw_getlogo_options(){
+  $logo_options = get_option('tw_theme_logo_options') ? get_option('tw_theme_logo_options') : false;
+  return $logo_options;
+}
+
 function tw_get_blog_options(){
   $blog_options = get_option('tw_theme_blog_options') ? get_option('tw_theme_blog_options') : false;
   return $blog_options;
@@ -896,6 +901,60 @@ function tw_is_top_menu_enabled(){
   $general_options = tw_get_general_options();
   $top_menu = isset($general_options['enable_top_menu']) ? !!$general_options['enable_top_menu'] : false;
   return $top_menu;
+}
+
+function tw_get_logo(){
+  $logo_options = tw_getlogo_options();
+  $logo = get_stylesheet_directory_uri().'/assets/img/logo.png';
+  if( isset($logo_options['logo']) && trim($logo_options['logo'])!=='' ){
+    $logo = trim($logo_options['logo']);
+  }
+  return $logo;
+}
+
+function tw_get_favicon(){
+  $logo_options = tw_getlogo_options();
+  $favicon = get_stylesheet_directory_uri().'/assets/img/favicon.png';
+  if( isset($logo_options['favicon']) && trim($logo_options['favicon'])!=='' ){
+    $favicon = trim($logo_options['favicon']);
+  }
+  return $favicon;
+}
+
+function tw_get_apple_icon(){
+  $logo_options = tw_getlogo_options();
+  $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon.png';
+  if( isset($logo_options['apple-icon']) && trim($logo_options['apple-icon'])!=='' ){
+    $icon = trim($logo_options['apple-icon']);
+  }
+  return $icon;
+}
+
+function tw_get_apple_icon_72(){
+  $logo_options = tw_getlogo_options();
+  $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-72.png';
+  if( isset($logo_options['apple-icon-72']) && trim($logo_options['apple-icon-72'])!=='' ){
+    $icon = trim($logo_options['apple-icon-72']);
+  }
+  return $icon;
+}
+
+function tw_get_apple_icon_114(){
+  $logo_options = tw_getlogo_options();
+  $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-114.png';
+  if( isset($logo_options['apple-icon-114']) && trim($logo_options['apple-icon-114'])!=='' ){
+    $icon = trim($logo_options['apple-icon-114']);
+  }
+  return $icon;
+}
+
+function tw_get_apple_icon_144(){
+  $logo_options = tw_getlogo_options();
+  $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-144.png';
+  if( isset($logo_options['apple-icon-144']) && trim($logo_options['apple-icon-144'])!=='' ){
+    $icon = trim($logo_options['apple-icon-144']);
+  }
+  return $icon;
 }
 
 function tw_is_footer_menu_enabled(){

@@ -33,6 +33,15 @@ function tw_theme_menu() {
 
   add_submenu_page(
 		'tw_theme_menu',
+		__( 'Logo & Icon Options', 'tw' ),
+		__( 'Logo & Icon Options', 'tw' ),
+		'administrator',
+		'tw_theme_logo_options',
+		create_function( null, 'tw_theme_display( "logo_options" );' )
+	);
+
+  add_submenu_page(
+		'tw_theme_menu',
 		__( 'Blog Options', 'tw' ),
 		__( 'Blog Options', 'tw' ),
 		'administrator',
@@ -85,6 +94,8 @@ function tw_theme_display( $active_tab = '' ) {
 
 		<?php if( isset( $_GET[ 'tab' ] ) ) {
 			$active_tab = $_GET[ 'tab' ];
+		} else if( $active_tab == 'logo_options' ) {
+			$active_tab = 'logo_options';
 		} else if( $active_tab == 'contact_options' ) {
 			$active_tab = 'contact_options';
 		} else if( $active_tab == 'blog_options' ) {
@@ -99,6 +110,7 @@ function tw_theme_display( $active_tab = '' ) {
 
 		<h2 class="nav-tab-wrapper">
 			<a href="?page=tw_theme_options&tab=display_options" class="nav-tab <?php echo $active_tab == 'display_options' ? 'nav-tab-active' : ''; ?>"><?php _e( 'General Options', 'tw' ); ?></a>
+			<a href="?page=tw_theme_options&tab=logo_options" class="nav-tab <?php echo $active_tab == 'logo_options' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Logo & Icon Options', 'tw' ); ?></a>
 			<a href="?page=tw_theme_options&tab=contact_options" class="nav-tab <?php echo $active_tab == 'contact_options' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Contact Options', 'tw' ); ?></a>
 			<a href="?page=tw_theme_options&tab=blog_options" class="nav-tab <?php echo $active_tab == 'blog_options' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Blog Options', 'tw' ); ?></a>
 			<a href="?page=tw_theme_options&tab=social_options" class="nav-tab <?php echo $active_tab == 'social_options' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Social Options', 'tw' ); ?></a>
@@ -113,7 +125,12 @@ function tw_theme_display( $active_tab = '' ) {
 					settings_fields( 'tw_theme_general_options' );
 					do_settings_sections( 'tw_theme_general_options' );
 
-				} elseif( $active_tab == 'contact_options' ) {
+				} elseif( $active_tab == 'logo_options' ) {
+
+					settings_fields( 'tw_theme_logo_options' );
+					do_settings_sections( 'tw_theme_logo_options' );
+
+				}elseif( $active_tab == 'contact_options' ) {
 
 					settings_fields( 'tw_theme_contact_options' );
 					do_settings_sections( 'tw_theme_contact_options' );
@@ -141,6 +158,26 @@ function tw_theme_display( $active_tab = '' ) {
 	</div><!-- /.wrap -->
 <?php
 } // end tw_theme_display
+
+/* ------------------------------------------------------------------------ *
+ * JS & CSS
+ * ------------------------------------------------------------------------ */
+function tw_settings_enqueue_scripts() {
+    wp_register_script( 'tw-upload', get_template_directory_uri() .'/includes/tw-wp-core/js/tw-settings.js', array('jquery','media-upload','thickbox') );
+
+    //if ( 'appearance_page_tw-settings' == get_current_screen() -> id ) {
+        wp_enqueue_script('jquery');
+
+        wp_enqueue_script('thickbox');
+        wp_enqueue_style('thickbox');
+
+        wp_enqueue_script('media-upload');
+        wp_enqueue_script('tw-upload');
+
+    //}
+
+}
+add_action('admin_enqueue_scripts', 'tw_settings_enqueue_scripts');
 
 /* ------------------------------------------------------------------------ *
  * Setting Registration
@@ -414,27 +451,87 @@ function tw_theme_validate_input_examples( $input ) {
 
 } // end tw_theme_validate_input_examples
 
+function tw_get_logo_default_options() {
+	$options = array(
+		'logo' => get_stylesheet_directory_uri().'/assets/img/logo.png',
+		'favicon' => get_stylesheet_directory_uri().'/assets/img/favicon.png',
+		'apple-icon'=>get_stylesheet_directory_uri().'/assets/img/apple-touch-icon.png',
+		'apple-icon-72'=>get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-72x72.png',
+		'apple-icon-114'=>get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-114x114.png',
+		'apple-icon-144'=>get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-144x144.png',
+	);
+	return $options;
+}
+
+function tw_theme_validate_logo_upload($input){
+  $output = array();
+  $default_options = tw_get_logo_default_options();
+	$valid_input = $default_options;
+	$options = get_option('tw_theme_logo_options');
+
+  foreach( $input as $key => $value ) {
+    if( isset( $input[$key] ) ) {
+
+      $submit = true;
+    	$reset = false;
+    	$delete_logo = false;
+    	if($input[$key]=='Delete'){
+      	$delete_logo = true;
+      	$submit = false;
+    	}
+    	if($input[$key]=='Reset'){
+      	error_log($key.' reset is true');
+      	$reset = true;
+      	$submit = false;
+    	}
+      error_log('key =>'.$key.', options=>'.$options[$key].', input=>'.$input[$key] );
+      if ( $submit ) {
+    		if ( $options[$key] != $input[$key]  && $options[$key] != '' ){
+      		delete_image( $options[$key] );
+    		}
+    		$output[$key] = $input[$key];
+    	} elseif ( $reset ) {
+      	error_log('Resetting '.$key.' deleting ->'.$options[$key]);
+    		delete_image( $options[$key] );
+    		error_log($key.' default = '.$default_options[$key]);
+    		$output[$key] = $default_options[$key];
+    	} elseif ( $delete_logo ) {
+    		delete_image( $options[$key] );
+    		$output[$key] = '';
+    	}
+
+    }
+  }
+
+	//return $valid_input;
+	return apply_filters( 'tw_theme_validate_logo_upload', $output, $input );
+	//return $output;
+}
+
+
+function delete_image( $image_url ) {
+	global $wpdb;
+
+	// We need to get the image's meta ID..
+	$query = "SELECT ID FROM wp_posts where guid = '" . esc_url($image_url) . "' AND post_type = 'attachment'";
+	$results = $wpdb -> get_results($query);
+
+	// And delete them (if more than one attachment is in the Library
+	foreach ( $results as $row ) {
+		wp_delete_attachment( $row -> ID );
+	}
+}
 
 
 /* ------------------------------------------------------------------------ *
  * General Options
  * ------------------------------------------------------------------------ */
-
-/**
- * Provides default values for the General Options.
- */
 function tw_theme_default_general_options() {
 	$defaults = array();
 	return apply_filters( 'tw_theme_default_general_options', $defaults );
-
 } // end tw_theme_default_general_options
 
-/**
- * This function provides a simple description for the General Options page.
- *
- * It's called from the 'tw_initialize_theme_options' function by being passed as a parameter
- * in the add_settings_section function.
- */
+
 function tw_general_options_callback() {
 	echo '<p>' . __( 'Theme General Options', 'tw' ) . '</p>';
 } // end tw_general_options_callback
@@ -447,13 +544,6 @@ function tw_general_menu_options_callback() {
 	echo '<p>' . __( 'Select extra menus to enable', 'tw' ) . '</p>';
 } // end tw_general_menu_options_callback
 
-
-/**
- * Initializes the theme's display options page by registering the Sections,
- * Fields, and Settings.
- *
- * This function is registered with the 'admin_init' hook.
- */
 function tw_initialize_theme_options() {
 
 	// If the theme options don't exist, create them.
@@ -461,48 +551,14 @@ function tw_initialize_theme_options() {
 		add_option( 'tw_theme_general_options', apply_filters( 'tw_theme_default_general_options', tw_theme_default_general_options() ) );
 	} // end if
 
-	// First, we register a section. This is necessary since all future options must belong to a
+/*
 	add_settings_section(
 		'general_settings_section',			// ID used to identify this section and with which to register options
 		__( 'General Options', 'tw' ),		// Title to be displayed on the administration page
 		'tw_general_options_callback',	// Callback used to render the description of the section
 		'tw_theme_general_options'		// Page on which to add this section of options
 	);
-
-	// Next, we'll introduce the fields for toggling the visibility of content elements.
-	//add_settings_field(
-	// 'show_header',						// ID used to identify the field throughout the theme
-	// __( 'Header', 'tw' ),							// The label to the left of the option interface element
-	// 'tw_toggle_header_callback',	// The name of the function responsible for rendering the option interface
-	// 'tw_theme_general_options',	// The page on which this option will be displayed
-	// 'general_settings_section',			// The name of the section to which this field belongs
-	// array(								// The array of arguments to pass to the callback. In this case, just a description.
-	// 	__( 'Activate this setting to display the header.', 'tw' ),
-	// )
-	//);
-
-	//add_settings_field(
-	//	'show_content',
-	//	__( 'Content', 'tw' ),
-	//	'tw_toggle_content_callback',
-	//	'tw_theme_general_options',
-	//	'general_settings_section',
-	//	array(
-	//		__( 'Activate this setting to display the content.', 'tw' ),
-	//	)
-	//);
-
-	//add_settings_field(
-	//	'show_footer',
-	//	__( 'Footer', 'tw' ),
-	//	'tw_toggle_footer_callback',
-	//	'tw_theme_general_options',
-	//	'general_settings_section',
-	//	array(
-	//		__( 'Activate this setting to display the footer.', 'tw' ),
-	//	)
-	//);
-
+*/
 
 
   /**
@@ -594,6 +650,7 @@ function tw_initialize_theme_options() {
 add_action( 'admin_init', 'tw_initialize_theme_options' );
 
 
+
 function tw_enable_top_menu_callback($args) {
 
 	// First, we read the options collection
@@ -661,6 +718,224 @@ function tw_footer_widgets_callback() {
 	echo $html;
 
 } // end tw_radio_element_callback
+
+/* ------------------------------------------------------------------------ *
+ * Logos and Images
+ * ------------------------------------------------------------------------ */
+function tw_theme_default_logo_options() {
+	$defaults = array();
+	return apply_filters( 'tw_theme_default_logo_options', $defaults );
+} // end tw_theme_default_general_options
+
+
+function tw_logo_options_callback() {
+	//echo '<p>' . __( '', 'tw' ) . '</p>';
+} // end tw_general_options_callback
+
+function tw_favicon_options_callback() {
+	//echo '<p>' . __( '', 'tw' ) . '</p>';
+} // end tw_general_widget_options_callback
+
+function tw_apple_icons_options_callback() {
+	//echo '<p>' . __( 'Upload Apple Homescreen Icons', 'tw' ) . '</p>';
+} // end tw_general_menu_options_callback
+
+function tw_initialize_logo_options() {
+
+	// If the theme options don't exist, create them.
+	if( false == get_option( 'tw_theme_logo_options' ) ) {
+		add_option( 'tw_theme_logo_options', apply_filters( 'tw_theme_default_logo_options', tw_theme_default_logo_options() ) );
+	} // end if
+
+	add_settings_section(
+		'logo_settings_section',			// ID used to identify this section and with which to register options
+		__( 'Logo Options', 'tw' ),		// Title to be displayed on the administration page
+		'tw_logo_options_callback',	// Callback used to render the description of the section
+		'tw_theme_logo_options'		// Page on which to add this section of options
+	);
+
+  add_settings_field(
+		'logo',
+		__( 'Site Logo', 'tw' ),
+		'tw_logo_upload_callback',
+		'tw_theme_logo_options',
+		'logo_settings_section',
+		array(
+			__( '</br>Upload site logo.<br/> Best results with a transparent png with max height of 100px.', 'tw' ),
+		)
+	);
+
+  add_settings_section(
+		'favicon_settings_section',			// ID used to identify this section and with which to register options
+		__( 'Favicon Options', 'tw' ),		// Title to be displayed on the administration page
+		'tw_favicon_options_callback',	// Callback used to render the description of the section
+		'tw_theme_logo_options'		// Page on which to add this section of options
+	);
+
+
+	add_settings_field(
+		'favicon',
+		__( 'Site Favicon', 'tw' ),
+		'tw_favicon_upload_callback',
+		'tw_theme_logo_options',
+		'favicon_settings_section',
+		array(
+			__( '</br>Upload site favicon.<br/> Best results with a transparent png with max 16x16px.', 'tw' ),
+		)
+	);
+
+	add_settings_section(
+		'apple_icon_settings_section',			// ID used to identify this section and with which to register options
+		__( 'Apple Home Screen Icon Options', 'tw' ),		// Title to be displayed on the administration page
+		'tw_apple_icons_options_callback',	// Callback used to render the description of the section
+		'tw_theme_logo_options'		// Page on which to add this section of options
+	);
+
+  add_settings_field(
+		'apple-icon',
+		__( 'Apple iPhone 3', 'tw' ),
+		'tw_apple_icon_upload_callback',
+		'tw_theme_logo_options',
+		'apple_icon_settings_section',
+		array(
+			__( '<br/> Best results with a square png with max 54x54px.', 'tw' ),
+		)
+	);
+
+	add_settings_field(
+		'apple-icon-72',
+		__( 'Apple iPhone 4', 'tw' ),
+		'tw_apple_icon_72_upload_callback',
+		'tw_theme_logo_options',
+		'apple_icon_settings_section',
+		array(
+			__( '<br/> Best results with a square png with max 72x72px.', 'tw' ),
+		)
+	);
+
+	add_settings_field(
+		'apple-icon-114',
+		__( 'Apple iPhone Retina', 'tw' ),
+		'tw_apple_icon_114_upload_callback',
+		'tw_theme_logo_options',
+		'apple_icon_settings_section',
+		array(
+			__( '<br/> Best results with a square png with max 114x114px.', 'tw' ),
+		)
+	);
+
+	add_settings_field(
+		'apple-icon-144',
+		__( 'Apple iPad', 'tw' ),
+		'tw_apple_icon_144_upload_callback',
+		'tw_theme_logo_options',
+		'apple_icon_settings_section',
+		array(
+			__( '<br/> Best results with a square png with max 144x144px.', 'tw' ),
+		)
+	);
+
+	// Finally, we register the fields with WordPress
+	register_setting(
+		'tw_theme_logo_options',
+		'tw_theme_logo_options',
+		'tw_theme_validate_logo_upload'
+	);
+
+
+} // end tw_initialize_theme_options
+add_action( 'admin_init', 'tw_initialize_logo_options' );
+
+
+function tw_logo_upload_callback($args){
+  $options = get_option('tw_theme_logo_options');
+  $html = '<div id="logo_wrapper">';
+    $html .='<input type="text" id="logo_url" name="tw_theme_logo_options[logo]" value="'.esc_url( $options['logo'] ).'" />
+		<input id="upload_logo_button" type="button" class="button" value="'.__( 'Upload', 'tw' ).'" />';
+		if ( '' != $options['logo'] ){
+			$html .='<input id="delete_logo_button" name="tw_theme_logo_options[logo]" type="submit" class="button" value="'.__( 'Delete', 'tw' ).'" />';
+		}
+		$html .='<input id="reset_logo_button" name="tw_theme_logo_options[logo]" type="submit" class="button" value="'.__( 'Reset', 'tw' ).'" />';
+    $html .= '<label for="logo_url" class="description">&nbsp;'  . $args[0] . '</label>';
+		$html .= '<div id="logo_url_preview" style="min-height: 10px;"><img style="max-width:500px; max-height:300px;" src="'.esc_url( $options['logo'] ).'" /></div>';
+		$html .= '</div>';
+  echo $html;
+}
+
+function tw_favicon_upload_callback($args){
+  $options = get_option('tw_theme_logo_options');
+  $html ='<input type="text" id="favicon_url" name="tw_theme_logo_options[favicon]" value="'.esc_url( $options['favicon'] ).'" />
+		<input id="upload_favicon_button" type="button" class="button" value="'.__( 'Upload', 'tw' ).'" />';
+		if ( '' != $options['logo'] ){
+			$html .='<input id="delete_favicon_button" name="tw_theme_logo_options[favicon]" type="submit" class="button" value="'.__( 'Delete', 'tw' ).'" />';
+		}
+		$html .='<input id="reset_favicon_button" name="tw_theme_logo_options[favicon]" type="submit" class="button" value="'.__( 'Reset', 'tw' ).'" />';
+    $html .= '<label for="favicon_url" class="description">&nbsp;'  . $args[0] . '</label>';
+		$html .= '<div id="favicon_url_preview" style="min-height: 10px;">
+		<img style="max-width:16px; max-height:16px;" src="'.esc_url( $options['favicon'] ).'" />
+	</div>';
+  echo $html;
+}
+
+function tw_apple_icon_upload_callback($args){
+  $options = get_option('tw_theme_logo_options');
+  $html ='<input type="text" id="apple_icon_url" name="tw_theme_logo_options[apple-icon]" value="'.esc_url( $options['apple-icon'] ).'" />
+		<input id="upload_apple_icon_button" type="button" class="button" value="'.__( 'Upload', 'tw' ).'" />';
+		if ( '' != $options['apple-icon'] ){
+			$html .='<input id="delete_apple_icon_button" name="tw_theme_logo_options[apple-icon]" type="submit" class="button" value="'.__( 'Delete', 'tw' ).'" />';
+		}
+		$html .='<input id="reset_apple_icon_button" name="tw_theme_logo_options[apple-icon]" type="submit" class="button" value="'.__( 'Reset', 'tw' ).'" />';
+    $html .= '<label for="apple_icon_url" class="description">&nbsp;'  . $args[0] . '</label>';
+		$html .= '<div id="apple_icon_url_preview" style="min-height: 10px;">
+		<img style="max-width:54px; max-height:54px;" src="'.esc_url( $options['apple-icon'] ).'" />
+	</div>';
+  echo $html;
+}
+
+function tw_apple_icon_72_upload_callback($args){
+  $options = get_option('tw_theme_logo_options');
+  $html ='<input type="text" id="apple_icon_72_url" name="tw_theme_logo_options[apple-icon-72]" value="'.esc_url( $options['apple-icon-72'] ).'" />
+		<input id="upload_apple_icon_72_button" type="button" class="button" value="'.__( 'Upload', 'tw' ).'" />';
+		if ( '' != $options['apple-icon-72'] ){
+			$html .='<input id="delete_apple_icon_72_button" name="tw_theme_logo_options[apple-icon-72]" type="submit" class="button" value="'.__( 'Delete', 'tw' ).'" />';
+		}
+		$html .='<input id="reset_apple_icon_72_button" name="tw_theme_logo_options[apple-icon-72]" type="submit" class="button" value="'.__( 'Reset', 'tw' ).'" />';
+    $html .= '<label for="apple_icon_72_url" class="description">&nbsp;'  . $args[0] . '</label>';
+		$html .= '<div id="apple_icon_72_url_preview" style="min-height: 10px;">
+		<img style="max-width:72px; max-height:72px;" src="'.esc_url( $options['apple-icon-72'] ).'" />
+	</div>';
+  echo $html;
+}
+
+function tw_apple_icon_114_upload_callback($args){
+  $options = get_option('tw_theme_logo_options');
+  $html ='<input type="text" id="apple_icon_114_url" name="tw_theme_logo_options[apple-icon-114]" value="'.esc_url( $options['apple-icon-114'] ).'" />
+		<input id="upload_apple_icon_114_button" type="button" class="button" value="'.__( 'Upload', 'tw' ).'" />';
+		if ( '' != $options['apple-icon-114'] ){
+			$html .='<input id="delete_apple_icon_114_button" name="tw_theme_logo_options[apple-icon-114]" type="submit" class="button" value="'.__( 'Delete', 'tw' ).'" />';
+		}
+		$html .='<input id="reset_apple_icon_114_button" name="tw_theme_logo_options[apple-icon-114]" type="submit" class="button" value="'.__( 'Reset', 'tw' ).'" />';
+    $html .= '<label for="apple_icon_114_url" class="description">&nbsp;'  . $args[0] . '</label>';
+		$html .= '<div id="apple_icon_114_url_preview" style="min-height: 10px;">
+		<img style="max-width:114px; max-height:114px;" src="'.esc_url( $options['apple-icon-114'] ).'" />
+	</div>';
+  echo $html;
+}
+
+function tw_apple_icon_144_upload_callback($args){
+  $options = get_option('tw_theme_logo_options');
+  $html ='<input type="text" id="apple_icon_144_url" name="tw_theme_logo_options[apple-icon-144]" value="'.esc_url( $options['apple-icon-144'] ).'" />
+		<input id="upload_apple_icon_144_button" type="button" class="button" value="'.__( 'Upload', 'tw' ).'" />';
+		if ( '' != $options['apple-icon-144'] ){
+			$html .='<input id="delete_apple_icon_144_button" name="tw_theme_logo_options[apple-icon-144]" type="submit" class="button" value="'.__( 'Delete', 'tw' ).'" />';
+		}
+		$html .='<input id="reset_apple_icon_144_button" name="tw_theme_logo_options[apple-icon-144]" type="submit" class="button" value="'.__( 'Reset', 'tw' ).'" />';
+    $html .= '<label for="apple_icon_144_url" class="description">&nbsp;'  . $args[0] . '</label>';
+		$html .= '<div id="apple_icon_144_url_preview" style="min-height: 10px;">
+		<img style="max-width:144px; max-height:144px;" src="'.esc_url( $options['apple-icon-144'] ).'" />
+	</div>';
+  echo $html;
+}
 
 /* ------------------------------------------------------------------------ *
  * Blog Options
@@ -823,8 +1098,6 @@ function tw_enable_related_posts_callback($args) {
 	echo $html;
 
 } // end tw_enable_sidebar_callback
-
-
 
 function tw_enable_facebook_comments_callback($args) {
 
