@@ -153,7 +153,9 @@ function tw_theme_display( $active_tab = '' ) {
 function tw_settings_enqueue_scripts() {
     wp_register_script( 'tw-upload', get_template_directory_uri() .'/includes/tw-wp-core/js/tw-settings.js', array('jquery','media-upload','thickbox') );
 
-    //if ( 'appearance_page_tw-settings' == get_current_screen() -> id ) {
+
+    error_log(get_current_screen()->id);
+    if ( 'appearance_page_tw_theme_options' == get_current_screen() -> id ) {
         wp_enqueue_script('jquery');
 
         wp_enqueue_script('thickbox');
@@ -162,7 +164,7 @@ function tw_settings_enqueue_scripts() {
         wp_enqueue_script('media-upload');
         wp_enqueue_script('tw-upload');
 
-    //}
+    }
 
 }
 add_action('admin_enqueue_scripts', 'tw_settings_enqueue_scripts');
