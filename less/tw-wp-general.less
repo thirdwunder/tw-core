@@ -1219,16 +1219,19 @@ img.alignright{
     }
   }
 
+
+
   .footer-container{
 
 
     #footer-menu{
       margin-top: 15px;
+      margin-bottom: 10px;
       ul#menu-footer-menu{
         list-style: none;
-        padding-left: 0;
+        padding-left: 15px;
         font-size: 0.9em;
-
+        vertical-align: bottom;
         li{
           display: inline-block;
           margin-right: 10px;
@@ -1243,6 +1246,44 @@ img.alignright{
             }
           }
         }
+      }
+
+      #footer-social{
+        .social-icons-list();
+
+        ul{
+          text-align: right;
+          margin-top: 0;
+          margin-bottom: 0;
+          vertical-align: bottom;
+          padding-left: 0;
+          li{
+            .social-link-colors();
+
+            a{
+              &.contact-facebook,
+              &.contact-twitter,
+              &.contact-instagram,
+              &.contact-pinterest,
+              &.contact-linkedin,
+              &.contact-youtube,
+              &.contact-googleplus,
+              &.contact-flickr,
+              &.contact-tumblr,
+              &.contact-vimeo,
+              &.contact-slideshare{
+                color: @color-inverse-link;
+                &:hover{
+                  color: @color-inverse-link-hover;
+                }
+              }
+            }
+
+          }
+
+        }
+
+
       }
     }
 
@@ -1333,10 +1374,22 @@ img.alignright{
     }
   }
 
+
   #site-footer{
     margin-top: 25px;
     padding: 25px inherit;
     .footer-container{
+      #footer-menu{
+
+        #footer-social{
+          ul{
+            text-align: left;
+          }
+        }
+
+      }
+
+
       #copyright{}
       #credit, #copyright{
         text-align: left;

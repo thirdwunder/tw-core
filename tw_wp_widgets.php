@@ -274,6 +274,9 @@ class tw_blog_widget extends WP_Widget {
               if(has_post_thumbnail()):
                 if(function_exists('tw_get_image_src')){
                   $image_sizes = array('4x3-small','16x9-medium','16x9-medium');
+                  if($widget_area=='homepage'){
+                    $image_sizes = array('4x3-small','4x3-small','4x3-small');
+                  }
                 ?>
                 <a href="<?php the_permalink();?>" title="<?php the_title(); ?>">
                   <?php echo tw_the_post_thumbnail($image_sizes, $attr = array('itemscope'=>'image','class'=>'img-responsive') ); ?>
@@ -292,10 +295,10 @@ class tw_blog_widget extends WP_Widget {
                 <h3 itemprop="headline"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h3>
                 <p class="time"><time class="updated" itemprop="datePublished" datetime="<?php echo get_the_time('Y-m-j'); ?>T<?php echo get_the_time('H:i:s'); ?>" pubdate><?php echo get_the_time('F j, Y'); ?></time></p>
                 <?php //if(has_excerpt()): ?>
-                <p itemprop="description"><?php the_excerpt(); ?></p>
+                <div class="description" itemprop="description"><?php the_excerpt(); ?></div>
                 <?php //endif;?>
               </div>
-            </div>
+            </div><!-- thumbnail -->
           </div>
           <?php endwhile;?>
           </div><!-- articles -->

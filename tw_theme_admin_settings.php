@@ -534,6 +534,14 @@ function tw_general_menu_options_callback() {
 	echo '<p>' . __( 'Select extra menus to enable', 'tw' ) . '</p>';
 } // end tw_general_menu_options_callback
 
+function tw_slider_options_callback(){
+  //echo '';
+}
+
+function tw_footer_options_callback(){
+
+}
+
 function tw_initialize_theme_options() {
 
 	// If the theme options don't exist, create them.
@@ -618,7 +626,7 @@ function tw_initialize_theme_options() {
 		)
 	);
 
-  	add_settings_section(
+  add_settings_section(
 		'slide_settings_section',			// ID used to identify this section and with which to register options
 		__( 'Slider Options', 'tw' ),		// Title to be displayed on the administration page
 		'tw_slider_options_callback',	// Callback used to render the description of the section
@@ -633,6 +641,25 @@ function tw_initialize_theme_options() {
 		'slide_settings_section',
 		array(
 			__( 'Select slider transition style', 'tw' ),
+		)
+	);
+
+
+	add_settings_section(
+		'footer_settings_section',			// ID used to identify this section and with which to register options
+		__( 'Footer Options', 'tw' ),		// Title to be displayed on the administration page
+		'tw_footer_options_callback',	// Callback used to render the description of the section
+		'tw_theme_general_options'		// Page on which to add this section of options
+	);
+
+	add_settings_field(
+		'enable_footer_social',
+		__( 'Footer Social Icons', 'tw' ),
+		'tw_footer_social_icons_callback',
+		'tw_theme_general_options',
+		'footer_settings_section',
+		array(
+			__( 'Show social icons in footer.', 'tw' ),
 		)
 	);
 
@@ -732,6 +759,15 @@ function tw_slider_style_callback($args){
 	echo $html;
 
 
+}
+
+
+function tw_footer_social_icons_callback($args){
+	$options = get_option('tw_theme_general_options');
+	$html = '<input type="checkbox" id="enable_footer_social" name="tw_theme_general_options[enable_footer_social]" value="1" ' . checked( 1, isset( $options['enable_footer_social'] ) ? $options['enable_footer_social'] : 0, false ) . '/>';
+	$html .= '<label for="enable_footer_social">&nbsp;'  . $args[0] . '</label>';
+
+	echo $html;
 }
 
 /* ------------------------------------------------------------------------ *
