@@ -706,9 +706,17 @@ if(!function_exists('tw_get_image_src')){
           break;
       }
     }
+
+
     $img_src = wp_get_attachment_image_src($image_id, $img_size);
-    return $img_src[0];
+    $img_src = $img_src[0];
+
+    return $img_src;
   }
+}
+
+function tw_get_default_image(){
+ return get_template_directory_uri().'/assets/img/default.png';
 }
 
 /**
@@ -730,8 +738,13 @@ if(!function_exists('tw_the_post_thumbnail')){
       $sizes[$i] = $image_sizes[$i];
     }
 
-    $img_id = get_post_thumbnail_id($post->ID);
+    $src = array( tw_get_default_image(), '', '' );
     $img_size = $sizes[1];
+
+    if(has_post_thumbnail($post->ID) ){
+      $img_id = get_post_thumbnail_id($post->ID);
+      $src = wp_get_attachment_image_src($img_id, $img_size);
+    }
 
     $alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
 
@@ -752,7 +765,7 @@ if(!function_exists('tw_the_post_thumbnail')){
       }
     }
 
-    $src = wp_get_attachment_image_src($img_id, $img_size);
+
 
     $html .= 'src="'.$src[0].'" width="'.$src[1].'" height="'.$src[2].'" alt="'.$alt.'"';
     $class = 'attachment-'.$img_size.' wp-post-image';

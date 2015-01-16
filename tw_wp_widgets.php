@@ -214,21 +214,16 @@ class tw_blog_widget extends WP_Widget {
   function widget($args, $instance) {
     extract( $args );
     $title 		= apply_filters('widget_title', $instance['title']);
-    $number = (isset($instance['number']) && is_integer(trim($instance['title'])) ) ?intval(trim($instance['title'])) : 6;
+    $number = (isset($instance['number']) && is_integer(intval(trim($instance['number']))) ) ?intval(trim($instance['number'])) : 6;
     $tags = (isset($instance['tags']) && trim($instance['tags'])!=='') ? trim($instance['tags']) : false;
     $button_title = (isset($instance['button_title']) && trim($instance['button_title'])!=='') ? trim($instance['button_title']) : false;
     $button_url = (isset($instance['button_url']) && trim($instance['button_url'])!=='') ? trim($instance['button_url']) : false;
-
-    if(is_integer($number) && intval($number)>0){
-      $blog_args['posts_per_page'] = $number;
-    }else{
-      $blog_args['posts_per_page'] = 6;
-    }
 
     if($tags){
       $tags  = explode(',', $tags);
       $blog_args['tag_name'] = $tags;
     }
+    $blog_args['posts_per_page'] = $number;
 
     $blog_query = new WP_Query( $blog_args );
 
@@ -271,8 +266,8 @@ class tw_blog_widget extends WP_Widget {
           <div id="article-<?php the_id();?>" class="article <?php echo $class;?>" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="thumbnail">
               <?php
-              if(has_post_thumbnail()):
-                if(function_exists('tw_get_image_src')){
+              //if(has_post_thumbnail()):
+                if(function_exists('tw_get_image_src')):
                   $image_sizes = array('4x3-small','16x9-medium','16x9-medium');
                   if($widget_area=='homepage'){
                     $image_sizes = array('4x3-small','4x3-small','4x3-small');
@@ -281,14 +276,15 @@ class tw_blog_widget extends WP_Widget {
                 <a href="<?php the_permalink();?>" title="<?php the_title(); ?>">
                   <?php echo tw_the_post_thumbnail($image_sizes, $attr = array('itemscope'=>'image','class'=>'img-responsive') ); ?>
                 </a>
-                <?php }else{ ?>
+              <?php elseif(has_post_thumbnail()): ?>
                 <a href="<?php the_permalink();?>" title="<?php the_title(); ?>">
-                  <?php get_the_post_thumbnail(get_the_id(), 'medium', array('itemscope'=>'image','class'=>'img-responsive')); ?>
+                <?php get_the_post_thumbnail(get_the_id(), 'medium', array('itemscope'=>'image','class'=>'img-responsive')); ?>
                 </a>
-                  <?php
-                }
-              endif;
-            ?>
+              <?php else: ?>
+                <a href="<?php the_permalink();?>" title="<?php the_title(); ?>">
+                  <img src="<?php echo tw_get_default_image(); ?>" width="" height="" alt="" class="img-responsive" itemscope="image" />
+                </a>
+              <?php endif; ?>
 
 
               <div class="caption">
