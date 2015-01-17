@@ -15,7 +15,8 @@ class tw_social_widget extends WP_Widget {
     extract( $args );
     $title 		= apply_filters('widget_title', $instance['title']);
     $message 	= $instance['message'];
-    $social_info   = tw_get_theme_social_options();
+    $square_social_icons = true;
+    $social_info   = tw_get_theme_social_options($square_social_icons);
 
     echo $before_widget;
       if ( $title )
@@ -62,7 +63,16 @@ class tw_social_widget extends WP_Widget {
                   }
                 ?>
                   <li class="width-<?php echo $count; ?>">
-                    <a class="contact-<?php echo $network; ?>" href="<?php echo $details['url']; ?>" target="_blank" title="<?php echo $title; ?>" data-toggle="tooltip" data-placement="top"><i class="fa <?php echo $details['icon']; ?>"></i></a>
+                    <a class="contact-<?php echo $network; ?>" href="<?php echo $details['url']; ?>" target="_blank" title="<?php echo $title; ?>" data-toggle="tooltip" data-placement="top">
+                      <?php if($square_social_icons):?>
+                        <i class="fa <?php echo $details['icon']; ?>"></i>
+                      <?php else: ?>
+                        <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa <?php echo $details['icon']; ?> fa-stack-1x fa-inverse"></i>
+                        </span>
+                      <?php endif; ?>
+                    </a>
                   </li>
                 <?php endforeach; ?>
               </ul>
