@@ -221,8 +221,9 @@ class tw_blog_widget extends WP_Widget {
 
     if($tags){
       $tags  = explode(',', $tags);
-      $blog_args['tag_name'] = $tags;
+      $blog_args['tag'] = $tags[0];
     }
+
     $blog_args['posts_per_page'] = $number;
 
     $blog_query = new WP_Query( $blog_args );
@@ -258,6 +259,7 @@ class tw_blog_widget extends WP_Widget {
       $class = 'col-xs-12 col-sm-12 col-md-12';
     }
     ?>
+
       <div class="blog-container">
        <?php if ( $title )
           echo $before_title . $title . $after_title; ?>
