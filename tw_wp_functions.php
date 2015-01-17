@@ -821,9 +821,13 @@ if(!function_exists('tw_html_tag_schema')){
  * @return array social
  */
 if(!function_exists('tw_get_theme_social_options')){
-  function tw_get_theme_social_options(){
+  function tw_get_theme_social_options($square=false){
      $social_info   = get_option('tw_theme_social_options');
      $social = array();
+     $style = $square==true ? '-square' : '';
+     if($square){
+       $style = '-square';
+     }
      foreach($social_info as $network => $value){
         $username = '';
         if($network!=='fb_app_id' && $network!=='sharedcount_id' && $network!=='enable_fb_comments'){
@@ -831,12 +835,12 @@ if(!function_exists('tw_get_theme_social_options')){
           switch ($network) {
             case 'fb_page':
                 $network = 'facebook';
-                $icon = 'fa-facebook-square';
+                $icon = 'fa-'.$network.$style;
                 break;
             case 'twitter':
                 $username = $value;
                 $value  = 'http://twitter.com/'.$username;
-                $icon = 'fa-twitter-square';
+                $icon = 'fa-'.$network.$style;
                 break;
             case 'instagram':
                 $username = $value;
@@ -844,28 +848,28 @@ if(!function_exists('tw_get_theme_social_options')){
                 $icon = 'fa-instagram';
                 break;
             case 'pinterest':
-                $icon = 'fa-pinterest-square';
+                $icon = 'fa-'.$network.$style;
                 break;
             case 'linkedin':
-                $icon = 'fa-linkedin-square';
+                $icon = 'fa-'.$network.$style;
                 break;
             case 'googleplus':
-                $icon = 'fa-google-plus-square';
+                $icon = 'fa-google-plus'.$style;
                 break;
             case 'youtube':
-                $icon = 'fa-youtube-square';
+                $icon = 'fa-'.$network.$style;
                 break;
             case 'vimeo':
-                $icon = 'fa-vimeo-square';
+                $icon = 'fa-'.$network.'-square';
                 break;
             case 'flickr':
-                $icon = 'fa-flickr';
+                $icon = 'fa-'.$network;
                 break;
             case 'slideshare':
-                $icon = 'fa-slideshare';
+                $icon = 'fa-'.$network;
                 break;
             case 'tumblr':
-                $icon = 'fa-tumblr-square';
+                $icon = 'fa-'.$network.$style;
                 break;
           }
 
