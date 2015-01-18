@@ -15,7 +15,7 @@ class tw_social_widget extends WP_Widget {
     extract( $args );
     $title 		= apply_filters('widget_title', $instance['title']);
     $message 	= $instance['message'];
-    $square_social_icons = true;
+    $square_social_icons = (isset($instance['square-icons']) && trim($instance['square-icons'])=='on') ? true : false;
     $social_info   = tw_get_theme_social_options($square_social_icons);
 
     echo $before_widget;
@@ -88,6 +88,7 @@ class tw_social_widget extends WP_Widget {
   		$instance = $old_instance;
   		$instance['title'] = strip_tags($new_instance['title']);
   		$instance['message'] = strip_tags($new_instance['message']);
+  		$instance['square-icons'] = strip_tags($new_instance['square-icons']);
       return $instance;
     }
 
@@ -95,6 +96,7 @@ class tw_social_widget extends WP_Widget {
   function form($instance) {
     $title 		= esc_attr($instance['title']);
     $message	= esc_attr($instance['message']);
+    $square_icons	= esc_attr($instance['square-icons']);
     ?>
        <p>
         <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
@@ -104,6 +106,11 @@ class tw_social_widget extends WP_Widget {
         <label for="<?php echo $this->get_field_id('message'); ?>"><?php _e('Sub-heading'); ?></label>
         <input class="widefat" id="<?php echo $this->get_field_id('message'); ?>" name="<?php echo $this->get_field_name('message'); ?>" type="text" value="<?php echo $message; ?>" />
       </p>
+      <p>
+      <input class="checkbox" type="checkbox" <?php checked($square_icons, 'on'); ?> id="<?php echo $this->get_field_id('square-icons'); ?>" name="<?php echo $this->get_field_name('square-icons'); ?>" />
+      <label for="<?php echo $this->get_field_id('square-icons'); ?>"><?php _e('Show Square social icons','tw'); ?></label>
+      <p class="description"><?php _e('Default icons are circles.','tw'); ?></p>
+    </p>
     <?php
   }
 
