@@ -21,7 +21,7 @@ class tw_social_widget extends WP_Widget {
     echo $before_widget;
       if ( $title )
           echo $before_title . $title . $after_title; ?>
-			<div>
+			<div class="social-widget-container">
           <?php if($message!==''): ?><p><?php echo $message; ?></p><?php endif; ?>
 
           <?php if($social_info): $count = count($social_info); ?>
@@ -151,7 +151,9 @@ class tw_fb_like_box_widget extends WP_Widget {
       echo $before_widget;
         if ( $title )
             echo $before_title . $title . $after_title; ?>
-            <div class="fb-like-box" data-href="<?php echo $fb_page_url; ?>" data-width="100%" data-height="<?php echo $height;?>" data-colorscheme="<?php echo $color;?>" data-show-faces="<?php echo $show_faces; ?>" data-header="<?php echo $show_header; ?>" data-stream="<?php echo $show_posts;?>" data-show-border="<?php echo $show_border; ?>"></div>
+            <div class="facebook-widget-container">
+              <div class="fb-like-box" data-href="<?php echo $fb_page_url; ?>" data-width="100%" data-height="<?php echo $height;?>" data-colorscheme="<?php echo $color;?>" data-show-faces="<?php echo $show_faces; ?>" data-header="<?php echo $show_header; ?>" data-stream="<?php echo $show_posts;?>" data-show-border="<?php echo $show_border; ?>"></div>
+            </div>
     <?php
       echo $after_widget;
     }
@@ -318,7 +320,7 @@ class tw_blog_widget extends WP_Widget {
           <?php endwhile;?>
           </div><!-- articles -->
           <div class="clearfix"></div>
-          <?php if($button_url && $button_title): ?>
+          <?php if($button_url!=='' && $button_title!==''): ?>
           <div class="more">
             <a href="<?php echo $button_url;?>" class="btn btn-primary btn-lg
               " title="<?php echo $button_title; ?>"><?php echo $button_title; ?></a>
