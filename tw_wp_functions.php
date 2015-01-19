@@ -307,10 +307,40 @@ if(!function_exists('tw_excerpt_more')){
 }
 
 /**
+ * Echo's post navigation - previous post
+ */
+if(!function_exists('tw_post_nav_previous')){
+  function tw_post_nav_previous($type='Previous Article'){
+    global $post;
+    $previous = get_adjacent_post( false, '', true );
+    if ( ! $previous )
+  		return;
+    ?>
+    <a href="<?php echo get_permalink($previous->ID);?>" title="<?php echo $previous->post_title;?>"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;&nbsp;<span class="nav-title"><?php echo sprintf( __('%s', 'tw'), $type ); ?></span></a>
+    <?php
+  }
+}
+
+/**
+ * Echo's post navigation - next post
+ */
+if(!function_exists('tw_post_nav_next')){
+  function tw_post_nav_next($type='Next Article'){
+    global $post;
+    $next     = get_adjacent_post( false, '', false );
+    if ( ! $next )
+  		return;
+    ?>
+    <a href="<?php echo get_permalink($next->ID);?>" title="<?php echo $next->post_title;?>"><span class="nav-title"><?php echo sprintf( __('%s', 'tw'), $type ) ?></span>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a>
+    <?php
+  }
+}
+
+/**
  * Echo's post navigation
  */
 if(!function_exists('tw_post_nav')){
-  function tw_post_nav() {
+  function tw_post_nav($type='Article') {
   	global $post;
 
   	// Don't print empty markup if there's nowhere to navigate.
@@ -326,16 +356,14 @@ if(!function_exists('tw_post_nav')){
         <?php
           if($previous){
             ?>
-            <li class="previous" itemprop="url"><a href="<?php echo get_permalink($previous->ID);?>" title="<?php echo $previous->post_title;?>"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;&nbsp;<span class="nav-title"><?php _e('Previous Article','tw'); ?></span></a></li>
+            <li class="previous" itemprop="url"><a href="<?php echo get_permalink($previous->ID);?>" title="<?php echo $previous->post_title;?>"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;&nbsp;<span class="nav-title"><?php echo sprintf( __('Previous %s', 'tw'), $type ); ?></span></a></li>
             <?php
-            //previous_post_link( '<li class="previous" itemprop="url">%link</li>', _x( '<i class="fa fa-long-arrow-left"></i> Previous Article', 'Previous Article', 'tw' ) );
           }
 
           if($next){
             ?>
-            <li class="next" itemprop="url"><a href="<?php echo get_permalink($next->ID);?>" title="<?php echo $next->post_title;?>"><span class="nav-title"><?php _e('Next Article','tw'); ?></span>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a></li>
+            <li class="next" itemprop="url"><a href="<?php echo get_permalink($next->ID);?>" title="<?php echo $next->post_title;?>"><span class="nav-title"><?php echo sprintf( __('Next %s', 'tw'), $type ) ?></span>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a></li>
             <?php
-            //next_post_link( '<li class="next" itemprop="url">%link</li>', _x( '%title <i class="fa fa-long-arrow-right"></i>', 'Next Article', 'tw' ) );
           }
 			  ?>
       </ul>
