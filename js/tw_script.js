@@ -1,6 +1,6 @@
 jQuery(function () {
-  jQuery('[data-toggle="tooltip"]').tooltip()
-})
+  jQuery('[data-toggle="tooltip"]').tooltip();
+});
 
 /*** Video Poster***/
 jQuery(function() {
@@ -42,17 +42,6 @@ jQuery(function(){
 	});
 
 	jQuery('.scroll-top-inner').on('click', scrollToTop);
-});
-
-
-
-jQuery('#scroll-to-top-wrapper').affix({
-  offset: {
-    top: 100,
-    bottom: function () {
-      return (this.bottom = jQuery('#site-footer').outerHeight(true));
-    }
-  }
 });
 
 
