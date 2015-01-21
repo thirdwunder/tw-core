@@ -1043,6 +1043,7 @@ blockquote{
     width: 100%;
     max-width: 100%;
     height: auto;
+    display: block;
   }
   .wp-caption-text{
     padding: 5px 10px;
@@ -1066,20 +1067,24 @@ blockquote{
   }
 
 }
-img.aligncenter{
-  margin: 15px auto;
+img{
+  display: block;
+  &.aligncenter{
+    margin: 15px auto;
+  }
+  &.alignnone{
+    margin: 15px 5px;
+  }
+  &.alignleft{
+   .pull-left();
+   margin: 5px 15px 5px 0;
+  }
+  &.alignright{
+   .pull-right();
+   margin: 5px 0 5px 15px;
+  }
 }
-img.alignnone{
-  margin: 15px 5px;
-}
-img.alignleft{
- .pull-left();
- margin: 5px 15px 5px 0;
-}
-img.alignright{
- .pull-right();
- margin: 5px 0 5px 15px;
-}
+
 
 
 /********************

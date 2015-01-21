@@ -747,6 +747,69 @@ function tw_get_default_image(){
  return get_template_directory_uri().'/assets/img/default.png';
 }
 
+
+/**
+ * Returns image html based on given array of sizes and device type
+ * @param: array image_id
+ * @param: array image_sizes
+ * @param: array attributes
+ * @return: image html output
+ */
+if(!function_exists('tw_get_the_post_thumbnail')){
+  function tw_get_the_post_thumbnail($img_id, $image_sizes = array(), $attr = array() ){
+    //global $post;
+
+    $sizes = array(
+                    '4x3-small',
+                    '4x3-medium',
+                    '4x3-large',
+                  );
+    for($i=0;$i<count($image_sizes); $i++){
+      $sizes[$i] = $image_sizes[$i];
+    }
+
+    $src = array( tw_get_default_image(), '', '' );
+    $img_size = $sizes[1];
+
+    $src = wp_get_attachment_image_src($img_id, $img_size);
+
+    $alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
+
+    $html = '<img ';
+    if(class_exists('Mobile_Detect')){
+      $detect = new Mobile_Detect;
+      $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
+      switch($deviceType){
+        case 'phone';
+          $img_size = $sizes[0];
+          break;
+        case 'tablet';
+          $img_size = $sizes[1];
+          break;
+        case 'computer';
+          $img_size = $sizes[2];
+          break;
+      }
+    }
+
+
+
+    $html .= 'src="'.$src[0].'" width="'.$src[1].'" height="'.$src[2].'" alt="'.$alt.'"';
+    $class = 'attachment-'.$img_size.' wp-post-image';
+    foreach($attr as $k=>$v){
+      if($k=='class'){
+        $class .= ' '.$v;
+      }else{
+       $html .= $k.'="'.$v.'"';
+      }
+    }
+    $html .= ' class="'.$class.'"';
+
+    $html .= ' />';
+    return $html;
+  }
+}
+
 /**
  * Returns image html based on given array of sizes and device type
  * @param: array image_sizes

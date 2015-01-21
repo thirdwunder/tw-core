@@ -153,8 +153,6 @@ function tw_theme_display( $active_tab = '' ) {
 function tw_settings_enqueue_scripts() {
     wp_register_script( 'tw-upload', get_template_directory_uri() .'/includes/tw-wp-core/js/tw-settings.js', array('jquery','media-upload','thickbox') );
 
-
-    error_log(get_current_screen()->id);
     if ( 'appearance_page_tw_theme_options' == get_current_screen() -> id ) {
         wp_enqueue_script('jquery');
 
@@ -470,20 +468,16 @@ function tw_theme_validate_logo_upload($input){
       	$submit = false;
     	}
     	if($input[$key]=='Reset'){
-      	error_log($key.' reset is true');
       	$reset = true;
       	$submit = false;
     	}
-      error_log('key =>'.$key.', options=>'.$options[$key].', input=>'.$input[$key] );
       if ( $submit ) {
     		if ( $options[$key] != $input[$key]  && $options[$key] != '' ){
       		delete_image( $options[$key] );
     		}
     		$output[$key] = $input[$key];
     	} elseif ( $reset ) {
-      	error_log('Resetting '.$key.' deleting ->'.$options[$key]);
     		delete_image( $options[$key] );
-    		error_log($key.' default = '.$default_options[$key]);
     		$output[$key] = $default_options[$key];
     	} elseif ( $delete_logo ) {
     		delete_image( $options[$key] );
@@ -493,9 +487,7 @@ function tw_theme_validate_logo_upload($input){
     }
   }
 
-	//return $valid_input;
 	return apply_filters( 'tw_theme_validate_logo_upload', $output, $input );
-	//return $output;
 }
 
 
