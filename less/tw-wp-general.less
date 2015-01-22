@@ -229,72 +229,7 @@ blockquote{
   }
 }
 
-/********************
-**** Homepage  ******
-********************/
-.page-template-template-homepage{
-  .jumbotron{
-    background-color: @color-inverse-bg;
-    background-position: center center;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
-    width:100%;
-    min-height: 400px;
-    min-height: 75vh;
-    margin-bottom: 0;
-    .border-radius(0);
-    .container-height();
-    padding-left: 25px;
-    padding-right: 25px;
-    .jumbotron-container{
-      .row-height();
-        width: 100%;
-        .jumbotron-content,
-        .jumbotron-video{
-          .col-height();
-        }
-        .jumbotron-content{
-          .col-middle();
-        }
-        .jumbotron-video{
-          .col-top();
-        }
-    }
 
-    .section-video{
-      margin-top: 25px;
-      margin-bottom: 25px;
-      background-position: center center;
-      background-repeat: no-repeat !important;
-      background-size: cover !important;
-      .clickable-video();
-    }
-
-    &.light{
-      h1, h2, h3, h4, p, blockquote{
-        color: @color-inverse-body;
-        text-shadow: 1px 1px 1px @text-color;
-      }
-    }
-    &.dark{
-      h1,h2,h3,h4,p, blockquote{
-        text-shadow: 1px 1px 1px @color-line-light;
-      }
-    }
-    p{
-      font-weight: 300;
-    }
-    blockquote{
-      background-color: transparent;
-      padding-left: 10px;
-      padding-right: 10px;
-      width: 50%;
-    }
-    a{
-      text-shadow: none;
-    }
-  }
-}
 
 
 /********************
@@ -547,6 +482,77 @@ blockquote{
 /********************
 ******* Pages  ******
 ********************/
+
+.page-template-template-homepage{
+  .jumbotron{
+    background-color: @color-inverse-bg;
+    background-position: center center;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    width:100%;
+    min-height: 400px;
+    min-height: 75vh;
+    margin-bottom: 0;
+    .border-radius(0);
+    .container-height();
+    padding-left: 25px;
+    padding-right: 25px;
+    .jumbotron-container{
+      .row-height();
+        width: 100%;
+        .jumbotron-content,
+        .jumbotron-video{
+          .col-height();
+        }
+    }
+    &.no-video{
+      .jumbotron-content{
+        .col-middle();
+      }
+    }
+
+    &.has-video{
+      .jumbotron-video,
+      .jumbotron-content{
+        .col-top();
+      }
+    }
+
+    .section-video{
+      margin-top: 25px;
+      margin-bottom: 25px;
+      background-position: center center;
+      background-repeat: no-repeat !important;
+      background-size: cover !important;
+      .clickable-video();
+    }
+
+    &.light{
+      h1, h2, h3, h4, p, blockquote{
+        color: @color-inverse-body;
+        text-shadow: 1px 1px 1px @text-color;
+      }
+    }
+    &.dark{
+      h1,h2,h3,h4,p, blockquote{
+        text-shadow: 1px 1px 1px @color-line-light;
+      }
+    }
+    p{
+      font-weight: 300;
+    }
+    blockquote{
+      background-color: transparent;
+      padding-left: 10px;
+      padding-right: 10px;
+      width: 50%;
+    }
+    a{
+      text-shadow: none;
+    }
+  }
+}
+
 #site-content{
   margin-top: 50px;
   min-height: 100%;
@@ -1405,14 +1411,17 @@ img{
 
   .page-template-template-homepage{
     .jumbotron{
-      .table-reset();
-      .jumbotron-container{
+      &.has-video{
         .table-reset();
-        .jumbotron-content,
-        .jumbotron-video{
+        .jumbotron-container{
           .table-reset();
+          .jumbotron-content,
+          .jumbotron-video{
+            .table-reset();
+          }
         }
       }
+
       blockquote{
         width: 100%;
       }
@@ -1524,15 +1533,17 @@ img{
 @media only screen and (min-width: @screen-sm) and (max-width: @screen-md){
   .page-template-template-homepage{
     .jumbotron{
-      .table-reset();
-      .jumbotron-container{
+      &.has-video{
         .table-reset();
-        .jumbotron-content,
-        .jumbotron-video{
+        .jumbotron-container{
           .table-reset();
+          .jumbotron-content,
+          .jumbotron-video{
+            .table-reset();
+          }
         }
-
       }
+
     }
   }
   .social-panel{
