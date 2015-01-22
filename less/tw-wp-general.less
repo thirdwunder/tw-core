@@ -238,10 +238,28 @@ blockquote{
     background-position: center center;
     background-repeat: no-repeat !important;
     background-size: cover !important;
-    //background-attachment: fixed !important;
+    width:100%;
     min-height: 400px;
+    min-height: 75vh;
     margin-bottom: 0;
     .border-radius(0);
+    .container-height();
+    padding-left: 25px;
+    padding-right: 25px;
+    .jumbotron-container{
+      .row-height();
+        width: 100%;
+        .jumbotron-content,
+        .jumbotron-video{
+          .col-height();
+        }
+        .jumbotron-content{
+          .col-middle();
+        }
+        .jumbotron-video{
+          .col-top();
+        }
+    }
 
     .section-video{
       margin-top: 25px;
@@ -1387,7 +1405,14 @@ img{
 
   .page-template-template-homepage{
     .jumbotron{
-
+      .table-reset();
+      .jumbotron-container{
+        .table-reset();
+        .jumbotron-content,
+        .jumbotron-video{
+          .table-reset();
+        }
+      }
       blockquote{
         width: 100%;
       }
@@ -1497,6 +1522,19 @@ img{
 
 /* From Phone to Tablet */
 @media only screen and (min-width: @screen-sm) and (max-width: @screen-md){
+  .page-template-template-homepage{
+    .jumbotron{
+      .table-reset();
+      .jumbotron-container{
+        .table-reset();
+        .jumbotron-content,
+        .jumbotron-video{
+          .table-reset();
+        }
+
+      }
+    }
+  }
   .social-panel{
     margin-top: 15px;
     clear: both;
