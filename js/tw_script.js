@@ -31,7 +31,7 @@ function scrollToTop() {
 }
 
 jQuery(function(){
-
+  "use strict";
 	jQuery(document).on( 'scroll', function(){
 
 		if (jQuery(window).scrollTop() > 100) {
@@ -47,6 +47,7 @@ jQuery(function(){
 
 /*** Carousel ***/
 jQuery(document).bind('keyup', function(e) {
+  "use strict";
   if(e.which === 39){
     jQuery('.carousel').carousel('next');
   }
@@ -64,14 +65,14 @@ jQuery('.carousel').carousel({
 
 /**** Isotope ****/
 jQuery(window).load(function(){
-
+  "use strict";
   jQuery('.widget_tw_blog_widget .articles').isotope({ itemSelector: '.article', layoutMode : 'fitRows' });
 
   jQuery('#related-posts .related-post-inner').isotope({ itemSelector: '.related-post-container', layoutMode : 'fitRows' });
 });
 
 jQuery(window).smartresize(function(){
-
+  "use strict";
   jQuery('.widget_tw_blog_widget .articles').isotope({ itemSelector: '.article', layoutMode : 'fitRows' });
 
   jQuery('#related-posts .related-post-inner').isotope({ itemSelector: '.related-post-container', layoutMode : 'fitRows' });
