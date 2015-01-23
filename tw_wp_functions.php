@@ -817,25 +817,32 @@ if(!function_exists('tw_get_the_post_thumbnail')){
  * @return: image html output
  */
 if(!function_exists('tw_the_post_thumbnail')){
-  function tw_the_post_thumbnail($image_sizes = array(), $attr = array() ){
+  function tw_the_post_thumbnail($image_sizes = array(), $attr = array()){
     global $post;
 
     $sizes = array(
-                    '4x3-small',
-                    '4x3-medium',
-                    '4x3-large',
+                    'phone'    =>'4x3-small',
+                    'tablet'   =>'4x3-medium',
+                    'computer' =>'4x3-large',
                   );
     for($i=0;$i<count($image_sizes); $i++){
-      $sizes[$i] = $image_sizes[$i];
+      switch ($i){
+        case 0:
+          $sizes['phone'] = $image_sizes[$i];
+          break;
+        case 1:
+          $sizes['tablet'] = $image_sizes[$i];
+          break;
+        case 2:
+          $sizes['computer'] = $image_sizes[$i];
+          break;
+      }
     }
 
     $src = array( tw_get_default_image(), '', '' );
-    $img_size = $sizes[1];
+    $img_size = $sizes['tablet'];
 
-    if(has_post_thumbnail($post->ID) ){
-      $img_id = get_post_thumbnail_id($post->ID);
-      $src = wp_get_attachment_image_src($img_id, $img_size);
-    }
+
 
     $alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
 
@@ -843,20 +850,24 @@ if(!function_exists('tw_the_post_thumbnail')){
     if(class_exists('Mobile_Detect')){
       $detect = new Mobile_Detect;
       $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
+
       switch($deviceType){
         case 'phone';
-          $img_size = $sizes[0];
+          $img_size = $sizes[$deviceType];
           break;
         case 'tablet';
-          $img_size = $sizes[1];
+          $img_size = $sizes[$deviceType];
           break;
         case 'computer';
-          $img_size = $sizes[2];
+          $img_size = $sizes[$deviceType];
           break;
       }
     }
 
-
+    if(has_post_thumbnail($post->ID) ){
+      $img_id = get_post_thumbnail_id($post->ID);
+      $src = wp_get_attachment_image_src($img_id, $img_size);
+    }
 
     $html .= 'src="'.$src[0].'" width="'.$src[1].'" height="'.$src[2].'" alt="'.$alt.'"';
     $class = 'attachment-'.$img_size.' wp-post-image';
