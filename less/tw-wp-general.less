@@ -719,6 +719,27 @@ blockquote{
     margin-top: 0;
     border-color: @color-line-light;
     .author-bio-box();
+
+    .entry-image{
+      position: relative;
+      img{
+       .fullwidth-image();
+      }
+      .caption{
+        position: absolute;
+        bottom:0;
+        right: 0;
+        color: white;
+        background-color: @color-inverse-bg;
+        background-color: fade(@color-inverse-bg, 75%);
+        padding: 10px 15px;
+        max-width: 100%;
+        height: auto;
+        font-style: italic;
+        font-size: 0.8em;
+      }
+    }
+
   }
 
   .page-posts{
