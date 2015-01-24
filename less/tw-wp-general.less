@@ -16,10 +16,7 @@ body{
     }
   }
   &.custom-background{
-    background-size: contain !important;
-    background-position: center top !important;
-    background-repeat: no-repeat !important;
-    //background-attachment: fixed !important;
+    .background-full('center top','scroll');
   }
 }
 
@@ -486,9 +483,7 @@ blockquote{
 .page-template-template-homepage{
   .jumbotron{
     background-color: @color-inverse-bg;
-    background-position: center center;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
+    .background-full('center center','scroll');
     width:100%;
     min-height: 400px;
     min-height: 75vh;
@@ -521,9 +516,7 @@ blockquote{
     .section-video{
       margin-top: 25px;
       margin-bottom: 25px;
-      background-position: center center;
-      background-repeat: no-repeat !important;
-      background-size: cover !important;
+      .background-full('center center','scroll');
       .clickable-video();
     }
 
@@ -668,9 +661,7 @@ blockquote{
 
     .section-video{
       text-align:center;
-      background-size: cover !important;
-      background-position: center center !important;
-      background-repeat: no-repeat !important;
+      .background-full('center center','scroll');
 
       margin-left: auto;
       margin-right: auto;

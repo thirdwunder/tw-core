@@ -21,11 +21,15 @@
   -o-border-radius: @radius !important;
 }
 
-.background-full(){
-  background-position: center top;
-  background-attachment: scroll;
-  background-size: cover;
-  background-repeat: no-repeat;
+.background-full(@position, @attachment){
+  background-position: @position !important;
+  background-attachment: @attachment !important;
+  background-repeat: no-repeat !important;
+
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
 }
 
 .transition(@property, @duration, @function){
