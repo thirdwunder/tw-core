@@ -933,7 +933,7 @@ if(!function_exists('tw_get_theme_social_options')){
      foreach($social_info as $network => $value){
         $username = '';
         if($network!=='fb_app_id' && $network!=='sharedcount_id' && $network!=='enable_fb_comments'){
-
+          $value = trim($value);
           switch ($network) {
             case 'fb_page':
                 $network = 'facebook';
@@ -941,12 +941,12 @@ if(!function_exists('tw_get_theme_social_options')){
                 break;
             case 'twitter':
                 $username = $value;
-                $value  = 'http://twitter.com/'.$username;
+                $value  = trim($username)!==''? 'http://twitter.com/'.$username : '';
                 $icon = 'fa-'.$network.$style;
                 break;
             case 'instagram':
                 $username = $value;
-                $value  = 'http://instagram.com/'.$username;
+                $value  = trim($username)!=='' ? 'http://instagram.com/'.$username : '';
                 $icon = 'fa-instagram';
                 break;
             case 'pinterest':
