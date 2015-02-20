@@ -961,7 +961,7 @@ blockquote{
         display: block;
       }
 
-      &.facebook, &.twitter, &.googleplus, &.pinterest{
+      &.facebook, &.twitter, &.googleplus, &.pinterest, &.linkedin{
         position: relative;
         line-height: 64px;
         width: 50%;
@@ -1052,6 +1052,19 @@ blockquote{
           color: #fff;
           .overlay{
             background-color: @color-googleplus;
+            color: #fff;
+          }
+        }
+      }
+
+      &.linkedin{
+        border-left: 1px solid @color-line-light;
+
+        &:hover{
+          background-color: @color-linkedin;
+          color: #fff;
+          .overlay{
+            background-color: @color-linkedin;
             color: #fff;
           }
         }
