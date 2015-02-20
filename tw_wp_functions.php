@@ -1121,14 +1121,14 @@ function tw_is_related_posts_enabled(){
 /******************************************************
 ***************** Shared Count API *******************
 ******************************************************/
-function get_get_sharedcount_api_key(){
+function get_sharedcount_api_key(){
   $social_options = tw_get_social_options();
   $api_key = (is_array($social_options) && isset($social_options['sharedcount_id']) && trim($social_options['sharedcount_id'])!=='' ) ? trim($social_options['sharedcount_id']) : false;
   return $api_key;
 }
 
 function tw_get_sharedcount_json($url){
-  $api_key = get_get_sharedcount_api_key();
+  $api_key = get_sharedcount_api_key();
   if($api_key){
     $request = wp_remote_get("http://free.sharedcount.com/?url=" . rawurlencode($url) . "&apikey=" . $api_key);
     try{
