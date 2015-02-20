@@ -827,7 +827,7 @@ blockquote{
         color: @text-color;
       }
 
-      &.facebook, &.twitter, &.googleplus, &.pinterest, &.email{
+      &.facebook, &.twitter, &.googleplus, &.pinterest, &.linkedin, &.email{
         position: relative;
         color: @text-color;
         a{
@@ -904,6 +904,20 @@ blockquote{
           color: #fff;
           .overlay{
             background-color: @color-googleplus;
+            color: #fff;
+          }
+          a{
+            color: #fff !important;
+          }
+        }
+      }
+
+      &.linkedin{
+        &:hover{
+          background-color: @color-linkedin;
+          color: #fff;
+          .overlay{
+            background-color: @color-linkedin;
             color: #fff;
           }
           a{
