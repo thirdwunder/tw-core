@@ -207,7 +207,7 @@ function tw_youtubeURL_to_embedCode($url, $autoplay=false){
 
   $width = '640';
   $height = '385';
-  $iframe = '&lt;iframe class="embed-responsive-item" width="' . $width . '" height="' . $height . '" src="http://www.youtube.com/embed/' . $id . '?autoplay='.$autoplay.'" frameborder="0" allowfullscreen&gt;&lt;/iframe>';
+  $iframe = '&lt;iframe class="embed-responsive-item" width="' . $width . '" height="' . $height . '" src="http://www.youtube.com/embed/' . $id . '?autoplay='.$autoplay.'&rel=0" frameborder="0" allowfullscreen&gt;&lt;/iframe>';
   return $iframe;
 }
 
