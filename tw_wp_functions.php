@@ -147,7 +147,7 @@ if(!function_exists('tw_post_formats')){
   if(is_array($tw_blog_options)){
     $enabled_post_formats = array();
     foreach($post_formats as $pf){
-      if($tw_blog_options[$pf]){
+      if(isset($tw_blog_options[$pf])){
         $enabled_post_formats[] = $pf;
       }
     }
@@ -167,7 +167,7 @@ if(!function_exists('tw_post_formats')){
 if(!function_exists('tw_register_sidebars')){
   function tw_register_sidebars() {
     $theme_general_options = get_option('tw_theme_general_options') ? get_option('tw_theme_general_options') : null;
-    $primary_sidebar = $theme_general_options['enable_sidebar'];
+    $primary_sidebar = isset($theme_general_options['enable_sidebar']) ? $theme_general_options['enable_sidebar'] : false;
     if($primary_sidebar){
       register_sidebar(array(
       	'id' => 'primary',
@@ -377,7 +377,7 @@ if(!function_exists('tw_post_nav')){
 ***********************  Metaboxes ********************
 ******************************************************/
 if(class_exists('AT_Meta_Box')){
-  $post_id = $_GET['post'] ? $_GET['post'] : $_POST['post_ID'] ;
+  $post_id = isset($_GET['post']) ? $_GET['post'] : $_POST['post_ID'] ;
   $template_file = get_post_meta($post_id,'_wp_page_template', TRUE);
 
   $blog_options = get_option('tw_theme_blog_options') ? get_option('tw_theme_blog_options') : null;
