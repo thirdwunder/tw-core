@@ -55,10 +55,13 @@
 .gfield{
   .row();
   .ginput_complex{
-    .name_first,
-    .name_last{
-      width: 49.5% !important;
-      display: inline-block;
+    &.has_first_name.has_last_name {
+      .name_first,
+      .name_last{
+        width: 49% !important;
+        display: inline;
+        display: inline-block;
+      }
     }
   }
 }
