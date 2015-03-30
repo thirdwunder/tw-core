@@ -1605,10 +1605,15 @@ p >iframe{
     &.alignnone,
     &.alignleft,
     &.alignright{
-     float: none;
+     float: none !important;
      margin: 15px auto;
      display: block;
      max-width: 100% !important;
+     width: 100% !important;
+     img{
+       width: 100%;
+       max-width: 100%;
+     }
     }
 
   }
