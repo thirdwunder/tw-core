@@ -988,6 +988,16 @@ if(!function_exists('tw_get_theme_social_options')){
 
         }
      }
+
+     if(count($social)>1){
+       $rss_icon = 'fa-rss';
+       if($square){
+         $rss_icon .= '-square';
+       }
+
+       $social['rss'] = array('url'=> get_bloginfo('rss2_url') ,'icon'=>$rss_icon);
+     }
+
      return $social;
   }
 }
