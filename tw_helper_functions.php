@@ -231,14 +231,16 @@ function tw_text_limit($text, $limit) {
  * @param  string $text
  * @return string $text
  */
-function tw_slugify($text){
-  $text = preg_replace('~[^\\pL\d]+~u', '-', $text); // replace non letter or digits by -
-  $text = trim($text, '-'); // trim
-  $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text); // transliterate
-  $text = strtolower($text); // lowercase
-  $text = preg_replace('~[^-\w]+~', '', $text); // remove unwanted characters
-  if (empty($text)){
-    return 'n-a';
+if(!function_exists('tw_slugify')){
+  function tw_slugify($text){
+    $text = preg_replace('~[^\\pL\d]+~u', '-', $text); // replace non letter or digits by -
+    $text = trim($text, '-'); // trim
+    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text); // transliterate
+    $text = strtolower($text); // lowercase
+    $text = preg_replace('~[^-\w]+~', '', $text); // remove unwanted characters
+    if (empty($text)){
+      return 'n-a';
+    }
+    return $text;
   }
-  return $text;
 }
