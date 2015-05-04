@@ -748,8 +748,10 @@ if(!function_exists('tw_get_image_src')){
   }
 }
 
+if(!function_exists('tw_get_default_image')){
 function tw_get_default_image(){
  return get_template_directory_uri().'/assets/img/default.png';
+}
 }
 
 
