@@ -1,5 +1,6 @@
 <?php
 
+if(!function_exists('lp_rebuild_old_data_configurations_to_suit_new_convention')){
 add_filter('lp_extension_data','lp_rebuild_old_data_configurations_to_suit_new_convention');
 function lp_rebuild_old_data_configurations_to_suit_new_convention($lp_data){
 
@@ -13,4 +14,5 @@ function lp_rebuild_old_data_configurations_to_suit_new_convention($lp_data){
         'context'  => 'normal'
   );
   return $lp_data;
+}
 }

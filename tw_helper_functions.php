@@ -9,6 +9,7 @@
  * @param  array  rgb
  * @return string hex
  */
+if(!function_exists('tw_rgb2hex')){
 function tw_rgb2hex($rgb) {
    $hex = "#";
    $hex .= str_pad(dechex($rgb[0]), 2, "0", STR_PAD_LEFT);
@@ -17,12 +18,14 @@ function tw_rgb2hex($rgb) {
 
    return $hex;
 }
+}
 
 /**
  * Returns color rgba array hex string value
  * @param  string hex
  * @return array rgb
  */
+if(!function_exists('tw_hex2rgb')){
 function tw_hex2rgb($hex) {
    $hex = str_replace("#", "", $hex);
 
@@ -38,16 +41,19 @@ function tw_hex2rgb($hex) {
    $rgb = array($r, $g, $b);
    return $rgb;
 }
+}
 
 /**
  * Returns a base domain from a full url
  * @param  string $url
  * @return string $domain
  */
+if(!function_exists('tw_url2domain')){
 function tw_url2domain($url){
   $domain = preg_replace('#^https?://#', '', $url);
   $domain = preg_replace('#^www.#','',$url);
   return $domain;
+}
 }
 
 /**
@@ -55,8 +61,10 @@ function tw_url2domain($url){
  * @param  string $phone
  * @return string $phone
  */
+if(!function_exists('tw_clean_phone_number')){
 function tw_clean_phone_number($phone){
   return preg_replace('~[\W\s]~', "", $phone);
+}
 }
 
 /**
@@ -64,9 +72,11 @@ function tw_clean_phone_number($phone){
  * @param  string $string
  * @return string $string
  */
+if(!function_exists('tw_clean_string')){
 function tw_clean_string($string) {
    $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
    return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+}
 }
 
 /**
@@ -74,11 +84,13 @@ function tw_clean_string($string) {
  * @param  string $name
  * @return string $abbreviated
  */
+if(!function_exists('tw_abbreviate_name')){
 function tw_abbreviate_name($name){
   $prefixes = array('Ms','Miss','Mrs','Mr','Master','Rev','Dr','Prof','Atty', 'Att','Hon','Pres','Gov','.');
   $abbreviated = str_replace($prefixes, "", $name);
   $abbreviated =  preg_replace('~\b(\w)|.~', '$1', $abbreviated);
   return $abbreviated;
+}
 }
 
 
@@ -87,9 +99,11 @@ function tw_abbreviate_name($name){
  * @param  string $file_url
  * @return string $file_icon
  */
+if(!function_exists('tw_file_icon_from_url')){
 function tw_file_icon_from_url($file_url){
   $f = pathinfo($file_url);
   return tw_fa_file_icon($f['extension']);
+}
 }
 
 /**
@@ -97,6 +111,7 @@ function tw_file_icon_from_url($file_url){
  * @param  string $extension
  * @return string $file_icon
  */
+if(!function_exists('tw_fa_file_icon')){
 function tw_fa_file_icon($extension){
   $file_icon = 'fa-file';
   $file_ext = array(
@@ -134,6 +149,7 @@ function tw_fa_file_icon($extension){
  }
  return $file_icon;
 }
+}
 
 /**
  * Returns Youtube or Vimeo embed iframe from url
@@ -141,6 +157,7 @@ function tw_fa_file_icon($extension){
  * @param  string $autoplay
  * @return string $iframe
  */
+if(!function_exists('tw_videoURL_to_embedCode')){
 function tw_videoURL_to_embedCode($url, $autoplay=false){
   $iframe = null;
   if(preg_match('/youtube/',$url)){
@@ -150,6 +167,7 @@ function tw_videoURL_to_embedCode($url, $autoplay=false){
   }
   return $iframe;
 }
+}
 
 /**
  * Returns Vimeo embed iframe from url
@@ -157,6 +175,7 @@ function tw_videoURL_to_embedCode($url, $autoplay=false){
  * @param  string $autoplay
  * @return string $iframe
  */
+if(!function_exists('tw_vimeoURL_to_embedCode')){
 function tw_vimeoURL_to_embedCode($url, $autoplay=false){
   $regex = '~
 		# Match Vimeo link and embed code
@@ -189,6 +208,7 @@ function tw_vimeoURL_to_embedCode($url, $autoplay=false){
 
   return $iframe;
 }
+}
 
 /**
  * Returns Youtube embed iframe from url
@@ -196,6 +216,7 @@ function tw_vimeoURL_to_embedCode($url, $autoplay=false){
  * @param  string $autoplay
  * @return string $iframe
  */
+if(!function_exists('tw_youtubeURL_to_embedCode')){
 function tw_youtubeURL_to_embedCode($url, $autoplay=false){
   preg_match(
           '/[\\?\\&]v=([^\\?\\&]+)/',
@@ -210,6 +231,7 @@ function tw_youtubeURL_to_embedCode($url, $autoplay=false){
   $iframe = '&lt;iframe class="embed-responsive-item" width="' . $width . '" height="' . $height . '" src="http://www.youtube.com/embed/' . $id . '?autoplay='.$autoplay.'&amp;rel=0" frameborder="0" allowfullscreen&gt;&lt;/iframe>';
   return $iframe;
 }
+}
 
 /**
  * Returns character limited truncated string
@@ -217,6 +239,7 @@ function tw_youtubeURL_to_embedCode($url, $autoplay=false){
  * @param  integer $limit
  * @return string $text
  */
+if(!function_exists('tw_text_limit')){
 function tw_text_limit($text, $limit) {
   if (str_word_count($text, 0) > $limit) {
       $words = str_word_count($text, 2);
@@ -224,6 +247,7 @@ function tw_text_limit($text, $limit) {
       $text = substr($text, 0, $pos[$limit]) . '...';
   }
   return $text;
+}
 }
 
 /**
