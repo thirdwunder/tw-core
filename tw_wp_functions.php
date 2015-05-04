@@ -491,10 +491,12 @@ if(class_exists('AT_Meta_Box')){
  * @return string $class
  */
 
+if(!function_exists('tw_round_avatar_css')){
 add_filter('get_avatar','tw_round_avatar_css');
 function tw_round_avatar_css($class) {
   $class = str_replace("class='avatar", "itemprop='image' class='avatar img-circle media-object", $class) ;
   return $class;
+}
 }
 
 /**
@@ -502,10 +504,12 @@ function tw_round_avatar_css($class) {
  * @param string $class
  * @return string $class
  */
+if(!function_exists('tw_reply_link_class')){
 add_filter('comment_reply_link', 'tw_reply_link_class');
 function tw_reply_link_class($class){
     $class = str_replace("class='comment-reply-link", "class='comment-reply-link btn btn-primary btn-xs", $class);
     return $class;
+}
 }
 
 
