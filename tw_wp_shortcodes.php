@@ -1,17 +1,17 @@
 <?php
-if(!function_exists('tw_lead')){
 add_shortcode('lead', 'tw_lead');
-function tw_lead($atts, $content = null) {
-  return '<div class="lead">'.$content.'</div>';
-}
-}
+//if(!function_exists('tw_lead')){
+  function tw_lead($atts, $content = null) {
+    return '<div class="lead">'.$content.'</div>';
+  }
+//}
 
-if(!function_exists('tw_lead')){
 add_shortcode('blockquote', 'tw_blockquote');
-function tw_blockquote($atts, $content = null) {
-  $atts = shortcode_atts(array(
-          'position' => 'center',
-        ), $atts);
-  return '<blockquote class="'.$atts['position'].'">'.$content.'</blockquote>';
-}
-}
+//if(!function_exists('tw_lead')){
+  function tw_blockquote($atts, $content = null) {
+    $atts = shortcode_atts(array(
+            'position' => 'center',
+          ), $atts);
+    return '<blockquote class="'.$atts['position'].'">'.$content.'</blockquote>';
+  }
+//}
