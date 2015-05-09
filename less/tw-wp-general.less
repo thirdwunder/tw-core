@@ -820,16 +820,19 @@ blockquote{
       font-size: 1em;
       line-height: 64px;
       border-left: 1px solid @color-line-light;
+      .transition(all, 0.3s, ease-in-out);
       &::first-child{
         border:none;
       }
       a{
+        .transition(all, 0.3s, ease-in-out);
         color: @text-color;
       }
 
       &.facebook, &.twitter, &.googleplus, &.pinterest, &.linkedin, &.email{
         position: relative;
         color: @text-color;
+        .transition(all, 0.3s, ease-in-out);
         a{
           color: @text-color !important;
         }
@@ -844,6 +847,7 @@ blockquote{
           padding-bottom: 5px;
           line-height: 16px;
           color: #fff;
+          .transition(all, 0.3s, ease-in-out);
           .shared-count{
             font-weight: bold;
             font-size: 1.1em;
@@ -957,6 +961,7 @@ blockquote{
       color: @text-color;
     }
     li{
+      .transition(all, 0.3s, ease-in-out);
       position: relative;
       background:white;
       background: rgba(255,255,255,0.2);

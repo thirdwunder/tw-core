@@ -7,7 +7,7 @@ add_shortcode('lead', 'tw_lead');
 //}
 
 add_shortcode('blockquote', 'tw_blockquote');
-//if(!function_exists('tw_lead')){
+//if(!function_exists('tw_blockquote')){
   function tw_blockquote($atts, $content = null) {
     $atts = shortcode_atts(array(
             'position' => 'center',
