@@ -926,7 +926,7 @@ if(!function_exists('tw_html_tag_schema')){
 
 
 if(!function_exists('tw_get_social_networks')){
-  function tw_get_social_networks($square_social_icons){
+  function tw_get_social_networks($square_social_icons, $has_rss=false){
     $social_info   = get_option('tw_theme_social_options');
     $social = array();
     unset($social_info['fb_app_id']);
@@ -989,7 +989,7 @@ if(!function_exists('tw_get_social_networks')){
         }
      }
 
-    if(count($social)>1){
+    if(count($social)>1 && $has_rss){
       $rss_icon = 'fa-rss';
       if($square){
         $rss_icon .= '-square';

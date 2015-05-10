@@ -17,7 +17,7 @@ class tw_social_widget extends WP_Widget {
     $message 	= $instance['message'];
     $square_social_icons = (isset($instance['square-icons']) && trim($instance['square-icons'])=='on') ? true : false;
     //$social_info   = tw_get_theme_social_options($square_social_icons);
-    $social_info   = tw_get_social_networks($square_social_icons);
+    $social_info   = tw_get_social_networks($square_social_icons, true);
 
     echo $before_widget;
       if ( $title )
