@@ -1153,6 +1153,24 @@ function tw_enable_facebook_comments_callback($args) {
 
 } // end tw_enable_sidebar_callback
 
+
+function tw_enable_comments_options_callback($args) {
+
+	$options = get_option( 'tw_theme_social_options' );
+
+	$html = '<select id="tw_theme_social_options" name="tw_theme_social_options[comment_options]">';
+		$html .= '<option value="default">' . __( 'Select a comments option...', 'tw' ) . '</option>';
+		$html .= '<option value="wp_comments"' . selected( $options['comment_options'], 'wp_comments', false) . '>' . __( 'Wordpress Comments Only', 'tw' ) . '</option>';
+		$html .= '<option value="fb_comments"' . selected( $options['comment_options'], 'fb_comments', false) . '>' . __( 'Facebook Comments Only', 'tw' ) . '</option>';
+		$html .= '<option value="wp_fb_comments"' . selected( $options['comment_options'], 'wp_fb_comments', false) . '>' . __( 'Wordpress & Facebook Comments', 'tw' ) . '</option>';
+		$html .= '</select>';
+		$html .= '<label for="tw_theme_social_options"><br/>'  . $args[0] . '</label>';
+
+	echo $html;
+
+} // end tw_radio_element_callback
+
+
 /* ------------------------------------------------------------------------ *
  * Social Options
  * ------------------------------------------------------------------------ */
@@ -1251,12 +1269,13 @@ function tw_theme_initialize_social_options() {
 
 	add_settings_field(
 		'enable_fb_comments',
-		__( 'Facebook Comments', 'tw' ),
-		'tw_enable_facebook_comments_callback',
+		__( 'Commenting System', 'tw' ),
+		//'tw_enable_facebook_comments_callback',
+		'tw_enable_comments_options_callback',
 		'tw_theme_social_options',
 		'social_api_settings_section',
 		array(
-			__( 'Replace Wordpress comments with Facebook Comments.<br/> Needs to have a valid Facebook App ID entered in the Social Settings.', 'tw' ),
+			__( 'Choose the type of commenting you would like.<br/> Facebook comments needs to have a valid Facebook App ID. <br/> Default is the Wordpress comments.', 'tw' ),
 		)
 	);
 
