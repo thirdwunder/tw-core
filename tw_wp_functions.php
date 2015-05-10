@@ -1106,66 +1106,84 @@ function tw_get_apple_icon_114(){
 }
 
 if(!function_exists('tw_get_apple_icon_144')){
-function tw_get_apple_icon_144(){
-  $logo_options = tw_getlogo_options();
-  $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-144.png';
-  if( isset($logo_options['apple-icon-144']) && trim($logo_options['apple-icon-144'])!=='' ){
-    $icon = trim($logo_options['apple-icon-144']);
+  function tw_get_apple_icon_144(){
+    $logo_options = tw_getlogo_options();
+    $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-144.png';
+    if( isset($logo_options['apple-icon-144']) && trim($logo_options['apple-icon-144'])!=='' ){
+      $icon = trim($logo_options['apple-icon-144']);
+    }
+    return $icon;
   }
-  return $icon;
-}
 }
 
 if(!function_exists('tw_is_footer_menu_enabled')){
-function tw_is_footer_menu_enabled(){
-  $general_options = tw_get_general_options();
-  $footer_wigets = isset($general_options['enable_footer_menu']) ? !!$general_options['enable_footer_menu'] : false;
-  return $footer_wigets;
-}
+  function tw_is_footer_menu_enabled(){
+    $general_options = tw_get_general_options();
+    $footer_wigets = isset($general_options['enable_footer_menu']) ? !!$general_options['enable_footer_menu'] : false;
+    return $footer_wigets;
+  }
 }
 
 if(!function_exists('tw_is_sidebar_enabled')){
-function tw_is_sidebar_enabled(){
-  $general_options = tw_get_general_options();
-  $sidebar = isset($general_options['enable_sidebar']) ? !!$general_options['enable_sidebar'] : false;
-  return $sidebar;
-}
+  function tw_is_sidebar_enabled(){
+    $general_options = tw_get_general_options();
+    $sidebar = isset($general_options['enable_sidebar']) ? !!$general_options['enable_sidebar'] : false;
+    return $sidebar;
+  }
 }
 
 if(!function_exists('tw_get_slider_style')){
-function tw_get_slider_style(){
-  $general_options = tw_get_general_options();
-  $style = isset($general_options['slider_style']) ? $general_options['slider_style'] : 'slide';
-  return $style;
-}
+  function tw_get_slider_style(){
+    $general_options = tw_get_general_options();
+    $style = isset($general_options['slider_style']) ? $general_options['slider_style'] : 'slide';
+    return $style;
+  }
 }
 
+if(!function_exists('get_facebook_app_id')){
+  function get_facebook_app_id(){
+    $social_options = tw_get_social_options();
+    $app_id = (is_array($social_options) && isset($social_options['fb_app_id']) && trim($social_options['fb_app_id'])!=='' ) ? trim($social_options['fb_app_id']) : false;
+    return $app_id;
+  }
+}
 
 if(!function_exists('tw_is_fb_coments_enabled')){
-function tw_is_fb_coments_enabled(){
-  $fb_comments = false;
-  $social_options = tw_get_social_options();
-  if(is_array($social_options) && isset($social_options['enable_fb_comments'])){
-    $fb_comments = !!$social_options['enable_fb_comments'];
+  function tw_is_fb_coments_enabled(){
+    $fb_comments = false;
+    $social_options = tw_get_social_options();
+    if(is_array($social_options) && isset($social_options['enable_fb_comments'])){
+      $fb_comments = !!$social_options['enable_fb_comments'];
+    }
+    return $fb_comments;
   }
-  return $fb_comments;
 }
+
+if(!function_exists('tw_coment_options')){
+  function tw_coment_options(){
+    $comment_options = 'wp_comments';
+    $social_options = tw_get_social_options();
+    if(is_array($social_options) && isset($social_options['comment_options']) && trim($social_options['comment_options'])!==''){
+      $comment_options = $social_options['comment_options'];
+    }
+    return $comment_options;
+  }
 }
 
 if(!function_exists('tw_is_blog_sidebar_enabled')){
-function tw_is_blog_sidebar_enabled(){
-  $blog_options = get_option('tw_theme_blog_options');
-  $sidebar = (is_array($blog_options)&& isset($blog_options['enable_blog_sidebar']) ) ? !!$blog_options['enable_blog_sidebar'] : false;
-  return $sidebar;
-}
+  function tw_is_blog_sidebar_enabled(){
+    $blog_options = get_option('tw_theme_blog_options');
+    $sidebar = (is_array($blog_options)&& isset($blog_options['enable_blog_sidebar']) ) ? !!$blog_options['enable_blog_sidebar'] : false;
+    return $sidebar;
+  }
 }
 
 if(!function_exists('tw_is_related_posts_enabled')){
-function tw_is_related_posts_enabled(){
-  $blog_options = get_option('tw_theme_blog_options');
-  $related_posts = (is_array($blog_options)&& isset($blog_options['enable_related_posts']) ) ? !!$blog_options['enable_related_posts'] : false;
-  return $related_posts;
-}
+  function tw_is_related_posts_enabled(){
+    $blog_options = get_option('tw_theme_blog_options');
+    $related_posts = (is_array($blog_options)&& isset($blog_options['enable_related_posts']) ) ? !!$blog_options['enable_related_posts'] : false;
+    return $related_posts;
+  }
 }
 
 
