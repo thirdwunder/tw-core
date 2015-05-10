@@ -925,6 +925,83 @@ if(!function_exists('tw_html_tag_schema')){
 }
 
 
+if(!function_exists('tw_get_social_networks')){
+  function tw_get_social_networks($square_social_icons){
+    $social_info   = get_option('tw_theme_social_options');
+    $social = array();
+    unset($social_info['fb_app_id']);
+    unset($social_info['sharedcount_id']);
+    unset($social_info['comment_options']);
+    unset($social_info['enable_fb_comments']);
+
+    foreach($social_info as $network => $value){
+        $username = '';
+        $value = trim($value);
+        switch ($network) {
+          case 'fb_page':
+              $network = 'facebook';
+              $icon = 'fa-'.$network.$style;
+              break;
+          case 'twitter':
+              $username = $value;
+              $value  = trim($username)!==''? 'http://twitter.com/'.$username : '';
+              $icon = 'fa-'.$network.$style;
+              break;
+          case 'instagram':
+              $username = $value;
+              $value  = trim($username)!=='' ? 'http://instagram.com/'.$username : '';
+              $icon = 'fa-instagram';
+              break;
+          case 'pinterest':
+              $icon = 'fa-'.$network.$style;
+              break;
+          case 'linkedin':
+              $icon = 'fa-'.$network.$style;
+              break;
+          case 'googleplus':
+              $icon = 'fa-google-plus'.$style;
+              break;
+          case 'youtube':
+              $icon = 'fa-'.$network.$style;
+              break;
+          case 'vimeo':
+              $icon = 'fa-'.$network.'-square';
+              break;
+          case 'flickr':
+              $icon = 'fa-'.$network;
+              break;
+          case 'slideshare':
+              $icon = 'fa-'.$network;
+              break;
+          case 'tumblr':
+              $icon = 'fa-'.$network.$style;
+              break;
+        }
+
+        if(!empty($value)){
+          $social[$network] = array(
+                                'url' =>$value,
+                                'icon'=>$icon
+                              );
+          if($username){
+            $social[$network]['username'] = $username;
+          }
+        }
+     }
+
+    if(count($social)>1){
+      $rss_icon = 'fa-rss';
+      if($square){
+        $rss_icon .= '-square';
+      }
+
+      $social['rss'] = array('url'=> get_bloginfo('rss2_url') ,'icon'=>$rss_icon);
+    }
+
+    return $social;
+  }
+}
+
 /**
  * Returns array of social network information formatted for easily display from Theme Options
  * @return array social
