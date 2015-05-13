@@ -72,7 +72,8 @@
 .widget_recent_entries,
 .widget_recent_comments,
 .widget_rss,
-.widget_meta{
+.widget_meta,
+.widget_wysija{
   .widget-title{
     &::before{
       font-family: @font-fontawesome;
@@ -377,6 +378,12 @@
       .container();
     }
   }
-
+  .widget_wysija{
+    .container();
+    .widget_wysija{
+      .wysija-paragraph{
+      }
+    }
+  }
 
 }
