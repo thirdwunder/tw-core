@@ -24,6 +24,7 @@ function tw_add_image_size($ratio, $size, $hard_crop = true, $unlimited_height =
                       'large'=>1024,
                       'medium'=>800,
                       'small'=>400,
+                      'xsmall'=>250,
                       'xthumb'=>50
                     );
   $img_ratios = array(
