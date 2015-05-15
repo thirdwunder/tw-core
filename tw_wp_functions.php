@@ -19,7 +19,8 @@
 if(!function_exists('tw_add_image_size')){
 function tw_add_image_size($ratio, $size, $hard_crop = true, $unlimited_height = false, $postion = array()){
   $img_widths = array(
-                      'xlarge'=>2048,
+                      'xxlarge'=>2048,
+                      'xlarge'=>1600,
                       'large'=>1024,
                       'medium'=>800,
                       'small'=>400,
