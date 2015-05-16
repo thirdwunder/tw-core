@@ -40,6 +40,20 @@
   transition: @property @duration @function !important;
 }
 
+
+
+.bg-img-gradient(@startColor: #555, @endColor: #333, @image) {
+    background-color: mix(@startColor, @endColor, 60%); // fallback
+    background-image: @image; // fallback
+
+    background: -moz-linear-gradient(top, @startColor, @endColor)                       , url(@image); // FF 3.6+
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor), to(@endColor)) , url(@image); // Safari 4+, Chrome 2+
+    background: -webkit-linear-gradient(top, @startColor, @endColor)                    , url(@image); // Safari 5.1+, Chrome 10+
+    background: -o-linear-gradient(top, @startColor, @endColor)                         , url(@image); // Opera 11.10
+    background: linear-gradient(to bottom, @startColor, @endColor)                      , url(@image); // Standard, IE10
+}
+
+
 @base-size: 18px;
 
 .em-size( @value: @base-size, @context: @base-size ) {
