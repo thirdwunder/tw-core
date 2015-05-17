@@ -1020,8 +1020,8 @@ if(!function_exists('tw_get_theme_social_options')){
     unset($social_info['sharedcount_id']);
     unset($social_info['comment_options']);
     unset($social_info['enable_fb_comments']);
-    unset($social_info['twitter_access_token']);
-    unset($social_info['twitter_access_token_secret']);
+    unset($social_info['twitter_oauth_access_token']);
+    unset($social_info['twitter_oauth_access_token_secret']);
     unset($social_info['twitter_consumer_key']);
     unset($social_info['twitter_consumer_secret']);
 
