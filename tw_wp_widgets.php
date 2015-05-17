@@ -7,8 +7,8 @@ class tw_social_widget extends WP_Widget {
 
   /** constructor -- name this the same as the class above */
   function tw_social_widget() {
-        parent::WP_Widget(false, $name = 'TW Social Widget');
-    }
+    parent::WP_Widget(false, $name = 'TW Social Widget');
+  }
 
   /** @see WP_Widget::widget -- do not rename this */
   function widget($args, $instance) {
@@ -80,8 +80,8 @@ class tw_social_widget extends WP_Widget {
             </div>
           <?php endif; ?>
 
-				</div>
-      <?php echo $after_widget;
+			</div><!-- social-widget-container -->
+    <?php echo $after_widget;
   }
 
   /** @see WP_Widget::update -- do not rename this */
@@ -118,7 +118,6 @@ class tw_social_widget extends WP_Widget {
 
 } // end class example_widget
 add_action('widgets_init', create_function('', 'return register_widget("tw_social_widget");'));
-
 
 
 /**
@@ -189,7 +188,7 @@ class tw_fb_like_box_widget extends WP_Widget {
     </p>
     <p>
       <label for="<?php echo $this->get_field_id('height'); ?>"><?php _e('Height (in px)','tw'); ?></label>
-      <input class="widefat" id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo $height; ?>" />
+      <input class="widefat" id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="number" value="<?php echo $height; ?>" />
     </p>
     <p>
       <label for="<?php echo $this->get_field_id('color'); ?>"><?php _e('Color Scheme','tw'); ?> </label>
@@ -216,7 +215,6 @@ class tw_fb_like_box_widget extends WP_Widget {
     </p>
     <?php
   }
-
 
 } // end class example_widget
 add_action('widgets_init', create_function('', 'return register_widget("tw_fb_like_box_widget");'));

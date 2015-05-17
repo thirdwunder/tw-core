@@ -1199,7 +1199,9 @@ function tw_social_options_callback() {
 function tw_social_api_options_callback() {
 	echo '<p>' . __( 'Social API Details', 'tw' ) . '</p>';
 }
-
+function tw_twitter_api_options_callback() {
+	echo '<p>' . __( 'Twitter API Details', 'tw' ) . '</p>';
+}
 /**
  * Initializes the theme's social options by registering the Sections,
  * Fields, and Settings.
@@ -1215,6 +1217,13 @@ function tw_theme_initialize_social_options() {
   $social_apis = array(
     'fb_app_id'		=>	'Facebook App ID',
     'sharedcount_id' => 'Shared Count API Key',
+  );
+
+  $twitter_apis = array(
+    'twitter_oauth_access_token'		    => 'Access Token',
+    'twitter_oauth_access_token_secret' => 'Access Token Secret',
+    'twitter_consumer_key'        => 'Consumer Key',
+    'twitter_consumer_secret'     => 'Consumer Secret',
   );
 
   $social_networks = array(
@@ -1278,6 +1287,31 @@ function tw_theme_initialize_social_options() {
 			__( 'Choose the type of commenting you would like.<br/> Facebook comments needs to have a valid Facebook App ID. <br/> Default is the Wordpress comments.', 'tw' ),
 		)
 	);
+
+
+	// Twitter Options
+	if(class_exists('TwitterAPIExchange')){
+  	add_settings_section(
+  		'twitter_api_settings_section',			// ID used to identify this section and with which to register options
+  		__( 'Twitter Options', 'tw' ),		// Title to be displayed on the administration page
+  		'tw_twitter_api_options_callback',	// Callback used to render the description of the section
+  		'tw_theme_social_options'		// Page on which to add this section of options
+  	);
+
+  	foreach($twitter_apis as $k => $v){
+      add_settings_field(
+    		$k,
+    		$v,
+    		'tw_social_api_field_callback',
+    		'tw_theme_social_options',
+    		'twitter_api_settings_section',
+    		array('api'=>$k)
+    	);
+    }
+
+
+	}
+
 
 	register_setting(
 		'tw_theme_social_options',

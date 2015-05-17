@@ -935,6 +935,10 @@ if(!function_exists('tw_get_social_networks')){
     unset($social_info['sharedcount_id']);
     unset($social_info['comment_options']);
     unset($social_info['enable_fb_comments']);
+    unset($social_info['twitter_access_token']);
+    unset($social_info['twitter_access_token_secret']);
+    unset($social_info['twitter_consumer_key']);
+    unset($social_info['twitter_consumer_secret']);
 
     foreach($social_info as $network => $value){
         $username = '';
@@ -1010,7 +1014,17 @@ if(!function_exists('tw_get_social_networks')){
  */
 if(!function_exists('tw_get_theme_social_options')){
   function tw_get_theme_social_options($square=false){
-     $social_info   = get_option('tw_theme_social_options');
+    $social_info   = get_option('tw_theme_social_options');
+
+    unset($social_info['fb_app_id']);
+    unset($social_info['sharedcount_id']);
+    unset($social_info['comment_options']);
+    unset($social_info['enable_fb_comments']);
+    unset($social_info['twitter_access_token']);
+    unset($social_info['twitter_access_token_secret']);
+    unset($social_info['twitter_consumer_key']);
+    unset($social_info['twitter_consumer_secret']);
+
      $social = array();
      $style = $square==true ? '-square' : '';
      if($square){
@@ -1093,73 +1107,73 @@ if(!function_exists('tw_get_theme_social_options')){
 ****************** Option Functions *******************
 ******************************************************/
 if(!function_exists('tw_get_general_options')){
-function tw_get_general_options(){
-  $general_options = get_option('tw_theme_general_options') ? get_option('tw_theme_general_options') : false;
-  return $general_options;
-}
+  function tw_get_general_options(){
+    $general_options = get_option('tw_theme_general_options') ? get_option('tw_theme_general_options') : false;
+    return $general_options;
+  }
 }
 
 if(!function_exists('tw_getlogo_options')){
-function tw_getlogo_options(){
-  $logo_options = get_option('tw_theme_logo_options') ? get_option('tw_theme_logo_options') : false;
-  return $logo_options;
-}
+  function tw_getlogo_options(){
+    $logo_options = get_option('tw_theme_logo_options') ? get_option('tw_theme_logo_options') : false;
+    return $logo_options;
+  }
 }
 
 if(!function_exists('tw_get_blog_options')){
-function tw_get_blog_options(){
-  $blog_options = get_option('tw_theme_blog_options') ? get_option('tw_theme_blog_options') : false;
-  return $blog_options;
-}
+  function tw_get_blog_options(){
+    $blog_options = get_option('tw_theme_blog_options') ? get_option('tw_theme_blog_options') : false;
+    return $blog_options;
+  }
 }
 
 if(!function_exists('tw_get_social_options')){
-function tw_get_social_options(){
-  $social_options = get_option('tw_theme_social_options') ? get_option('tw_theme_social_options') : false;
-  return $social_options;
-}
+  function tw_get_social_options(){
+    $social_options = get_option('tw_theme_social_options') ? get_option('tw_theme_social_options') : false;
+    return $social_options;
+  }
 }
 
 if(!function_exists('tw_is_top_menu_enabled')){
-function tw_is_top_menu_enabled(){
-  $general_options = tw_get_general_options();
-  $top_menu = isset($general_options['enable_top_menu']) ? !!$general_options['enable_top_menu'] : false;
-  return $top_menu;
-}
+  function tw_is_top_menu_enabled(){
+    $general_options = tw_get_general_options();
+    $top_menu = isset($general_options['enable_top_menu']) ? !!$general_options['enable_top_menu'] : false;
+    return $top_menu;
+  }
 }
 
 
 if(!function_exists('tw_get_logo')){
-function tw_get_logo(){
-  $logo_options = tw_getlogo_options();
-  $logo = get_stylesheet_directory_uri().'/assets/img/logo.png';
-  if( isset($logo_options['logo']) && trim($logo_options['logo'])!=='' ){
-    $logo = trim($logo_options['logo']);
+  function tw_get_logo(){
+    $logo_options = tw_getlogo_options();
+    $logo = get_stylesheet_directory_uri().'/assets/img/logo.png';
+    if( isset($logo_options['logo']) && trim($logo_options['logo'])!=='' ){
+      $logo = trim($logo_options['logo']);
+    }
+    return $logo;
   }
-  return $logo;
-}
 }
 
 if(!function_exists('tw_get_favicon')){
-function tw_get_favicon(){
-  $logo_options = tw_getlogo_options();
-  $favicon = get_stylesheet_directory_uri().'/assets/img/favicon.png';
-  if( isset($logo_options['favicon']) && trim($logo_options['favicon'])!=='' ){
-    $favicon = trim($logo_options['favicon']);
+  function tw_get_favicon(){
+    $logo_options = tw_getlogo_options();
+    $favicon = get_stylesheet_directory_uri().'/assets/img/favicon.png';
+    if( isset($logo_options['favicon']) && trim($logo_options['favicon'])!=='' ){
+      $favicon = trim($logo_options['favicon']);
+    }
+    return $favicon;
   }
-  return $favicon;
-}
 }
 
 if(!function_exists('tw_get_apple_icon')){
-function tw_get_apple_icon(){
-  $logo_options = tw_getlogo_options();
-  $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon.png';
-  if( isset($logo_options['apple-icon']) && trim($logo_options['apple-icon'])!=='' ){
-    $icon = trim($logo_options['apple-icon']);
+  function tw_get_apple_icon(){
+    $logo_options = tw_getlogo_options();
+    $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon.png';
+    if( isset($logo_options['apple-icon']) && trim($logo_options['apple-icon'])!=='' ){
+      $icon = trim($logo_options['apple-icon']);
+    }
+    return $icon;
   }
-  return $icon;
-}
 }
 
 if(!function_exists('tw_get_apple_icon_72')){
@@ -1219,6 +1233,14 @@ if(!function_exists('tw_get_slider_style')){
   }
 }
 
+if(!function_exists('get_theme_twitter_username')){
+  function get_theme_twitter_username(){
+    $social_options = tw_get_social_options();
+    $twitter_username = (is_array($social_options) && isset($social_options['twitter']) && trim($social_options['twitter'])!=='' ) ? trim($social_options['twitter']) : false;
+    return $twitter_username;
+  }
+}
+
 if(!function_exists('get_facebook_app_id')){
   function get_facebook_app_id(){
     $social_options = tw_get_social_options();
@@ -1265,7 +1287,22 @@ if(!function_exists('tw_is_related_posts_enabled')){
   }
 }
 
-
+if(!function_exists('tw_get_twitter_api')){
+  function tw_get_twitter_api(){
+    $twitter_api = array();
+    $social_options = tw_get_social_options();
+    foreach($social_options as $k=>$v){
+      if(strpos($k, 'twitter_')!==false && trim($v)!==''){
+        $key = str_replace('twitter_', '', $k);
+        $twitter_api[$key] = $v;
+      }
+    }
+    if(count($twitter_api)>0){
+      return $twitter_api;
+    }
+    return false;
+  }
+}
 
 /******************************************************
 ***************** Shared Count API *******************

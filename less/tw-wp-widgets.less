@@ -61,6 +61,7 @@
 
 }
 
+.widget_tw_twitter_widget,
 .widget_tw_blog_widget,
 .widget_tw_fb_like_box_widget,
 .widget_tw_social_widget,
@@ -82,7 +83,43 @@
   }
 }
 
+.widget_tw_twitter_widget{
+  .widget-title{
+    &::before{
+      content: @fa-var-twitter;
+      color: @color-twitter;
+    }
+  }
+  .twitter-timeline{
+    ul.tweets{
+      li.tweet{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px 0;
+        border-bottom: 1px solid @color-line-light;
+        .tweet-text{
+          font-size: 0.9em;
+        }
+        .tweet-created_at{
+          font-size: 0.8em;
+          text-align: right;
+          font-style: italic;
+        }
 
+        &:last-child{
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  .more{
+    text-align: center;
+    .btn{
+      width: 100%;
+    }
+  }
+}
 .widget_tw_fb_like_box_widget{
   .widget-title{
     &::before{
