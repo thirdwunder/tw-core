@@ -89,13 +89,19 @@ if(class_exists('TwitterAPIExchange')){
     	$settings = tw_get_twitter_api();
       if(count($settings)==4){
 
-        //if ( false === ( $timeline = get_transient( 'tw_twitter_timeline' ) ) ) {
+        if ( false === ( $timeline = get_transient( 'tw_twitter_timeline' ) ) ) {
           $twitter = new TwitterAPIExchange($settings);
           $timeline = $twitter->setGetfield($getfield)
                      ->buildOauth($url, $requestMethod)
                      ->performRequest();
         	set_transient( 'tw_twitter_timeline', $timeline, HOUR_IN_SECONDS/4 );
-        //}
+        }else{
+          $twitter = new TwitterAPIExchange($settings);
+          $timeline = $twitter->setGetfield($getfield)
+                     ->buildOauth($url, $requestMethod)
+                     ->performRequest();
+        	set_transient( 'tw_twitter_timeline', $timeline, HOUR_IN_SECONDS/4 );
+        }
 
         $timeline = json_decode($timeline);
 
