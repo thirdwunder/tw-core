@@ -270,6 +270,45 @@ if(!function_exists('tw_slugify')){
 }
 
 /**
+ * Returns array of dates from a to and from date input
+ * @param  date $from (y-m-d)
+ * @param  date $to (y-m-d)
+ * @return array $dates
+ */
+if(!function_exists('tw_get_date_range_array')){
+  function tw_get_date_range_array($from, $to){
+    $dates = array();
+    $day = 86400;
+    $from = strtotime($from);
+    $to   = strtotime($to);
+    $days_between = ceil(abs($to - $from) / $day);
+    for($i=0; $i<=$days_between; $i++){
+      $d = $from + ($i*$day);
+      $d =  date('Y-m-d', $d);
+
+      $dates[] = $d;
+    }
+    return $dates;
+  }
+}
+
+/**
+ * Returns country name from country code
+ * @param string $code_code
+ * @return string $country_name
+ */
+if(!function_exists('tw_get_country_name_from_code')){
+  function tw_get_country_name_from_code($country_code){
+    $country_name = '';
+    $country_list = tw_get_countries_list();
+    //if(in_array($code, $country_list)){
+      $country_name = $country_list[$country_code];
+    //}
+    return $country_name;
+  }
+}
+
+/**
  * Returns array of countries
  * @return array $countries
  */
@@ -524,5 +563,142 @@ if(!function_exists('tw_get_countries_list')){
       	'ZW' => __('Zimbabwe','tw'),
       );
     return $countries;
+  }
+}
+
+
+
+/**
+ * Returns html of a calendar
+ * @param  integer $month
+ * @param  integer $year
+ * @param  array $unavailability - array of dates in Y-m-d format
+ * @return string $calednar
+ */
+function draw_calendar($month,$year, $unavailability=array()){
+  $now = getdate();
+  $today_day = date('j');
+  $today_month = date('n');
+
+	/* draw table */
+	$calendar = '<div class="calendar-wrapper">';
+	$calendar .= '<div class="calendar-title">'.date('F', mktime(0, 0, 0, $month, 10)).' '.$year.'</div>';
+	$calendar .= '<table cellpadding="0" cellspacing="0" class="calendar">';
+
+	/* table headings */
+	$headings = array('S','M','T','W','T','F','S');
+	$calendar.= '<tr class="calendar-row"><td class="calendar-day-head">'.implode('</td><td class="calendar-day-head">',$headings).'</td></tr>';
+
+	/* days and weeks vars now ... */
+	$running_day = date('w',mktime(0,0,0,$month,1,$year));
+	$days_in_month = date('t',mktime(0,0,0,$month,1,$year));
+	$days_in_this_week = 1;
+	$day_counter = 0;
+	$dates_array = array();
+
+	/* row for week one */
+	$calendar.= '<tr class="calendar-row">';
+
+	/* print "blank" days until the first of the current week */
+	for($x = 0; $x < $running_day; $x++):
+		$calendar.= '<td class="calendar-day-np"> </td>';
+		$days_in_this_week++;
+	endfor;
+
+	/* keep going with days.... */
+	for($list_day = 1; $list_day <= $days_in_month; $list_day++):
+	  $day_class = 'day-number';
+	  $cal_state = 'calendar-day';
+  	if($today_month==$month && $today_day==$list_day){
+      $day_class.=' today';
+      $cal_state.= ' calendar-today';
+	  }
+
+    /** QUERY THE DATABASE FOR AN ENTRY FOR THIS DAY !!  IF MATCHES FOUND, PRINT THEM !! **/
+		$availability = true;
+		$this_day = date('Y-m-d', strtotime($year.'-'.$month.'-'.$list_day));
+		if(in_array($this_day, $unavailability)){
+  		$availability = false;
+		}
+
+		if(!$availability){
+  		$cal_state.= ' unavailable';
+		}
+
+    $calendar.= '<td class="'.$cal_state.'">';
+
+		/* add in the day number */
+		$calendar.= '<div class="'.$day_class.'">'.$list_day.'</div>';
+
+		$calendar.= '</td>';
+		if($running_day == 6):
+			$calendar.= '</tr>';
+			if(($day_counter+1) != $days_in_month):
+				$calendar.= '<tr class="calendar-row">';
+			endif;
+			$running_day = -1;
+			$days_in_this_week = 0;
+		endif;
+		$days_in_this_week++; $running_day++; $day_counter++;
+	endfor;
+
+	/* finish the rest of the days in the week */
+	if($days_in_this_week < 8):
+		for($x = 1; $x <= (8 - $days_in_this_week); $x++):
+			$calendar.= '<td class="calendar-day-np"> </td>';
+		endfor;
+	endif;
+
+	/* final row */
+	$calendar.= '</tr>';
+
+	/* end the table */
+	$calendar.= '</table>';
+
+  $calendar.= '</div><!-- .calendar-wrapper -->';
+
+	/* all done, return result */
+	return $calendar;
+}
+
+
+/**
+ * Returns html of stars using font-awesome
+ * @param  integer $number
+ * @param  integer $max
+ * @return string $stars_html
+ */
+if(!function_exists('tw_number_to_stars')){
+  function tw_number_to_stars($number, $max=5){
+    $base = floor($number);
+    $remainder = $number - $base;
+    $filler = floor($max-$number);
+    $stars_html = '';
+    for($i=1; $i<=$base; $i++){
+      $stars_html .= '<i class="fa fa-star"></i>';
+    }
+    if($remainder>0){
+      $stars_html .= '<i class="fa fa-star-half-o"></i>';
+    }
+    for($i=1; $i<=$filler; $i++){
+      $stars_html .= '<i class="fa fa-star-o"></i>';
+    }
+    return $stars_html;
+  }
+}
+
+/**
+ * Returns 2 level deep array list for easy use as columns
+ * @param  array $list
+ * @param  integer $columns
+ * @return string $array
+ */
+if(!function_exists('tw_list_to_column_groups')){
+  function tw_list_to_column_groups($list = array(), $columns=3){
+    $list_count = count($list);
+    $items_per_list = ceil($list_count/$columns);
+    $segemented_list = array_chunk($list, $items_per_list);
+
+    return $segemented_list;
   }
 }

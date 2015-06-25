@@ -97,3 +97,48 @@
     .alert-success();
   }
 }
+
+td.ui-datepicker-unselectable{
+  background-color: @color-line-light;
+}
+td.ui-datepicker-other-month{
+  background-color: white;
+}
+#ui-datepicker-div{
+  display: none;
+  background-color: white;
+  width: 260px;
+  border: 1px solid @color-line-light;
+  padding: 15px;
+  .ui-datepicker-header{
+    text-align: center;
+    .ui-datepicker-prev{
+      float: left;
+      margin-bottom: 10px;
+    }
+    .ui-datepicker-next{
+      float: right;
+      margin-bottom: 10px;
+    }
+
+    .ui-datepicker-title{
+      width: 100%;
+      display: block;
+      clear:both;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    select{
+      width: 48%;
+    }
+    .ui-datepicker-month{
+      margin-right: 2%;
+    }
+  }
+  table.ui-datepicker-calendar{
+    width: 100%;
+    th,td{
+      text-align: center;
+    }
+  }
+}
