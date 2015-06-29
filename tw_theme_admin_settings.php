@@ -666,20 +666,9 @@ function tw_initialize_theme_options() {
     */
     add_settings_section(
   		'gform_settings_section',			// ID used to identify this section and with which to register options
-  		__( 'Site Gravity Form Options', 'tw' ),		// Title to be displayed on the administration page
-  		'tw_gform_desc_callback',	// Callback used to render the description of the section
+  		__( 'Email Subscribe Gravity Form Options', 'tw' ),		// Title to be displayed on the administration page
+  		'tw_email_subscribe_gform_desc_callback',	// Callback used to render the description of the section
   		'tw_theme_general_options'		// Page on which to add this section of options
-  	);
-
-    add_settings_field(
-  		'contact_gform',
-  		__( 'Contact Us Form', 'tw' ),
-  		'tw_contact_gform_callback',
-  		'tw_theme_general_options',
-  		'gform_settings_section',
-  		array(
-  			__( 'Select the Gravity Form used for the contact us.', 'tw' ),
-  		)
   	);
 
     add_settings_field(
@@ -800,34 +789,6 @@ function tw_footer_social_icons_callback($args){
 	echo $html;
 }
 
-
-function tw_contact_gform_callback() {
-  if ( is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
-    $options = get_option( 'tw_theme_general_options' );
-    $forms = RGFormsModel::get_forms( null, 'title' );
-    $forms_array = array(''=>'');
-    foreach( $forms as $form ){
-      if($form->id!==''){
-        $forms_array[$form->id] = $form->title;
-      }
-
-    }
-    if(count($forms_array)>0){
-      $html = '<select id="contact_gform" name="tw_theme_general_options[contact_gform]">';
-      $html .= '<option value="0">' . __( 'Select a Gravity Form', 'tw' ) . '</option>';
-      foreach($forms_array as $id => $title){
-      	if($title!==''){
-      	  $html .= '<option value="'.$id.'"' . selected( $options['contact_gform'], $id, false) . '>' . $title . '</option>';
-      	}
-      }
-      $html .= '</select>';
-
-      echo $html;
-
-    }
-
-  }
-} // end tw_radio_element_callback
 
 function tw_email_subscribe_gform_callback() {
   if ( is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
