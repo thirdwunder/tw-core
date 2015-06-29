@@ -848,8 +848,6 @@ if(!function_exists('tw_the_post_thumbnail')){
 
 <<<<<<< HEAD
 
-=======
->>>>>>> core updates for buddypress
     $alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
 
     $html = '<img ';
