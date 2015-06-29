@@ -818,8 +818,11 @@ if(!function_exists('tw_get_the_post_thumbnail')){
  * @return: image html output
  */
 if(!function_exists('tw_the_post_thumbnail')){
-  function tw_the_post_thumbnail($image_sizes = array(), $attr = array()){
-    global $post;
+  function tw_the_post_thumbnail($image_sizes = array(), $attr = array(), $post_id=null){
+    if(is_null($post_id)){
+      global $post;
+      $post_id = $post->ID;
+    }
 
     $sizes = array(
                     'phone'    =>'4x3-small',
@@ -843,6 +846,7 @@ if(!function_exists('tw_the_post_thumbnail')){
     $src = array( tw_get_default_image(), '', '' );
     $img_size = $sizes['tablet'];
 
+
     $alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
 
     $html = '<img ';
@@ -863,8 +867,8 @@ if(!function_exists('tw_the_post_thumbnail')){
       }
     }
 
-    if(has_post_thumbnail($post->ID) ){
-      $img_id = get_post_thumbnail_id($post->ID);
+    if(has_post_thumbnail($post_id) ){
+      $img_id = get_post_thumbnail_id($post_id);
       $src = wp_get_attachment_image_src($img_id, $img_size);
     }
 
@@ -1132,6 +1136,13 @@ if(!function_exists('tw_is_top_menu_enabled')){
   }
 }
 
+if(!function_exists('tw_email_subscribe_gform')){
+  function tw_email_subscribe_gform(){
+    $general_options = tw_get_general_options();
+    $email_subscribe_gform_id = isset($general_options['email_subscribe_gform']) ? $general_options['email_subscribe_gform'] : false;
+    return $email_subscribe_gform_id;
+  }
+}
 
 if(!function_exists('tw_get_logo')){
   function tw_get_logo(){

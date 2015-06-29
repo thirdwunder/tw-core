@@ -489,7 +489,6 @@ function tw_theme_validate_logo_upload($input){
 	return apply_filters( 'tw_theme_validate_logo_upload', $output, $input );
 }
 
-
 function delete_image( $image_url ) {
 	global $wpdb;
 
@@ -531,6 +530,10 @@ function tw_slider_options_callback(){
   //echo '';
 }
 
+function tw_email_subscribe_gform_desc_callback(){
+  echo '<p>' . __( 'Select the email subscription Gravity Form', 'tw' ) . '</p>';
+}
+
 function tw_footer_options_callback(){
 
 }
@@ -552,7 +555,6 @@ function tw_initialize_theme_options() {
 		'tw_general_menu_options_callback',	// Callback used to render the description of the section
 		'tw_theme_general_options'		// Page on which to add this section of options
 	);
-
   add_settings_field(
 		'enable_top_menu',
 		__( 'Top Menu', 'tw' ),
@@ -585,7 +587,6 @@ function tw_initialize_theme_options() {
 		'tw_general_widget_options_callback',	// Callback used to render the description of the section
 		'tw_theme_general_options'		// Page on which to add this section of options
 	);
-
 	add_settings_field(
 		'enable_sidebar',
 		__( 'Primary Sidebar', 'tw' ),
@@ -596,7 +597,6 @@ function tw_initialize_theme_options() {
 			__( 'Enable the primary sidebar area.', 'tw' ),
 		)
 	);
-
 	add_settings_field(
 		'enable_homepage_sidebar',
 		__( 'Homepage Widget Area', 'tw' ),
@@ -607,7 +607,6 @@ function tw_initialize_theme_options() {
 			__( 'Enable the homepage template widget area', 'tw' ),
 		)
 	);
-
   add_settings_field(
 		'enable_footer_widgets',
 		__( 'Footer Widgets', 'tw' ),
@@ -619,13 +618,16 @@ function tw_initialize_theme_options() {
 		)
 	);
 
+
+  /**
+  * Slider Options
+  */
   add_settings_section(
 		'slide_settings_section',			// ID used to identify this section and with which to register options
 		__( 'Slider Options', 'tw' ),		// Title to be displayed on the administration page
 		'tw_slider_options_callback',	// Callback used to render the description of the section
 		'tw_theme_general_options'		// Page on which to add this section of options
 	);
-
   add_settings_field(
 		'slider_style',
 		__( 'Slider Style', 'tw' ),
@@ -637,7 +639,9 @@ function tw_initialize_theme_options() {
 		)
 	);
 
-
+  /**
+  * Footer Options
+  */
 	add_settings_section(
 		'footer_settings_section',			// ID used to identify this section and with which to register options
 		__( 'Footer Options', 'tw' ),		// Title to be displayed on the administration page
@@ -656,6 +660,28 @@ function tw_initialize_theme_options() {
 		)
 	);
 
+  if ( is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
+    /**
+    * Email Subscribe Gform Options
+    */
+    add_settings_section(
+  		'gform_settings_section',			// ID used to identify this section and with which to register options
+  		__( 'Email Subscribe Gravity Form Options', 'tw' ),		// Title to be displayed on the administration page
+  		'tw_email_subscribe_gform_desc_callback',	// Callback used to render the description of the section
+  		'tw_theme_general_options'		// Page on which to add this section of options
+  	);
+
+    add_settings_field(
+  		'email_subscribe_gform',
+  		__( 'Email Subscribe Form', 'tw' ),
+  		'tw_email_subscribe_gform_callback',
+  		'tw_theme_general_options',
+  		'gform_settings_section',
+  		array(
+  			__( 'Select the Gravity Form used for email subscriptions.', 'tw' ),
+  		)
+  	);
+	}
 
 	// Finally, we register the fields with WordPress
 	register_setting(
@@ -762,6 +788,35 @@ function tw_footer_social_icons_callback($args){
 
 	echo $html;
 }
+
+
+function tw_email_subscribe_gform_callback() {
+  if ( is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
+    $options = get_option( 'tw_theme_general_options' );
+    $forms = RGFormsModel::get_forms( null, 'title' );
+    $forms_array = array(''=>'');
+    foreach( $forms as $form ){
+      if($form->id!==''){
+        $forms_array[$form->id] = $form->title;
+      }
+
+    }
+    if(count($forms_array)>0){
+      $html = '<select id="email_subscribe_gform" name="tw_theme_general_options[email_subscribe_gform]">';
+      $html .= '<option value="0">' . __( 'Select a Gravity Form', 'tw' ) . '</option>';
+      foreach($forms_array as $id => $title){
+      	if($title!==''){
+      	  $html .= '<option value="'.$id.'"' . selected( $options['email_subscribe_gform'], $id, false) . '>' . $title . '</option>';
+      	}
+      }
+      $html .= '</select>';
+
+      echo $html;
+
+    }
+
+  }
+} // end tw_radio_element_callback
 
 /* ------------------------------------------------------------------------ *
  * Logos and Images
