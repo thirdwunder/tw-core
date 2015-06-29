@@ -751,9 +751,9 @@ if(!function_exists('tw_get_image_src')){
 }
 
 if(!function_exists('tw_get_default_image')){
-function tw_get_default_image(){
- return get_template_directory_uri().'/assets/img/default.png';
-}
+  function tw_get_default_image(){
+   return get_template_directory_uri().'/assets/img/default.png';
+  }
 }
 
 
@@ -826,8 +826,11 @@ if(!function_exists('tw_get_the_post_thumbnail')){
  * @return: image html output
  */
 if(!function_exists('tw_the_post_thumbnail')){
-  function tw_the_post_thumbnail($image_sizes = array(), $attr = array()){
-    global $post;
+  function tw_the_post_thumbnail($image_sizes = array(), $attr = array(), $post_id=null){
+    if(is_null($post_id)){
+      global $post;
+      $post_id = $post->ID;
+    }
 
     $sizes = array(
                     'phone'    =>'4x3-small',
@@ -852,7 +855,6 @@ if(!function_exists('tw_the_post_thumbnail')){
     $img_size = $sizes['tablet'];
 
 
-
     $alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
 
     $html = '<img ';
@@ -873,8 +875,8 @@ if(!function_exists('tw_the_post_thumbnail')){
       }
     }
 
-    if(has_post_thumbnail($post->ID) ){
-      $img_id = get_post_thumbnail_id($post->ID);
+    if(has_post_thumbnail($post_id) ){
+      $img_id = get_post_thumbnail_id($post_id);
       $src = wp_get_attachment_image_src($img_id, $img_size);
     }
 
@@ -1142,6 +1144,13 @@ if(!function_exists('tw_is_top_menu_enabled')){
   }
 }
 
+if(!function_exists('tw_email_subscribe_gform')){
+  function tw_email_subscribe_gform(){
+    $general_options = tw_get_general_options();
+    $email_subscribe_gform_id = isset($general_options['email_subscribe_gform']) ? $general_options['email_subscribe_gform'] : false;
+    return $email_subscribe_gform_id;
+  }
+}
 
 if(!function_exists('tw_get_logo')){
   function tw_get_logo(){
@@ -1177,25 +1186,25 @@ if(!function_exists('tw_get_apple_icon')){
 }
 
 if(!function_exists('tw_get_apple_icon_72')){
-function tw_get_apple_icon_72(){
-  $logo_options = tw_getlogo_options();
-  $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-72.png';
-  if( isset($logo_options['apple-icon-72']) && trim($logo_options['apple-icon-72'])!=='' ){
-    $icon = trim($logo_options['apple-icon-72']);
+  function tw_get_apple_icon_72(){
+    $logo_options = tw_getlogo_options();
+    $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-72.png';
+    if( isset($logo_options['apple-icon-72']) && trim($logo_options['apple-icon-72'])!=='' ){
+      $icon = trim($logo_options['apple-icon-72']);
+    }
+    return $icon;
   }
-  return $icon;
-}
 }
 
 if(!function_exists('tw_get_apple_icon_114')){
-function tw_get_apple_icon_114(){
-  $logo_options = tw_getlogo_options();
-  $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-114.png';
-  if( isset($logo_options['apple-icon-114']) && trim($logo_options['apple-icon-114'])!=='' ){
-    $icon = trim($logo_options['apple-icon-114']);
+  function tw_get_apple_icon_114(){
+    $logo_options = tw_getlogo_options();
+    $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-114.png';
+    if( isset($logo_options['apple-icon-114']) && trim($logo_options['apple-icon-114'])!=='' ){
+      $icon = trim($logo_options['apple-icon-114']);
+    }
+    return $icon;
   }
-  return $icon;
-}
 }
 
 if(!function_exists('tw_get_apple_icon_144')){
