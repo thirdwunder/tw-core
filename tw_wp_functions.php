@@ -1152,6 +1152,14 @@ if(!function_exists('tw_email_subscribe_gform')){
   }
 }
 
+if(!function_exists('tw_contact_gform')){
+  function tw_contact_gform(){
+    $general_options = tw_get_general_options();
+    $contact_gform_id = isset($general_options['contact_gform']) ? $general_options['contact_gform'] : false;
+    return $contact_gform_id;
+  }
+}
+
 if(!function_exists('tw_get_logo')){
   function tw_get_logo(){
     $logo_options = tw_getlogo_options();
