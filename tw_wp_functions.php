@@ -905,7 +905,7 @@ if(!function_exists('tw_the_post_thumbnail')){
  * Echos schema.org tag
  */
 if(!function_exists('tw_html_tag_schema')){
-  function tw_html_tag_schema($type=null){
+  function tw_html_tag_schema($type=null, $itemscope=''){
     $schema = 'http://schema.org/';
     if(is_null($type) || $type=='' ){
       if(is_single()){
@@ -924,7 +924,7 @@ if(!function_exists('tw_html_tag_schema')){
 
     }
 
-    echo 'itemscope="itemscope" itemtype="' . $schema . $type . '"';
+    echo 'itemscope="'.$itemscope.'" itemtype="' . $schema . $type . '"';
   }
 }
 
