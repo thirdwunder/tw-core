@@ -874,7 +874,7 @@ if(!function_exists('tw_the_post_thumbnail')){
           break;
       }
     }
-
+    error_log($post_id);
     if(has_post_thumbnail($post_id) ){
       $img_id = get_post_thumbnail_id($post_id);
       $src = wp_get_attachment_image_src($img_id, $img_size);
