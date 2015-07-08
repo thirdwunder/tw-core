@@ -846,7 +846,6 @@ if(!function_exists('tw_the_post_thumbnail')){
     $src = array( tw_get_default_image(), '', '' );
     $img_size = $sizes['tablet'];
 
-
     $alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
 
     $html = '<img ';
