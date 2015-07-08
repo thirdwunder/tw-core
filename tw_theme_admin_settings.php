@@ -152,7 +152,11 @@ function tw_theme_display( $active_tab = '' ) {
  * ------------------------------------------------------------------------ */
 function tw_settings_enqueue_scripts() {
     wp_register_script( 'tw-upload', get_template_directory_uri() .'/includes/tw-wp-core/js/min/tw-settings-min.js', array('jquery','media-upload','thickbox') );
+<<<<<<< Updated upstream
     if ( 'tw-theme_page_tw_theme_logo_options' == get_current_screen()->id ) {
+=======
+    if ( 'tw-theme_page_tw_theme_logo_options' == get_current_screen() -> id ) {
+>>>>>>> Stashed changes
         wp_enqueue_script('jquery');
 
         wp_enqueue_script('thickbox');
