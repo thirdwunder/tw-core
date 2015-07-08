@@ -151,7 +151,7 @@ function tw_theme_display( $active_tab = '' ) {
  * JS & CSS
  * ------------------------------------------------------------------------ */
 function tw_settings_enqueue_scripts() {
-    wp_register_script( 'tw-upload', get_template_directory_uri() .'/includes/tw-wp-core/js/tw-settings.js', array('jquery','media-upload','thickbox') );
+    wp_register_script( 'tw-upload', get_template_directory_uri() .'/includes/tw-wp-core/js/min/tw-settings-min.js', array('jquery','media-upload','thickbox') );
     if ( 'tw-theme_page_tw_theme_logo_options' == get_current_screen()->id ) {
         wp_enqueue_script('jquery');
 
