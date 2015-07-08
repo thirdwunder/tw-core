@@ -3,7 +3,7 @@
  * Wordpress Functions
  *
  */
-
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 /******************************************************
 ************* Theme Support Functions ****************
 ******************************************************/
@@ -17,49 +17,49 @@
  * @param array   $postion
  */
 if(!function_exists('tw_add_image_size')){
-function tw_add_image_size($ratio, $size, $hard_crop = true, $unlimited_height = false, $postion = array()){
-  $img_widths = array(
-                      'xxlarge'=>2048,
-                      'xlarge'=>1600,
-                      'large'=>1024,
-                      'medium'=>800,
-                      'small'=>400,
-                      'xsmall'=>250,
-                      'xthumb'=>50
-                    );
-  $img_ratios = array(
-                      '16x6'     =>array('w'=>16, 'h'=>6),
-                      '16x9'     =>array('w'=>16, 'h'=>9),
-                      '9x16'     =>array('w'=>9,  'h'=>16),
-                      '4x3'      =>array('w'=>4,  'h'=>3),
-                      '3x4'      =>array('w'=>3,  'h'=>4),
-                      '3x2'      =>array('w'=>3,  'h'=>2),
-                      '2x3'      =>array('w'=>2,  'h'=>3),
-                      'square'   =>array('w'=>1,  'h'=>1),
-                    );
+  function tw_add_image_size($ratio, $size, $hard_crop = true, $unlimited_height = false, $postion = array()){
+    $img_widths = array(
+                        'xxlarge'=>2048,
+                        'xlarge'=>1600,
+                        'large'=>1024,
+                        'medium'=>800,
+                        'small'=>400,
+                        'xsmall'=>250,
+                        'xthumb'=>50
+                      );
+    $img_ratios = array(
+                        '16x6'     =>array('w'=>16, 'h'=>6),
+                        '16x9'     =>array('w'=>16, 'h'=>9),
+                        '9x16'     =>array('w'=>9,  'h'=>16),
+                        '4x3'      =>array('w'=>4,  'h'=>3),
+                        '3x4'      =>array('w'=>3,  'h'=>4),
+                        '3x2'      =>array('w'=>3,  'h'=>2),
+                        '2x3'      =>array('w'=>2,  'h'=>3),
+                        'square'   =>array('w'=>1,  'h'=>1),
+                      );
 
-  $r_w = $img_ratios[$ratio]['w'];
-  $r_h = $img_ratios[$ratio]['h'];
+    $r_w = $img_ratios[$ratio]['w'];
+    $r_h = $img_ratios[$ratio]['h'];
 
-  $width = $img_widths[$size];
+    $width = $img_widths[$size];
 
-  if($unlimited_height){
-    $height = 999;
-  }else{
-    $height = ($r_h*$width)/$r_w;
+    if($unlimited_height){
+      $height = 999;
+    }else{
+      $height = ($r_h*$width)/$r_w;
+    }
+
+    if($unlimited_height){
+      $hard_crop  = false;
+      add_image_size( $ratio.'-'.$size.'-auto', $width, $height, $hard_crop, array('center','center'));
+    }elseif(count($postion)>0){
+      add_image_size( $ratio.'-'.$size, $width, $height, false, $postion );
+    }elseif($hard_crop){
+      add_image_size( $ratio.'-'.$size, $width, $height, $hard_crop, array('center','center'));
+    }else{
+      add_image_size( $ratio.'-'.$size, $width, $height, array('center','center'));
+    }
   }
-
-  if($unlimited_height){
-    $hard_crop  = false;
-    add_image_size( $ratio.'-'.$size.'-auto', $width, $height, $hard_crop, array('center','center'));
-  }elseif(count($postion)>0){
-    add_image_size( $ratio.'-'.$size, $width, $height, false, $postion );
-  }elseif($hard_crop){
-    add_image_size( $ratio.'-'.$size, $width, $height, $hard_crop, array('center','center'));
-  }else{
-    add_image_size( $ratio.'-'.$size, $width, $height, array('center','center'));
-  }
-}
 }
 
 /**
@@ -147,21 +147,20 @@ if(!function_exists('tw_post_formats')){
   			'audio',   // audio
   			'chat'     // chat transcript
   		);
-  if(is_array($tw_blog_options)){
-    $enabled_post_formats = array();
-    foreach($post_formats as $pf){
-      if(isset($tw_blog_options[$pf])){
-        $enabled_post_formats[] = $pf;
+    if(is_array($tw_blog_options)){
+      $enabled_post_formats = array();
+      foreach($post_formats as $pf){
+        if(isset($tw_blog_options[$pf])){
+          $enabled_post_formats[] = $pf;
+        }
       }
+      add_theme_support( 'post-formats',$enabled_post_formats);
     }
-    add_theme_support( 'post-formats',$enabled_post_formats);
-  }
 
 
   }
   add_action('after_setup_theme','tw_post_formats');
 }
-
 
 /******************************************************
 ********************** Widgets ************************
@@ -219,7 +218,6 @@ if(!function_exists('tw_register_sidebars')){
 }
 
 
-
 /******************************************************
 ******************* User Functions ********************
 ******************************************************/
@@ -254,7 +252,6 @@ if(!function_exists('tw_extra_contact_info')){
 /******************************************************
 ***************** Header Functions ********************
 ******************************************************/
-
 /**
  * Sets favicon url in header
  */
@@ -271,13 +268,13 @@ if(!function_exists('tw_favicon')){
  * Sets Apple iOS icons url in header
  */
 if(!function_exists('tw_apple_icon')){
-  function tw_apple_icon() { ?>
+  function tw_apple_icon(){ ?>
     		<link rel="apple-touch-icon" href="<?php echo tw_get_apple_icon();?>" />
       <link rel="apple-touch-icon" sizes="72x72" href="<?php echo tw_get_apple_icon_72();?>" />
       <link rel="apple-touch-icon" sizes="114x114" href="<?php echo tw_get_apple_icon_114();?>" />
       <link rel="apple-touch-icon" sizes="144x144" href="<?php echo tw_get_apple_icon_144();?>" />
   	<?php
-  }
+  };
   add_action( 'wp_head', 'tw_apple_icon', 10 );
 }
 
@@ -492,13 +489,12 @@ if(class_exists('AT_Meta_Box')){
  * @param string $class
  * @return string $class
  */
-
 if(!function_exists('tw_round_avatar_css')){
-add_filter('get_avatar','tw_round_avatar_css');
-function tw_round_avatar_css($class) {
-  $class = str_replace("class='avatar", "itemprop='image' class='avatar img-circle media-object", $class) ;
-  return $class;
-}
+  function tw_round_avatar_css($class) {
+    $class = str_replace("class='avatar", "itemprop='image' class='avatar img-circle media-object", $class) ;
+    return $class;
+  }
+  add_filter('get_avatar','tw_round_avatar_css');
 }
 
 /**
@@ -507,11 +503,11 @@ function tw_round_avatar_css($class) {
  * @return string $class
  */
 if(!function_exists('tw_reply_link_class')){
-add_filter('comment_reply_link', 'tw_reply_link_class');
-function tw_reply_link_class($class){
-    $class = str_replace("class='comment-reply-link", "class='comment-reply-link btn btn-primary btn-xs", $class);
-    return $class;
-}
+  function tw_reply_link_class($class){
+      $class = str_replace("class='comment-reply-link", "class='comment-reply-link btn btn-primary btn-xs", $class);
+      return $class;
+  }
+  add_filter('comment_reply_link', 'tw_reply_link_class');
 }
 
 
@@ -560,6 +556,7 @@ if(!function_exists('tw_comments')){
  * @param $fields
  */
 if(!function_exists('tw_comment_placeholders')){
+  add_filter( 'comment_form_default_fields', 'tw_comment_placeholders' );
   function tw_comment_placeholders( $fields ){
       $fields['author'] = str_replace( '<input', '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span><input placeholder="'
               . _x( 'First and last name or a nick name *', 'comment form placeholder', 'tw' ) . '"', $fields['author'] );
@@ -582,7 +579,6 @@ if(!function_exists('tw_comment_placeholders')){
 
       return $fields;
   }
-  add_filter( 'comment_form_default_fields', 'tw_comment_placeholders' );
 }
 
 
@@ -645,7 +641,6 @@ if(!function_exists('tw_copyright')){
 if(!function_exists( 'tw_get_post_images' ) ) {
 	function tw_get_post_images( $image_sizes = array(), $offset = 1 ) {
     global $post;
-
 
     $sizes = array(
                     '4x3-small',
@@ -742,7 +737,6 @@ if(!function_exists('tw_get_image_src')){
       }
     }
 
-
     $img_src = wp_get_attachment_image_src($image_id, $img_size);
     $img_src = $img_src[0];
 
@@ -751,9 +745,9 @@ if(!function_exists('tw_get_image_src')){
 }
 
 if(!function_exists('tw_get_default_image')){
-function tw_get_default_image(){
- return get_template_directory_uri().'/assets/img/default.png';
-}
+  function tw_get_default_image(){
+   return get_template_directory_uri().'/assets/img/default.png';
+  }
 }
 
 
@@ -800,8 +794,6 @@ if(!function_exists('tw_get_the_post_thumbnail')){
           break;
       }
     }
-
-
 
     $html .= 'src="'.$src[0].'" width="'.$src[1].'" height="'.$src[2].'" alt="'.$alt.'"';
     $class = 'attachment-'.$img_size.' wp-post-image';
@@ -850,8 +842,6 @@ if(!function_exists('tw_the_post_thumbnail')){
 
     $src = array( tw_get_default_image(), '', '' );
     $img_size = $sizes['tablet'];
-
-
 
     $alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
 
@@ -1177,25 +1167,25 @@ if(!function_exists('tw_get_apple_icon')){
 }
 
 if(!function_exists('tw_get_apple_icon_72')){
-function tw_get_apple_icon_72(){
-  $logo_options = tw_getlogo_options();
-  $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-72.png';
-  if( isset($logo_options['apple-icon-72']) && trim($logo_options['apple-icon-72'])!=='' ){
-    $icon = trim($logo_options['apple-icon-72']);
+  function tw_get_apple_icon_72(){
+    $logo_options = tw_getlogo_options();
+    $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-72.png';
+    if( isset($logo_options['apple-icon-72']) && trim($logo_options['apple-icon-72'])!=='' ){
+      $icon = trim($logo_options['apple-icon-72']);
+    }
+    return $icon;
   }
-  return $icon;
-}
 }
 
 if(!function_exists('tw_get_apple_icon_114')){
-function tw_get_apple_icon_114(){
-  $logo_options = tw_getlogo_options();
-  $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-114.png';
-  if( isset($logo_options['apple-icon-114']) && trim($logo_options['apple-icon-114'])!=='' ){
-    $icon = trim($logo_options['apple-icon-114']);
+  function tw_get_apple_icon_114(){
+    $logo_options = tw_getlogo_options();
+    $icon = get_stylesheet_directory_uri().'/assets/img/apple-touch-icon-114.png';
+    if( isset($logo_options['apple-icon-114']) && trim($logo_options['apple-icon-114'])!=='' ){
+      $icon = trim($logo_options['apple-icon-114']);
+    }
+    return $icon;
   }
-  return $icon;
-}
 }
 
 if(!function_exists('tw_get_apple_icon_144')){
