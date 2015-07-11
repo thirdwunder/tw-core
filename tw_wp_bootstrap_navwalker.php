@@ -16,6 +16,12 @@ if(class_exists('wp_bootstrap_navwalker')){
   	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
   		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
 
+      // Getting Phone number options from TW Settings
+      $contact_options = get_option('tw_theme_contact_options');
+      $phone_enabled = isset($contact_options['enable_phone_in_menu']) && $contact_options['enable_phone_in_menu']!=='no' ? $contact_options['enable_phone_in_menu'] : false;
+      $phone_number = isset($contact_options[$phone_enabled]) ? $contact_options[$phone_enabled] : false;
+      $phone_number_clean = $phone_number && function_exists('tw_clean_phone_number') ? tw_clean_phone_number($phone_number) : false;
+
   		/**
   		 * Dividers, Headers or Disabled
   		 * =============================
@@ -24,6 +30,7 @@ if(class_exists('wp_bootstrap_navwalker')){
   		 * comparison that is not case sensitive. The strcasecmp() function returns
   		 * a 0 if the strings are equal.
   		 */
+
   		if ( strcasecmp( $item->attr_title, 'divider' ) == 0 && $depth === 1 ) {
   			$output .= $indent . '<li role="presentation" class="divider">';
   		} else if ( strcasecmp( $item->title, 'divider') == 0 && $depth === 1 ) {
@@ -32,6 +39,15 @@ if(class_exists('wp_bootstrap_navwalker')){
   			$output .= $indent . '<li role="presentation" class="dropdown-header">' . esc_attr( $item->title );
   		} else if ( strcasecmp($item->attr_title, 'disabled' ) == 0 ) {
   			$output .= $indent . '<li role="presentation" class="disabled"><a href="#">' . esc_attr( $item->title ) . '</a>';
+  		} else if ( strcasecmp($item->attr_title, 'phone' ) == 0 && $phone_enabled && $phone_number ) {
+    		// phone Attribute pulls displays phone number in menu from theme settings
+  			$class_names = $value = '';
+  			$classes = empty( $item->classes ) ? array() : $item->classes;
+  			$classes[] = 'menu-item-' . $item->ID;
+
+  			$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
+
+  			$output .= $indent . '<li role="presentation" class="'.$class_names.'"><a href="callto:'.$phone_number_clean.'">' . $phone_number . '</a>';
   		} else {
 
   			$class_names = $value = '';
