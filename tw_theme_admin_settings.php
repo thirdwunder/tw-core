@@ -1200,7 +1200,6 @@ function tw_theme_initialize_blog_options() {
 }
 add_action( 'admin_init', 'tw_theme_initialize_blog_options' );
 
-
 function tw_post_format_field_callback($args) {
 
 	// First, we read the options collection
@@ -1246,7 +1245,6 @@ function tw_enable_facebook_comments_callback($args) {
 	echo $html;
 
 } // end tw_enable_sidebar_callback
-
 
 function tw_enable_comments_options_callback($args) {
 
@@ -1507,6 +1505,16 @@ function tw_theme_initialize_contact_options() {
   	);
   }
 
+  add_settings_field(
+		'enable_phone_in_menu',
+		__( 'Phone in Menu', 'tw' ),
+		'tw_enable_phone_in_menu_options_callback',
+		'tw_theme_contact_options',
+		'contact_settings_contact',
+		array(
+			__( 'Choose which phone number to show in the menu. To enable to the position of the phone number, add a menu item with the attribute "phone" to your menu.', 'tw' ),
+		)
+	);
 
   add_settings_section(
 		'contact_settings_address',			// ID used to identify this section and with which to register options
@@ -1546,3 +1554,19 @@ function tw_contact_address_callback($args){
 
   echo '<input type="text" id="'.$args['address'].'" name="tw_theme_contact_options['.$args['address'].']" value="' . trim($options[$args['address']]) . '" />';
 }
+
+function tw_enable_phone_in_menu_options_callback($args) {
+
+	$options = get_option('tw_theme_contact_options');
+
+	$html = '<select id="tw_theme_contact_options" name="tw_theme_contact_options[enable_phone_in_menu]">';
+		$html .= '<option value="default">' . __( 'Select a phone number option...', 'tw' ) . '</option>';
+		$html .= '<option value="no"' . selected( $options['enable_phone_in_menu'], 'no', false) . '>' . __( 'No phone number in menu', 'tw' ) . '</option>';
+		$html .= '<option value="phone"' . selected( $options['enable_phone_in_menu'], 'phone', false) . '>' . __( 'Phone', 'tw' ) . '</option>';
+		$html .= '<option value="toll_free"' . selected( $options['enable_phone_in_menu'], 'toll_free', false) . '>' . __( 'Toll Free Phone', 'tw' ) . '</option>';
+		$html .= '</select>';
+		$html .= '<label for="enable_phone_in_menu"><br/>'  . $args[0] . '</label>';
+
+	echo $html;
+
+} // end tw_radio_element_callback
