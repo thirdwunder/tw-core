@@ -849,7 +849,6 @@ if(!function_exists('tw_the_post_thumbnail')){
 <<<<<<< HEAD
 =======
 
->>>>>>> gform email subscription update
     $alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
 
     $html = '<img ';
@@ -1144,6 +1143,14 @@ if(!function_exists('tw_email_subscribe_gform')){
     $general_options = tw_get_general_options();
     $email_subscribe_gform_id = isset($general_options['email_subscribe_gform']) ? $general_options['email_subscribe_gform'] : false;
     return $email_subscribe_gform_id;
+  }
+}
+
+if(!function_exists('tw_contact_gform')){
+  function tw_contact_gform(){
+    $general_options = tw_get_general_options();
+    $contact_gform_id = isset($general_options['contact_gform']) ? $general_options['contact_gform'] : false;
+    return $contact_gform_id;
   }
 }
 
