@@ -330,17 +330,16 @@
 
 /**** Text Highligher ****/
 .highlighted(@bg-color,@bg-opacity, @text-color){
-  -webkit-box-sh-dow: fade(@bg-color, @bg-opacity) 10px 0px 0px 0px, fade(@bg-color, @bg-opacity) -10px 0px 0px 0px;
+  -webkit-box-sh-dow: fade(@bg-color, @bg-opacity) 20px 0px 0px 0px, fade(@bg-color, @bg-opacity) -10px 0px 0px 0px;
   background-color: fade(@bg-color, @bg-opacity);
-  box-shadow: fade(@bg-color, @bg-opacity) 10px 0px 0px 0px, fade(@bg-color, @bg-opacity) -10px 0px 0px 0px;
+  box-shadow: fade(@bg-color, @bg-opacity) 20px 0px 0px 0px, fade(@bg-color, @bg-opacity) -10px 0px 0px 0px;
   box-sizing: border-box;
   color: @text-color;
   display: inline;
   left: 10px;
-  line-height: 1.7em;
+  line-height: 1.5em;
   margin: 20px 0 10px 0;
-  //padding: 0 0 4px 0;
-  padding: 4px 0 4px 0;
+  padding: 0 0 4px 0;
   position: relative;
   text-decoration: none;
   width: auto;
