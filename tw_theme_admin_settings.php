@@ -1,5 +1,5 @@
 <?php
-
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 /**
  * This function introduces the theme options into the 'Appearance' menu and into a top-level
  * 'Third Wunder Theme' menu.
