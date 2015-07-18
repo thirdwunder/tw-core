@@ -1,0 +1,29 @@
+.gravityflow_workflow_wrap{
+  &.gravityflow_workflow_inbox{
+    ul.subsubsub{
+      li{
+        &.all,
+        &.pending,
+        &.complete,
+        &.cancelled{
+
+        }
+        a{
+          .count{
+            .badge();
+          }
+        }
+      }
+    }
+
+    #gravityflow-status-filters{
+      #gravityflow-status-date-filters{
+        input[type="text"],
+        select{
+          .form-control();
+        }
+      }
+    }
+
+  }
+}
