@@ -17,7 +17,21 @@
     }
 
     #gravityflow-status-filters{
+
       #gravityflow-status-date-filters{
+        .form-inline();
+
+        input[type="text"],
+        input[type="submit"],
+        select,
+        label{
+          display: inline;
+          display: inline-block !important;
+          margin-right: 10px;
+          width: auto;
+          max-width: 200px;
+        }
+
         input[type="text"],
         select{
           .form-control();
@@ -27,6 +41,13 @@
           .btn();
           .btn-success();
         }
+
+        #entry-id{
+          width: 60px !important;
+        }
+
+
+
       }
     }
 
