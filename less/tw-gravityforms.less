@@ -51,6 +51,39 @@
 .gform_wrapper{
   //.container();
   max-width: 100%;
+
+  .gf_progressbar_wrapper{
+    .gf_progressbar{
+      .progress();
+      background-image: none !important;
+      .gf_progressbar_percentage{
+        .progress-bar();
+        background-image: none !important;
+        &.percentbar_blue,
+        &.percentbar_green,
+        &.percentbar_orange{
+          background-image: none !important;
+        }
+
+        &.percentbar_blue{
+          .progress-bar-info();
+        }
+        &.percentbar_green{
+          .progress-bar-success();
+        }
+        &.percentbar_orange{
+          .progress-bar-warning();
+        }
+        &.percentbar_red{
+          .progress-bar-danger();
+        }
+
+      }
+    }
+
+  }
+
+
 }
 .gfield{
   //.row();
@@ -61,6 +94,19 @@
         width: 49% !important;
         display: inline;
         display: inline-block;
+      }
+    }
+  }
+  .ginput_container{
+    ul.gfield_radio{
+      li{
+        margin-bottom: 5px;
+      }
+      input[type="radio"]{
+        width: 25px;
+      }
+      label{
+        line-height: 35px;
       }
     }
   }
@@ -143,23 +189,7 @@ td.ui-datepicker-other-month{
   }
 }
 
-/*** Gravity Forms Functions ***/
-.gform_hide_labels(){
-  .gform_body{
-    .gfield{
-      label.gfield_label{
-        .sr-only();
-      }
 
-      .ginput_container{
-        label{
-          .sr-only();
-        }
-      }
-
-    }
-  }
-}
 /*** Gravity Forms Functions ***/
 .gform_hide_labels(){
   .gform_body{
