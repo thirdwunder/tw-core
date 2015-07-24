@@ -19,9 +19,9 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 if(!function_exists('tw_add_image_size')){
   function tw_add_image_size($ratio, $size, $hard_crop = true, $unlimited_height = false, $postion = array()){
     $img_widths = array(
-                        'xxlarge'=>2048,
-                        'xlarge'=>1600,
-                        'mlarge'=>1200,
+                        'xxxlarge'=>2048,
+                        'xxlarge'=>1600,
+                        'xlarge'=>1200,
                         'large'=>1024,
                         'medium'=>800,
                         'small'=>400,
