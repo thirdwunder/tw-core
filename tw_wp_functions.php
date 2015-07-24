@@ -21,6 +21,7 @@ if(!function_exists('tw_add_image_size')){
     $img_widths = array(
                         'xxlarge'=>2048,
                         'xlarge'=>1600,
+                        'mlarge'=>1200,
                         'large'=>1024,
                         'medium'=>800,
                         'small'=>400,
