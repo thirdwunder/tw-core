@@ -7,6 +7,11 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 /******************************************************
 ************* Theme Support Functions ****************
 ******************************************************/
+function tw_remove_wp_version_info() {
+ return '';
+}
+add_filter('the_generator', 'tw_remove_wp_version_info');
+
 function tw_dns_prefetch() {
 	$dns_array = array(
   	'//fonts.googleapis.com',
