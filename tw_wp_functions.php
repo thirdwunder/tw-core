@@ -7,6 +7,19 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 /******************************************************
 ************* Theme Support Functions ****************
 ******************************************************/
+function tw_dns_prefetch() {
+	$dns_array = array(
+  	'//fonts.googleapis.com',
+  	'//www.google-analytics.com',
+  	'//connect.facebook.net',
+	);
+	$prop_details = apply_filters('tw_dns_prefetch_filter', $dns_array);
+	foreach($dns_array as $dns){
+  	echo '<link rel="dns-prefetch" href="'.$dns.'">';
+	}
+}
+add_action('wp_head', 'tw_dns_prefetch');
+
 
 function tw_remove_cssjs_ver( $src ) {
   if( strpos( $src, '?ver=' ) )
