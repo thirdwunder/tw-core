@@ -314,7 +314,7 @@ class tw_blog_widget extends WP_Widget {
                 </a>
               <?php else: ?>
                 <a href="<?php the_permalink();?><?php //echo $tw_tracking; ?>" title="<?php the_title(); ?>">
-                  <img src="<?php echo tw_get_default_image(); ?>" width="" height="" alt="" class="img-responsive" itemscope="image" />
+                  <img src="<?php echo tw_get_default_image(); ?>" width="" height="" alt="<?php the_title(); ?>" class="img-responsive" itemscope="image" />
                 </a>
               <?php endif; ?>
 

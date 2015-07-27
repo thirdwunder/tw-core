@@ -904,7 +904,7 @@ if(!function_exists('tw_the_post_thumbnail')){
       $src = wp_get_attachment_image_src($img_id, $img_size);
     }
 
-    $html .= 'src="'.$src[0].'" width="'.$src[1].'" height="'.$src[2].'" alt="'.$alt.'"';
+    $html .= 'src="'.$src[0].'" width="'.$src[1].'" height="'.$src[2].'" alt="'.$alt.'" ';
     $class = 'attachment-'.$img_size.' wp-post-image';
     foreach($attr as $k=>$v){
       if($k=='class'){
