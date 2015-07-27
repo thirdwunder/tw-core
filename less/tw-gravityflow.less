@@ -342,3 +342,38 @@
 
   }
 }
+
+.gv-field-edit_link{
+  a{
+    .btn();
+    .btn-default();
+  }
+}
+.gv-field-delete_link{
+  a{
+    .btn();
+    .btn-danger();
+  }
+}
+
+ul.bulleted{
+  list-style: none;
+  margin-left: 5px;
+  padding-left: 5px;
+}
+
+.gv-edit-entry-wrapper{
+  .gform_wrapper{
+    .gform_fields{
+      .gfield{
+        &.sr-only{
+          display: block;
+          visibility: visible;
+          position: relative;
+          width: auto;
+          height: auto;
+        }
+      }
+    }
+  }
+}

@@ -8,6 +8,14 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 ************* Theme Support Functions ****************
 ******************************************************/
 
+function tw_remove_cssjs_ver( $src ) {
+  if( strpos( $src, '?ver=' ) )
+    $src = remove_query_arg( 'ver', $src );
+  return $src;
+}
+add_filter( 'style_loader_src', 'tw_remove_cssjs_ver', 10, 2 );
+add_filter( 'script_loader_src', 'tw_remove_cssjs_ver', 10, 2 );
+
 /**
  * Adds custom image sizes based on parameteres
  * @param string  $ratio
