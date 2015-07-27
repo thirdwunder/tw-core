@@ -7,9 +7,11 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 /******************************************************
 ************* Theme Support Functions ****************
 ******************************************************/
-add_filter( 'clean_url', 'tw_defer_js', 11, 1 );
+//add_filter( 'clean_url', 'tw_defer_js', 11, 1 );
 function tw_defer_js( $url ){
-    if ( FALSE === strpos( $url, '.js' ) ) { // not our file
+    if ( FALSE === strpos( $url, '.js' )
+          || strpos($url, 'jquery.js')
+      ) { // not our file
         return $url;
     }
     // Must be a ', not "!
