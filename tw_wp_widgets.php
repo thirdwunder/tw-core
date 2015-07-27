@@ -241,13 +241,13 @@ class tw_blog_widget extends WP_Widget {
   	// Allow child themes/plugins to filter here.
   	$args = apply_filters( 'tw_blog_default_args', $args );
 
-  	$tw_tracking = trim($args['tw-tracking-source'])!=='' ? '?tw_source='.$args['tw-tracking-source'].'&tw_medium=blog_widget' : '';
+  	//$tw_tracking = trim($args['tw-tracking-source'])!=='' ? '?tw_source='.$args['tw-tracking-source'].'&tw_medium=blog_widget' : '';
 
     $title 		= apply_filters('widget_title', $instance['title']);
     $number = (isset($instance['number']) && is_integer(intval(trim($instance['number']))) ) ?intval(trim($instance['number'])) : 6;
     $tags = (isset($instance['tags']) && trim($instance['tags'])!=='') ? trim($instance['tags']) : false;
     $button_title = (isset($instance['button_title']) && trim($instance['button_title'])!=='') ? trim($instance['button_title']) : false;
-    $button_url = (isset($instance['button_url']) && trim($instance['button_url'])!=='') ? trim($instance['button_url']).$tw_tracking : false;
+    $button_url = (isset($instance['button_url']) && trim($instance['button_url'])!=='') ? trim($instance['button_url'])/* .$tw_tracking */ : false;
 
     if($tags){
       $tags  = explode(',', $tags);
@@ -305,22 +305,22 @@ class tw_blog_widget extends WP_Widget {
                     $image_sizes = array('4x3-small','4x3-small','4x3-small');
                   }
                 ?>
-                <a href="<?php the_permalink();?><?php echo $tw_tracking; ?>" title="<?php the_title(); ?>">
+                <a href="<?php the_permalink();?><?php //echo $tw_tracking; ?>" title="<?php the_title(); ?>">
                   <?php echo tw_the_post_thumbnail($image_sizes, $attr = array('itemscope'=>'image','class'=>'img-responsive') ); ?>
                 </a>
               <?php elseif(has_post_thumbnail()): ?>
-                <a href="<?php the_permalink();?><?php echo $tw_tracking; ?>" title="<?php the_title(); ?>">
+                <a href="<?php the_permalink();?><?php //echo $tw_tracking; ?>" title="<?php the_title(); ?>">
                 <?php get_the_post_thumbnail(get_the_id(), 'medium', array('itemscope'=>'image','class'=>'img-responsive')); ?>
                 </a>
               <?php else: ?>
-                <a href="<?php the_permalink();?><?php echo $tw_tracking; ?>" title="<?php the_title(); ?>">
+                <a href="<?php the_permalink();?><?php //echo $tw_tracking; ?>" title="<?php the_title(); ?>">
                   <img src="<?php echo tw_get_default_image(); ?>" width="" height="" alt="" class="img-responsive" itemscope="image" />
                 </a>
               <?php endif; ?>
 
 
               <div class="caption">
-                <h3 itemprop="headline"><a href="<?php the_permalink(); ?><?php echo $tw_tracking; ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h3>
+                <h3 itemprop="headline"><a href="<?php the_permalink(); ?><?php //echo $tw_tracking; ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h3>
                 <p class="time"><time class="updated" itemprop="datePublished" datetime="<?php echo get_the_time('Y-m-j'); ?>T<?php echo get_the_time('H:i:s'); ?>" pubdate><?php echo get_the_time('F j, Y'); ?></time></p>
                 <?php //if(has_excerpt()): ?>
                 <div class="description" itemprop="description"><?php the_excerpt(); ?></div>
