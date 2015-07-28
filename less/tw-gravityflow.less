@@ -344,9 +344,16 @@
 }
 
 
-input[type="text"].gv_search{
-  .form-control();
+.gv-widget-search{
+  .gv-search-box{
+    input[type="text"],
+    select{
+      .form-control();
+    }
+  }
+
 }
+
 input[type="submit"].gv-search-button{
   .btn();
   .btn-success();
