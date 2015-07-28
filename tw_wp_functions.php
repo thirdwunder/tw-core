@@ -879,8 +879,6 @@ if(!function_exists('tw_the_post_thumbnail')){
     $src = array( tw_get_default_image(), '', '' );
     $img_size = $sizes['tablet'];
 
-    $alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
-
     $html = '<img ';
     if(class_exists('Mobile_Detect')){
       $detect = new Mobile_Detect;
@@ -903,6 +901,7 @@ if(!function_exists('tw_the_post_thumbnail')){
       $img_id = get_post_thumbnail_id($post_id);
       $src = wp_get_attachment_image_src($img_id, $img_size);
     }
+    $alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
 
     $html .= 'src="'.$src[0].'" width="'.$src[1].'" height="'.$src[2].'" alt="'.$alt.'" ';
     $class = 'attachment-'.$img_size.' wp-post-image';
