@@ -130,7 +130,6 @@ if(class_exists('TwitterAPIExchange')){
                     <div class="tweet-text"><?php echo $tweet_text; ?></div>
                     <div class="tweet-created_at"><?php echo date('D jS F Y', strtotime($tweet->created_at)) ; ?></div>
                   </li>
-                  <!-- <pre><?php var_dump($tweet);?></pre> -->
                   <?php endforeach; ?>
                 </ul>
               <?php else: ?>
