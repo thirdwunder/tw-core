@@ -333,8 +333,7 @@ class tw_blog_widget extends WP_Widget {
           <div class="clearfix"></div>
           <?php if($button_url!=='' && $button_title!==''): ?>
           <div class="more">
-            <a href="<?php echo $button_url;?>" class="btn btn-primary btn-lg
-              " title="<?php echo $button_title; ?>"><?php echo $button_title; ?></a>
+            <a href="<?php echo $button_url;?>" class="btn btn-primary btn-lg" title="<?php echo $button_title; ?>"><?php echo $button_title; ?></a>
           </div>
           <?php endif; ?>
 
