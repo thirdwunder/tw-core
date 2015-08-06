@@ -7,6 +7,7 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 /******************************************************
 ************* Theme Support Functions ****************
 ******************************************************/
+
 //add_filter( 'clean_url', 'tw_defer_js', 11, 1 );
 function tw_defer_js( $url ){
     if ( FALSE === strpos( $url, '.js' )
@@ -18,20 +19,27 @@ function tw_defer_js( $url ){
     return "$url' defer='defer";
 }
 
+/**
+ * Adds prefetch dns meta to headd
+ */
 function tw_dns_prefetch() {
 	$dns_array = array(
   	'//fonts.googleapis.com',
   	'//www.google-analytics.com',
   	'//connect.facebook.net',
 	);
-	$prop_details = apply_filters('tw_dns_prefetch_filter', $dns_array);
+	$dns_array = apply_filters('tw_dns_prefetch_filter', $dns_array);
 	foreach($dns_array as $dns){
   	echo '<link rel="dns-prefetch" href="'.$dns.'">';
 	}
 }
 add_action('wp_head', 'tw_dns_prefetch');
 
-
+/**
+ * Removes version information from css and js
+ * @param string  $src
+ * @param string  $src
+ */
 function tw_remove_cssjs_ver( $src ) {
   if( strpos( $src, '?ver=' ) )
     $src = remove_query_arg( 'ver', $src );
@@ -274,6 +282,8 @@ if(!function_exists('tw_extra_contact_info')){
       $contactmethods['instagram']  = 'Instagram';
       $contactmethods['youtube']    = 'Youtube';
       $contactmethods['soundcloud'] = 'SoundCloud';
+
+      $contactmethods = apply_filters('tw_extra_contact_info_filter', $contactmethods);
 
       return $contactmethods;
   }

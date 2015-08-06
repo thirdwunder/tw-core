@@ -45,7 +45,16 @@
   transition: @property @duration @function !important;
 }
 
-
+.placeholder(@color: @input-color-placeholder, @text-transform: inherit) {
+  // Firefox
+  &::-moz-placeholder {
+    color: @color;
+    opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+    text-transform: @text-transform;
+  }
+  &:-ms-input-placeholder { color: @color; text-transform: @text-transform; } // Internet Explorer 10+
+  &::-webkit-input-placeholder  { color: @color; text-transform: @text-transform; } // Safari and Chrome
+}
 
 .bg-img-gradient(@startColor: #555, @endColor: #333, @image) {
     background-color: mix(@startColor, @endColor, 60%); // fallback
