@@ -16,7 +16,7 @@ jQuery(function() {
         }
         jQuery(".section-"+elm_id).css("background", "");
         elm.addClass("player").html(ifr);
-        elm.off("click");
+        //elm.off("click");
         jQuery('.carousel').carousel('pause');
     });
 });
