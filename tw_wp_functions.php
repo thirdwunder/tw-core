@@ -1401,3 +1401,48 @@ if(!function_exists('tw_get_sharedcount_total')){
     return $total;
   }
 }
+
+/******************************************************
+******************* Theme Actions *********************
+******************************************************/
+
+/**
+ * Adds FB Script to footer for FB Comments
+ */
+add_action( 'wp_footer', 'tw_fb_script' );
+function tw_fb_script(){
+  $fb_comments = false;
+  $fb_app_id = null;
+  $social_options = tw_get_social_options();
+  if(is_array($social_options) && isset($social_options['enable_fb_comments'])){
+    $fb_comments = !!$social_options['enable_fb_comments'];
+  }
+  if(is_array($social_options) && isset($social_options['fb_app_id']) ){
+    $fb_app_id = trim($social_options['fb_app_id']);
+  }
+  if(!is_null($fb_app_id)):
+?>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=<?php echo $fb_app_id; ?>&version=v2.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+<?php endif;
+}
+
+/**
+ * Adds Google Tag Manager Code plugin available
+ * DuracellTomi's Google Tag Manager for WordPress
+ * https://wordpress.org/plugins/duracelltomi-google-tag-manager/
+ */
+if ( function_exists( 'gtm4wp_the_gtm_tag' ) ) {
+add_action( 'wp_footer', 'tw_gtm4wp_the_gtm_tag' );
+  function tw_gtm4wp_the_gtm_tag(){
+    ?><!-- Google Tag Manager Code --><?php
+    gtm4wp_the_gtm_tag();
+    ?><!-- Google Tag Manager Code --><?php
+  }
+}
