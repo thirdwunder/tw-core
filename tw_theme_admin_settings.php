@@ -152,7 +152,8 @@ function tw_theme_display( $active_tab = '' ) {
  * ------------------------------------------------------------------------ */
 function tw_settings_enqueue_scripts() {
     wp_register_script( 'tw-upload', get_template_directory_uri() .'/includes/tw-wp-core/js/min/tw-settings-min.js', array('jquery','media-upload','thickbox') );
-    if ( 'tw-theme_page_tw_theme_logo_options' == get_current_screen() -> id ) {
+    if ( 'tw-theme_page_tw_theme_logo_options' == get_current_screen()->id ||
+         'appearance_page_tw_theme_options'== get_current_screen()->id) {
         wp_enqueue_script('jquery');
 
         wp_enqueue_script('thickbox');
@@ -791,7 +792,6 @@ function tw_slider_style_callback($args){
 
 }
 
-
 function tw_footer_social_icons_callback($args){
 	$options = get_option('tw_theme_general_options');
 	$html = '<input type="checkbox" id="enable_footer_social" name="tw_theme_general_options[enable_footer_social]" value="1" ' . checked( 1, isset( $options['enable_footer_social'] ) ? $options['enable_footer_social'] : 0, false ) . '/>';
@@ -799,7 +799,6 @@ function tw_footer_social_icons_callback($args){
 
 	echo $html;
 }
-
 
 function tw_contact_gform_callback() {
   if ( is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
@@ -864,7 +863,6 @@ function tw_theme_default_logo_options() {
 	$defaults = array();
 	return apply_filters( 'tw_theme_default_logo_options', $defaults );
 } // end tw_theme_default_general_options
-
 
 function tw_logo_options_callback() {
 	//echo '<p>' . __( '', 'tw' ) . '</p>';
@@ -1108,6 +1106,7 @@ function tw_theme_default_blog_options() {
 function tw_blog_options_callback() {
 	echo '<p>' . __( 'Post format options', 'tw' ) . '</p>';
 } // end tw_general_options_callback
+
 function tw_blog_comments_callback() {
 	echo '<p>' . __( '', 'tw' ) . '</p>';
 } // end tw_blog_comments_callback
@@ -1288,9 +1287,11 @@ function tw_theme_default_social_options() {
 function tw_social_options_callback() {
 	echo '<p>' . __( 'Provide the details of each social network', 'tw' ) . '</p>';
 }
+
 function tw_social_api_options_callback() {
 	echo '<p>' . __( 'Social API Details', 'tw' ) . '</p>';
 }
+
 function tw_twitter_api_options_callback() {
 	echo '<p>' . __( 'Twitter API Details', 'tw' ) . '</p>';
 }

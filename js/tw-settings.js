@@ -44,7 +44,8 @@ jQuery(document).ready(function($){
 	});
 
 	window.send_to_editor = function(html) {
-  	var image_url = $(html).attr('src');
+  	//var image_url = $(html).attr('src');
+  	image_url = $('img',html).attr('src');
   	uploadID.val(image_url);
   	tb_remove();
   	jQuery(previewID).attr('src',image_url);
