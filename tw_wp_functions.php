@@ -1432,17 +1432,3 @@ function tw_fb_script(){
   }(document, 'script', 'facebook-jssdk'));</script>
 <?php endif;
 }
-
-/**
- * Adds Google Tag Manager Code plugin available
- * DuracellTomi's Google Tag Manager for WordPress
- * https://wordpress.org/plugins/duracelltomi-google-tag-manager/
- */
-if ( function_exists( 'gtm4wp_the_gtm_tag' ) ) {
-add_action( 'wp_footer', 'tw_gtm4wp_the_gtm_tag' );
-  function tw_gtm4wp_the_gtm_tag(){
-    ?><!-- Google Tag Manager Code --><?php
-    gtm4wp_the_gtm_tag();
-    ?><!-- Google Tag Manager Code --><?php
-  }
-}
