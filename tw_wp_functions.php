@@ -1060,6 +1060,8 @@ if(!function_exists('tw_get_theme_social_options')){
     unset($social_info['twitter_consumer_key']);
     unset($social_info['twitter_consumer_secret']);
 
+
+
      $social = array();
      $style = $square==true ? '-square' : '';
      if($square){
@@ -1132,7 +1134,7 @@ if(!function_exists('tw_get_theme_social_options')){
 
        $social['rss'] = array('url'=> get_bloginfo('rss2_url') ,'icon'=>$rss_icon);
      }
-
+     $social = apply_filters('tw_theme_social_options_filter', $social);
      return $social;
   }
 }
