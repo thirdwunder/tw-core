@@ -181,9 +181,19 @@
     background-size: cover !important;
     background-position: center center;
     background-repeat: no-repeat !important;
+    &.without-image{
+      padding-top: 45px;
+      padding-bottom: 45px;
+    }
+
     .panel-wrapper{
       .panel-content{
         margin: 30px 0;
+
+        blockquote{
+          background: none;
+        }
+
         &.light{
           h2{
             color: white;
