@@ -33,17 +33,62 @@
   .carousel-inner{
     height: 100%;
     .item{
-
+      //border: 10px solid red;
       .carousel-caption{
         background-color: @color-inverse-bg;
         background-color: fade(@color-inverse-bg, 70%);
         position: absolute;
-        left: 15%;
-        bottom:0;
         padding: 20px;
         clear: both;
-        text-align: left;
-        width: 40%;
+        //border: 10px solid yellow;
+
+        &.top_left{
+          left: 15%;
+          top:0;
+          text-align: left;
+          width: 40%;
+          height: 100%;
+        }
+
+        &.top_right{
+          right: 15%;
+          top:0;
+          text-align: left;
+          width: 40%;
+          height: 100%;
+        }
+
+        &.bottom_left{
+          left: 15%;
+          bottom:0;
+          text-align: left;
+          width: 40%;
+        }
+
+        &.bottom_right{
+          left: auto;
+          right: 15%;
+          bottom:0;
+          text-align: left;
+          width: 40%;
+        }
+
+        &.center_center{
+          left: 30%;
+          right: 30%;
+          bottom:15%;
+          text-align: center;
+          width: 40%;
+        }
+
+        &.overlay{
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          padding: 12% 15% 0 15%;
+        }
+
 
         a, a:visited{
           color: white;
@@ -69,7 +114,7 @@
       }
       img{
         width: 100%;
-        max-height: 100%;
+        //max-height: 100%;
         margin: 0 auto;
       }
     }
@@ -205,6 +250,17 @@
           text-align: center;
           padding: 10px 15px 50px 15px;
           min-height: 45px;
+          &.overlay{
+            padding: 10px 15% 50px 15%;
+          }
+          &.center_center{
+            left: 0;
+            right: 0;
+            bottom:0;
+            text-align: center;
+            width: 100%;
+            height: auto;
+          }
 
           h2,h3{
             color: white;
@@ -226,7 +282,30 @@
 
 
 @media only screen and (min-width: @screen-sm){
+  .widget_twslideswidget{
+    .carousel-inner{
+      .item{
+        .carousel-caption{
 
+          &.overlay{
+
+          }
+          &.center_center{
+            left: 15%;
+            right: 15%;
+            bottom: 0%;
+            top: 0;
+            text-align: center;
+            width: 60%;
+            height: 100%;
+          }
+
+
+        }
+      }
+    }
+
+  }
 
 }
 
@@ -234,6 +313,47 @@
 /* Medium devices (desktops, 992px and up) */
 @media only screen and (min-width: @screen-md) {
 
+  .widget_twslideswidget{
+    .carousel-inner{
+      .item{
+        .carousel-caption{
+
+          &.top_left{
+          }
+
+          &.top_right{
+          }
+
+          &.bottom_left{
+          }
+
+          &.bottom_right{
+
+          }
+
+          &.center_center{
+            left: 30%;
+            right: 30%;
+            top: 15%;
+            bottom:auto;
+            text-align: center;
+            width: 40%;
+            height: auto;
+          }
+
+          &.overlay{
+
+          }
+
+
+          .section-video{}
+
+
+        }
+
+      }
+    }
+  }
 
 
 }
