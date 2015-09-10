@@ -1,7 +1,12 @@
 <?php
 add_shortcode('lead', 'tw_lead');
 function tw_lead($atts, $content = null) {
-  return '<div class="lead">'.$content.'</div>';
+  extract( shortcode_atts(
+		array(
+			'align' => 'left',
+		), $atts )
+	);
+  return '<div class="lead" style="text-align:'.$atts['align'].'">'.$content.'</div>';
 }
 
 add_shortcode('blockquote', 'tw_blockquote');
