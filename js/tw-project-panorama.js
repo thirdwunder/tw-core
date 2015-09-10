@@ -4,7 +4,7 @@ jQuery(document).ready(function($) {
 	}
 });
 
-$('#nav-menu a').smoothScroll({offset: -165});
+jQuery('#nav-menu a').smoothScroll({offset: -165});
 
 function hasScrolled() {
     var st = jQuery(this).scrollTop();
