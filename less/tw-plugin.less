@@ -73,6 +73,7 @@
           width: 40%;
         }
 
+
         &.center_center{
           left: 30%;
           right: 30%;
@@ -80,6 +81,7 @@
           text-align: center;
           width: 40%;
         }
+
 
         &.overlay{
           left: 0;
@@ -89,6 +91,21 @@
           padding: 12% 15% 0 15%;
         }
 
+        &.with-video{
+          .section-video{
+            background-size: cover !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+          }
+
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          width: 100%;
+          height: 100%;
+          padding: 0 !important;
+        }
 
         a, a:visited{
           color: white;
@@ -159,6 +176,42 @@
   }
 }
 
+.widget_twsinglepanelwidget{
+  .panel{
+    background-size: cover !important;
+    background-position: center center;
+    background-repeat: no-repeat !important;
+    .panel-wrapper{
+      .panel-content{
+        margin: 30px 0;
+        &.light{
+          h2{
+            color: white;
+          }
+          color: white;
+          .panel-content-inner{
+            text-shadow: 1px 1px 1px @color-line-dark;
+          }
+        }
+        &.dark{
+          h2{
+            color: @text-color;
+          }
+          color: @text-color;
+          .panel-content-inner{
+            text-shadow: 1px 1px 1px @color-line-light;
+          }
+
+        }
+
+        .panel-content-button{
+          margin-top: 30px;
+        }
+      }
+    }
+  }
+}
+
 #homepage-widgets{
   .widget_twservicescategorywidget,
   .widget_twserviceswidget{
@@ -177,6 +230,14 @@
           max-width: 100%;
         }
       }
+    }
+  }
+
+
+  .widget_twsinglepanelwidget{
+    padding: 0;
+    .panel{
+      margin-bottom: 0;
     }
   }
 }
