@@ -6,7 +6,8 @@ function tw_lead($atts, $content = null) {
 			'align' => 'left',
 		), $atts )
 	);
-  return '<div class="lead" style="text-align:'.$atts['align'].'">'.$content.'</div>';
+	$align = isset($atts['align']) ? $atts['align'] : 'left';
+  return '<div class="lead" style="text-align:'.$align.'">'.$content.'</div>';
 }
 
 add_shortcode('blockquote', 'tw_blockquote');
