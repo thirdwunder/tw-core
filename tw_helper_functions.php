@@ -164,6 +164,8 @@ if(!function_exists('tw_videoURL_to_embedCode')){
       $iframe = tw_youtubeURL_to_embedCode($url, $autoplay);
     }elseif(preg_match('/vimeo/',$url)){
       $iframe = tw_vimeoURL_to_embedCode($url, $autoplay);
+    }elseif(preg_match('/videopress/',$url)){
+      $iframe = tw_videopressURL_to_embedCode($url, $autoplay);
     }
     return $iframe;
   }
@@ -229,6 +231,32 @@ if(!function_exists('tw_youtubeURL_to_embedCode')){
     $width = '640';
     $height = '385';
     $iframe = '&lt;iframe class="embed-responsive-item" width="' . $width . '" height="' . $height . '" src="http://www.youtube.com/embed/' . $id . '?autoplay='.$autoplay.'&amp;rel=0" frameborder="0" allowfullscreen&gt;&lt;/iframe>';
+    return $iframe;
+  }
+}
+
+/**
+ * Returns Youtube embed iframe from url
+ * @param  string $url
+ * @param  string $autoplay
+ * @return string $iframe
+ */
+if(!function_exists('tw_videopressURL_to_embedCode')){
+  function tw_videopressURL_to_embedCode($url, $autoplay=false){
+    //preg_match(
+    //        '/[\\?\\&]v=([^\\?\\&]+)/',
+    //        $url,
+    //        $matches
+    //    );
+    //$id = $matches[1];
+    //$autoplay = intval($autoplay);
+
+    $width = '640';
+    $height = '385';
+
+
+    $iframe = '&lt;iframe width="'.$width.'" height="'.$height.'" src="'.$url.'" frameborder="0" allowfullscreen&gt;&lt;/iframe> <script src="https://videopress.com/videopress-iframe.js"></script>';
+
     return $iframe;
   }
 }
