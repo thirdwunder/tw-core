@@ -160,7 +160,7 @@ if(!function_exists('tw_fa_file_icon')){
 if(!function_exists('tw_videoURL_to_embedCode')){
   function tw_videoURL_to_embedCode($url, $autoplay=false){
     $iframe = null;
-    if(preg_match('/youtube/',$url)){
+    if(preg_match('/youtube/',$url) || preg_match('/youtu.be/', $url) ){
       $iframe = tw_youtubeURL_to_embedCode($url, $autoplay);
     }elseif(preg_match('/vimeo/',$url)){
       $iframe = tw_vimeoURL_to_embedCode($url, $autoplay);
@@ -220,11 +220,9 @@ if(!function_exists('tw_vimeoURL_to_embedCode')){
  */
 if(!function_exists('tw_youtubeURL_to_embedCode')){
   function tw_youtubeURL_to_embedCode($url, $autoplay=false){
-    preg_match(
-            '/[\\?\\&]v=([^\\?\\&]+)/',
-            $url,
-            $matches
-        );
+    //$regex = '/[\\?\\&]v=([^\\?\\&]+)/';
+    $regex = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i';
+    preg_match($regex, $url, $matches );
     $id = $matches[1];
     $autoplay = intval($autoplay);
 
@@ -235,6 +233,8 @@ if(!function_exists('tw_youtubeURL_to_embedCode')){
   }
 }
 
+
+
 /**
  * Returns Youtube embed iframe from url
  * @param  string $url
@@ -243,20 +243,27 @@ if(!function_exists('tw_youtubeURL_to_embedCode')){
  */
 if(!function_exists('tw_videopressURL_to_embedCode')){
   function tw_videopressURL_to_embedCode($url, $autoplay=false){
-    //preg_match(
-    //        '/[\\?\\&]v=([^\\?\\&]+)/',
-    //        $url,
-    //        $matches
-    //    );
-    //$id = $matches[1];
-    $autoplay = intval($autoplay);
-    $url .= '?autoplay='.$autoplay;
+    //https://videopress.com/v/JFOGjpIs
 
+    $pattern = '#^(?:https?://)?';    # Optional URL scheme. Either http or https.
+    $pattern .= '(?:www\.)?';         #  Optional www subdomain.
+    $pattern .=   'videopress\.com';    #    or youtube.com
+    $pattern .=   '(?:';              #    Group path alternatives:
+    $pattern .=     '/embed/';        #      Either /embed/,
+    $pattern .=     '|/v/';           #      or /v/,
+    $pattern .=   ')';                #    End path alternatives.
+    $pattern .= '([\w-]{8})';        # 11 characters (Length of Youtube video ids).
+    $pattern .= '(?:.+)?$#x';         # Optional other ending URL parameters.
+
+    $regex = '@^(?:http://)?([^/]+)@i';
+
+  	preg_match( $pattern, $url, $matches );
+    $id = $matches[1];
+    $autoplay = intval($autoplay);
     $width = '640';
     $height = '385';
 
-
-    $iframe = '&lt;iframe width="'.$width.'" height="'.$height.'" src="'.$url.'" frameborder="0" allowfullscreen&gt;&lt;/iframe> <script src="https://videopress.com/videopress-iframe.js"></script>';
+    $iframe = '&lt;iframe width="'.$width.'" height="'.$height.'" src="https://videopress.com/embed/' . $id . '?autoplay='.$autoplay.'" frameborder="0" allowfullscreen&gt;&lt;/iframe> <script src="https://videopress.com/videopress-iframe.js"></script>';
 
     return $iframe;
   }
