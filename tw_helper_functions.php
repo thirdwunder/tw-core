@@ -249,7 +249,8 @@ if(!function_exists('tw_videopressURL_to_embedCode')){
     //        $matches
     //    );
     //$id = $matches[1];
-    //$autoplay = intval($autoplay);
+    $autoplay = intval($autoplay);
+    $url .= '?autoplay='.$autoplay;
 
     $width = '640';
     $height = '385';
