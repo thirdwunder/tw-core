@@ -58,7 +58,7 @@
 
 .bg-img-gradient(@startColor: #555, @endColor: #333, @image) {
     background-color: mix(@startColor, @endColor, 60%); // fallback
-    background-image: @image; // fallback
+    background-image: url(@image); // fallback
 
     background: -moz-linear-gradient(top, @startColor, @endColor)                       , url(@image); // FF 3.6+
     background: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor), to(@endColor)) , url(@image); // Safari 4+, Chrome 2+
