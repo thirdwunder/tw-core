@@ -12,16 +12,61 @@ class tw_social_widget extends WP_Widget {
 
   /** @see WP_Widget::widget -- do not rename this */
   function widget($args, $instance) {
-    extract( $args );
-    $title 		= apply_filters('widget_title', $instance['title']);
-    $message 	= $instance['message'];
-    $square_social_icons = (isset($instance['square-icons']) && trim($instance['square-icons'])=='on') ? true : false;
-    //$social_info   = tw_get_theme_social_options($square_social_icons);
-    $social_info   = tw_get_social_networks($square_social_icons, true);
+    extract($args, EXTR_SKIP);
+    tw_show_social_widget($args, $instance);
+  }
 
-    echo $before_widget;
+  /** @see WP_Widget::update -- do not rename this */
+  function update($new_instance, $old_instance) {
+  		$instance = $old_instance;
+  		$instance['title'] = strip_tags($new_instance['title']);
+  		$instance['message'] = strip_tags($new_instance['message']);
+  		$instance['square-icons'] = strip_tags($new_instance['square-icons']);
+      return $instance;
+    }
+
+  /** @see WP_Widget::form -- do not rename this */
+  function form($instance) {
+    $title 		= esc_attr($instance['title']);
+    $message	= esc_attr($instance['message']);
+    $square_icons	= esc_attr($instance['square-icons']);
+    ?>
+      <p>
+        <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+        <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+      </p>
+  		<p>
+        <label for="<?php echo $this->get_field_id('message'); ?>"><?php _e('Sub-heading'); ?></label>
+        <input class="widefat" id="<?php echo $this->get_field_id('message'); ?>" name="<?php echo $this->get_field_name('message'); ?>" type="text" value="<?php echo $message; ?>" />
+      </p>
+      <p>
+      <input class="checkbox" type="checkbox" <?php checked($square_icons, 'on'); ?> id="<?php echo $this->get_field_id('square-icons'); ?>" name="<?php echo $this->get_field_name('square-icons'); ?>" />
+      <label for="<?php echo $this->get_field_id('square-icons'); ?>"><?php _e('Show Square social icons','tw'); ?></label>
+      <p class="description"><?php _e('Default icons are circles.','tw'); ?></p>
+    </p>
+    <?php
+  }
+
+
+} // end class example_widget
+add_action('widgets_init', create_function('', 'return register_widget("tw_social_widget");'));
+
+function tw_show_social_widget($args, $instance){
+  // check if we have an override function for a theme specific display
+  if(function_exists('tw_social_widget_custom_action')){
+    add_action( 'tw_social_widget_custom_hook', 'tw_social_widget_custom_action', 10, 2 );
+    echo $args['before_widget'];
+    do_action( 'tw_social_widget_custom_hook', $args, $instance);
+    echo $args['after_widget'];
+  }else{
+    echo $args['before_widget'];
+      $title 		= apply_filters('widget_title', $instance['title']);
+      $message 	= $instance['message'];
+      $square_social_icons = (isset($instance['square-icons']) && trim($instance['square-icons'])=='on') ? true : false;
+      //$social_info   = tw_get_theme_social_options($square_social_icons);
+      $social_info   = tw_get_social_networks($square_social_icons, true);
       if ( $title )
-          echo $before_title . $title . $after_title; ?>
+      echo $args['before_title'] . $title . $args['after_title']; ?>
 			<div class="social-widget-container">
           <?php if($message!==''): ?><p><?php echo $message; ?></p><?php endif; ?>
 
@@ -81,43 +126,9 @@ class tw_social_widget extends WP_Widget {
           <?php endif; ?>
 
 			</div><!-- social-widget-container -->
-    <?php echo $after_widget;
+<?php echo $args['after_widget'];
   }
-
-  /** @see WP_Widget::update -- do not rename this */
-  function update($new_instance, $old_instance) {
-  		$instance = $old_instance;
-  		$instance['title'] = strip_tags($new_instance['title']);
-  		$instance['message'] = strip_tags($new_instance['message']);
-  		$instance['square-icons'] = strip_tags($new_instance['square-icons']);
-      return $instance;
-    }
-
-  /** @see WP_Widget::form -- do not rename this */
-  function form($instance) {
-    $title 		= esc_attr($instance['title']);
-    $message	= esc_attr($instance['message']);
-    $square_icons	= esc_attr($instance['square-icons']);
-    ?>
-       <p>
-        <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
-        <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
-      </p>
-  		<p>
-        <label for="<?php echo $this->get_field_id('message'); ?>"><?php _e('Sub-heading'); ?></label>
-        <input class="widefat" id="<?php echo $this->get_field_id('message'); ?>" name="<?php echo $this->get_field_name('message'); ?>" type="text" value="<?php echo $message; ?>" />
-      </p>
-      <p>
-      <input class="checkbox" type="checkbox" <?php checked($square_icons, 'on'); ?> id="<?php echo $this->get_field_id('square-icons'); ?>" name="<?php echo $this->get_field_name('square-icons'); ?>" />
-      <label for="<?php echo $this->get_field_id('square-icons'); ?>"><?php _e('Show Square social icons','tw'); ?></label>
-      <p class="description"><?php _e('Default icons are circles.','tw'); ?></p>
-    </p>
-    <?php
-  }
-
-
-} // end class example_widget
-add_action('widgets_init', create_function('', 'return register_widget("tw_social_widget");'));
+}
 
 
 /**
