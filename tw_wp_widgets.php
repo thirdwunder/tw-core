@@ -1,19 +1,141 @@
 <?php
+
+add_action('widgets_init', create_function('', 'return register_widget("tw_contact_info_widget");'));
+class tw_contact_info_widget extends WP_Widget{
+  function tw_contact_info_widget() {
+    parent::WP_Widget(false, $name = 'TW Contact Info Widget');
+  }
+
+  function update($new_instance, $old_instance) {
+    $instance = $old_instance;
+		$instance['title'] = strip_tags($new_instance['title']);
+		$instance['enable_address'] = strip_tags($new_instance['enable_address']);
+		$instance['enable_phone']   = strip_tags($new_instance['enable_phone']);
+		$instance['enable_tollfree']= strip_tags($new_instance['enable_tollfree']);
+		$instance['enable_fax']     = strip_tags($new_instance['enable_fax']);
+		$instance['enable_email']   = strip_tags($new_instance['enable_email']);
+    return $instance;
+  }
+
+  function form($instance) {
+    $title 		         = esc_attr($instance['title']);
+    $enabled_address   = esc_attr($instance['enable_address']);
+		$enabled_phone     = esc_attr($instance['enable_phone']);
+		$enabled_tollfree  = esc_attr($instance['enable_tollfree']);
+		$enabled_fax       = esc_attr($instance['enable_fax']);
+		$enabled_email     = esc_attr($instance['enable_email']);
+		?>
+		<p>
+        <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+        <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+    </p>
+		<p>
+      <input class="checkbox" type="checkbox" <?php checked($enabled_address, 'on'); ?> id="<?php echo $this->get_field_id('enable_address'); ?>" name="<?php echo $this->get_field_name('enable_address'); ?>" />
+      <label for="<?php echo $this->get_field_id('enable_address'); ?>"><?php _e('Show Address','tw'); ?></label>
+		</p>
+		<p>
+      <input class="checkbox" type="checkbox" <?php checked($enabled_phone, 'on'); ?> id="<?php echo $this->get_field_id('enable_phone'); ?>" name="<?php echo $this->get_field_name('enable_phone'); ?>" />
+      <label for="<?php echo $this->get_field_id('enable_phone'); ?>"><?php _e('Show Phone','tw'); ?></label>
+		</p>
+		<p>
+      <input class="checkbox" type="checkbox" <?php checked($enabled_tollfree, 'on'); ?> id="<?php echo $this->get_field_id('enable_tollfree'); ?>" name="<?php echo $this->get_field_name('enable_tollfree'); ?>" />
+      <label for="<?php echo $this->get_field_id('enable_tollfree'); ?>"><?php _e('Show Toll Free Number','tw'); ?></label>
+		</p>
+		<p>
+      <input class="checkbox" type="checkbox" <?php checked($enabled_fax, 'on'); ?> id="<?php echo $this->get_field_id('enable_fax'); ?>" name="<?php echo $this->get_field_name('enable_fax'); ?>" />
+      <label for="<?php echo $this->get_field_id('enable_fax'); ?>"><?php _e('Show Fax','tw'); ?></label>
+		</p>
+		<p>
+      <input class="checkbox" type="checkbox" <?php checked($enabled_email, 'on'); ?> id="<?php echo $this->get_field_id('enable_email'); ?>" name="<?php echo $this->get_field_name('enable_email'); ?>" />
+      <label for="<?php echo $this->get_field_id('enable_email'); ?>"><?php _e('Show Email','tw'); ?></label>
+		</p>
+		<?php
+  }
+
+  function widget($args, $instance) {
+    extract($args, EXTR_SKIP);
+    tw_show_contact_info_widget($args, $instance);
+  }
+}
+
+
+function tw_show_contact_info_widget($args, $instance){
+  if(function_exists('tw_contact_info_widget_custom_action')){
+    add_action('tw_contact_info_widget_custom_hook', 'tw_contact_info_widget_custom_action', 10, 2 );
+    echo $args['before_widget'];
+    do_action( 'tw_contact_info_widget_custom_hook', $args, $instance);
+    echo $args['after_widget'];
+  }else{
+    $enabled_address   = $instance['enable_address']  =='on' ? true : false;
+		$enabled_phone     = $instance['enable_phone']    =='on' ? true : false;
+		$enabled_tollfree  = $instance['enable_tollfree'] =='on' ? true : false;
+		$enabled_fax       = $instance['enable_fax']      =='on' ? true : false;
+		$enabled_email     = $instance['enable_email']    =='on' ? true : false;
+    $contact_info  = get_option('tw_theme_contact_options');
+
+    echo $args['before_widget'];
+    $title 		= apply_filters('widget_title', $instance['title']);
+
+    if($contact_info){
+
+    echo $args['before_title'] . $title . $args['after_title'];
+      ?>
+      <div class="contact-info-widget-container">
+
+        <div itemscope itemtype="http://schema.org/LocalBusiness">
+            <span class="sr-only" itemprop="name"><?php echo bloginfo('name');?></span>
+
+            <?php if($enabled_address):?>
+            <div class="contact-address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+              <?php if(isset($contact_info['address_1']) && $contact_info['address_1']!=='' ):?>
+                <span itemprop="streetAddress">
+                  <?php echo $contact_info['address_1'];?>
+                  <?php if(isset($contact_info['address_2']) && $contact_info['address_2']!=='' ):?>,<br/><?php echo $contact_info['address_2']; ?> <?php endif;?>
+                </span><br/>
+              <?php endif;?>
+              <?php if(isset($contact_info['city']) && $contact_info['city']!=='' ):?><span itemprop="addressLocality"><?php echo $contact_info['city'];?></span><?php endif;?>
+              <?php if(isset($contact_info['postcode'])  && $contact_info['postcode']!=='' ):?><span itemprop="postalCode"><?php echo $contact_info['postcode'];?></span><?php endif;?>
+              <?php if(isset($contact_info['state'])  && $contact_info['state']!=='' ):?><span itemprop="addressRegion"><?php echo $contact_info['state'];?></span><?php endif;?>
+              <?php if(isset($contact_info['country'])  && $contact_info['country']!=='' ):?><br/><span itemprop="addressCountry"><?php echo $contact_info['country'];?></span><?php endif;?>
+            </div><!-- contact-address-->
+            <?php endif;?>
+
+            <?php if($enabled_phone || $enabled_tollfree || $enabled_fax || $enabled_email):?>
+            <div class="contact-phone">
+              <ul class="fa fa-ul">
+                <?php if($enabled_phone && isset($contact_info['phone']) && $contact_info['phone']!=='' ):?><li><i class="fa fa-fw fa-phone"></i> <span itemprop="telephone">
+                  <a href="callto:<?php echo tw_clean_phone_number($contact_info['phone']);?>" title="<?php echo __('Call','tw'); ?> <?php echo bloginfo('name');?>"><?php echo $contact_info['phone']; ?></a>
+                </span></li><?php endif;?>
+
+                <?php if($enabled_tollfree && isset($contact_info['toll_free']) && $contact_info['toll_free']!=='' ):?><li><i class="fa fa-fw fa-phone"></i> <span itemprop="telephone">
+                  <a href="callto:<?php echo tw_clean_phone_number($contact_info['toll_free']);?>" title="<?php echo __('Call','tw'); ?> <?php echo bloginfo('toll_free');?>"><?php echo $contact_info['toll_free']; ?></a>
+                </span></li><?php endif;?>
+
+                <?php if($enabled_fax && isset($contact_info['fax']) && $contact_info['fax']!=='' ):?><li><i class="fa fa-fw fa-fax"></i> <span itemprop="faxNumber"><?php echo $contact_info['fax']; ?></span></li><?php endif;?>
+
+                <?php if($enabled_email && isset($contact_info['Email']) && $contact_info['Email']!=='' ):?><li><i class="fa fa-fw fa-envelope"></i> <span itemprop="email">
+                  <a href="mailto:<?php echo $contact_info['Email']; ?>" target="_blank" title="<?php echo __('Email','tw'); ?> <?php echo bloginfo('toll_free');?>"><?php echo $contact_info['Email']; ?></a>
+                </span></li><?php endif;?>
+              <ul>
+            </div><!-- contact-phone -->
+            <?php endif;?>
+        </div>
+
+      </div><!-- contact-info-widget-container -->
+      <?php
+    }
+    echo $args['after_widget'];
+  }
+}
+
 /**
  * Social Icons Widget
  */
 class tw_social_widget extends WP_Widget {
 
-
   /** constructor -- name this the same as the class above */
   function tw_social_widget() {
     parent::WP_Widget(false, $name = 'TW Social Widget');
-  }
-
-  /** @see WP_Widget::widget -- do not rename this */
-  function widget($args, $instance) {
-    extract($args, EXTR_SKIP);
-    tw_show_social_widget($args, $instance);
   }
 
   /** @see WP_Widget::update -- do not rename this */
@@ -47,6 +169,11 @@ class tw_social_widget extends WP_Widget {
     <?php
   }
 
+  /** @see WP_Widget::widget -- do not rename this */
+  function widget($args, $instance) {
+    extract($args, EXTR_SKIP);
+    tw_show_social_widget($args, $instance);
+  }
 
 } // end class example_widget
 add_action('widgets_init', create_function('', 'return register_widget("tw_social_widget");'));
