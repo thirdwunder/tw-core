@@ -1139,6 +1139,24 @@ if(!function_exists('tw_get_theme_social_options')){
   }
 }
 
+/******************************************************
+**************** Formatting Functions ****************
+******************************************************/
+if(!function_exists('tw_address_to_google_map_url')){
+  function tw_address_to_google_map_url(){
+    $url_base = 'http://maps.google.com/?q=';
+    $contact_info = tw_get_contact_info();
+    $address_1 = isset($contact_info['address_1']) ? $contact_info['address_1'] : '';
+    $address_2 = isset($contact_info['address_2']) ? $contact_info['address_2'] : '';
+    $city = isset($contact_info['city']) ? $contact_info['city'] : '';
+    $postcode = isset($contact_info['postcode']) ? $contact_info['postcode'] : '';
+    $state = isset($contact_info['state']) ? $contact_info['state'] : '';
+    $country = isset($contact_info['country']) ? $contact_info['country'] : '';
+    $query_string = urlencode(trim($address_1.' '.$address_2.' '.$city.' '.$postcode.' '.$state.' '.$country));
+    $map_url = $url_base.$query_string;
+    return $map_url;
+  }
+}
 
 /******************************************************
 ****************** Option Functions *******************
@@ -1282,6 +1300,13 @@ if(!function_exists('tw_get_slider_style')){
     $general_options = tw_get_general_options();
     $style = isset($general_options['slider_style']) ? $general_options['slider_style'] : 'slide';
     return $style;
+  }
+}
+
+if(!function_exists('tw_get_contact_info')){
+  function tw_get_contact_info(){
+    $contact_info  = get_option('tw_theme_contact_options');
+    return $contact_info;
   }
 }
 
