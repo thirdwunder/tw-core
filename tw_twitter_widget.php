@@ -9,7 +9,7 @@ if(class_exists('TwitterAPIExchange')){
 
     class tw_twitter_widget extends WP_Widget{
       function tw_twitter_widget(){
-        parent::WP_Widget(false, $name = 'TW Twitter Widget');
+        parent::__construct(false, $name = 'TW Twitter Widget');
       }
       function update($new_instance, $old_instance){
         $instance = $old_instance;
