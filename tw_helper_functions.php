@@ -63,7 +63,13 @@ if(!function_exists('tw_url2domain')){
  */
 if(!function_exists('tw_clean_phone_number')){
   function tw_clean_phone_number($phone){
-    return preg_replace('~[\W\s]~', "", $phone);
+    $pos = strpos($phone, '+');
+    $prefix = is_int($pos) && $pos == 0 ? true : false;
+    $phone = preg_replace('~[\W\s]~', "", $phone);
+    if($prefix){
+      $phone = '+'.$phone;
+    }
+    return $phone;
   }
 }
 
