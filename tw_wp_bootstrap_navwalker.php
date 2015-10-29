@@ -47,7 +47,7 @@ if(class_exists('wp_bootstrap_navwalker')){
 
   			$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
 
-  			$output .= $indent . '<li role="presentation" class="'.$class_names.'"><a href="callto:'.$phone_number_clean.'">' . $phone_number . '</a>';
+  			$output .= $indent . '<li role="presentation" class="'.$class_names.'"><a href="tel:'.$phone_number_clean.'">' . $phone_number . '</a>';
   		} else {
 
   			$class_names = $value = '';

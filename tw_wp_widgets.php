@@ -104,11 +104,11 @@ function tw_show_contact_info_widget($args, $instance){
             <div class="contact-phone">
               <ul class="fa fa-ul">
                 <?php if($enabled_phone && isset($contact_info['phone']) && $contact_info['phone']!=='' ):?><li><i class="fa fa-fw fa-phone"></i> <span itemprop="telephone">
-                  <a href="callto:<?php echo tw_clean_phone_number($contact_info['phone']);?>" title="<?php echo __('Call','tw'); ?> <?php echo bloginfo('name');?>"><?php echo $contact_info['phone']; ?></a>
+                  <a href="tel:<?php echo tw_clean_phone_number($contact_info['phone']);?>" title="<?php echo __('Call','tw'); ?> <?php echo bloginfo('name');?>"><?php echo $contact_info['phone']; ?></a>
                 </span></li><?php endif;?>
 
                 <?php if($enabled_tollfree && isset($contact_info['toll_free']) && $contact_info['toll_free']!=='' ):?><li><i class="fa fa-fw fa-phone"></i> <span itemprop="telephone">
-                  <a href="callto:<?php echo tw_clean_phone_number($contact_info['toll_free']);?>" title="<?php echo __('Call','tw'); ?> <?php echo bloginfo('toll_free');?>"><?php echo $contact_info['toll_free']; ?></a>
+                  <a href="tel:<?php echo tw_clean_phone_number($contact_info['toll_free']);?>" title="<?php echo __('Call','tw'); ?> <?php echo bloginfo('toll_free');?>"><?php echo $contact_info['toll_free']; ?></a>
                 </span></li><?php endif;?>
 
                 <?php if($enabled_fax && isset($contact_info['fax']) && $contact_info['fax']!=='' ):?><li><i class="fa fa-fw fa-fax"></i> <span itemprop="faxNumber"><?php echo $contact_info['fax']; ?></span></li><?php endif;?>
