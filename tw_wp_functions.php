@@ -629,11 +629,13 @@ if(!function_exists('tw_comment_placeholders')){
 ***************** Pagination ************************
 ******************************************************/
 if(!function_exists('tw_pagination')){
-  function tw_pagination($pages = '', $range = 4){
+  function tw_pagination($pages = '', $range = 4, $paged = null){
      $showitems = ($range * 2)+1;
 
-     global $paged;
-     if(empty($paged)) $paged = 1;
+     if(is_null($paged)){
+       global $paged;
+       if(empty($paged)) $paged = 1;
+     }
 
      if($pages == ''){
          global $wp_query;
