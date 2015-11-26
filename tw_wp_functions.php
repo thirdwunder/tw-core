@@ -985,12 +985,12 @@ if(!function_exists('tw_get_social_networks')){
               break;
           case 'twitter':
               $username = $value;
-              $value  = trim($username)!==''? 'http://twitter.com/'.$username : '';
+              $value  = trim($username)!==''? 'https://twitter.com/'.$username : '';
               $icon = 'fa-'.$network.$style;
               break;
           case 'instagram':
               $username = $value;
-              $value  = trim($username)!=='' ? 'http://instagram.com/'.$username : '';
+              $value  = trim($username)!=='' ? 'https://www.instagram.com/'.$username : '';
               $icon = 'fa-instagram';
               break;
           case 'pinterest':
@@ -1078,12 +1078,12 @@ if(!function_exists('tw_get_theme_social_options')){
                 break;
             case 'twitter':
                 $username = $value;
-                $value  = trim($username)!==''? 'http://twitter.com/'.$username : '';
+                $value  = trim($username)!==''? 'https://twitter.com/'.$username : '';
                 $icon = 'fa-'.$network.$style;
                 break;
             case 'instagram':
                 $username = $value;
-                $value  = trim($username)!=='' ? 'http://instagram.com/'.$username : '';
+                $value  = trim($username)!=='' ? 'https://www.instagram.com/'.$username : '';
                 $icon = 'fa-instagram';
                 break;
             case 'pinterest':
