@@ -1,2 +1,0 @@
-function hasScrolled(){var t=jQuery(this).scrollTop();Math.abs(lastScrollTop-t)<=delta||(t>lastScrollTop&&t>navbarHeight?jQuery("#psp-title").animate({top:"32px"},250):t+jQuery(window).height()<jQuery(document).height()&&(jQuery("#wpadminbar").length?jQuery("#psp-title").animate({top:"30px"},250):jQuery("#psp-title").animate({top:"0px"},250)),lastScrollTop=t)}jQuery(document).ready(function($){jQuery("#wpadminbar").length&&jQuery("#psp-title").animate({top:"30px"},250)}),jQuery("#nav-menu a").smoothScroll({offset:-165});
-//# sourceMappingURL=./tw-project-panorama-min.js.map
