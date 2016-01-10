@@ -17,7 +17,7 @@ if(class_exists('wp_bootstrap_navwalker')){
   		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
 
       // Getting Phone number options from TW Settings
-      $contact_options = get_option('tw_theme_contact_options');
+      $contact_options = tw_get_contact_info();
       $phone_enabled = isset($contact_options['enable_phone_in_menu']) && $contact_options['enable_phone_in_menu']!=='no' ? $contact_options['enable_phone_in_menu'] : false;
       $phone_number = isset($contact_options[$phone_enabled]) ? $contact_options[$phone_enabled] : false;
       $phone_number_clean = $phone_number && function_exists('tw_clean_phone_number') ? tw_clean_phone_number($phone_number) : false;

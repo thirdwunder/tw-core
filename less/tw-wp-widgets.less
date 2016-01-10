@@ -61,6 +61,7 @@
 
 }
 
+.widget_twphotoswidget,
 .widget_tw_twitter_widget,
 .widget_tw_blog_widget,
 .widget_tw_fb_like_box_widget,
@@ -74,7 +75,8 @@
 .widget_recent_comments,
 .widget_rss,
 .widget_meta,
-.widget_wysija{
+.widget_wysija,
+.widget_tw_contact_info_widget{
   .widget-title{
     &::before{
       font-family: @font-fontawesome;
@@ -131,6 +133,9 @@
 .widget_tw_social_widget{
   .contact-social{
     .social-icons-list();
+    ul{
+      padding-left: 0;
+    }
   }
 }
 .widget_pages{
@@ -179,8 +184,9 @@
     }
   }
 
-  #calendar_wrap{
-    #wp-calendar{
+  .calendar_wrap{
+    #wp-calendar,
+    table{
       width: 100%;
       caption{
         font-weight: bold;
@@ -281,6 +287,118 @@
   }
 
 }
+.widget_tw_contact_info_widget{
+  .contact-info-widget-container{
+    .contact-phone{
+      ul{
+        margin: 15px 0;
+        padding: 0;
+        li{
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
+.widget_twgallerieswidget,
+.widget_twphotoswidget{
+  .tw_photos_plugin-container{
+    .tw_photos_plugin-container-inner{
+      ul.tw_photos_plugin-photos{
+        padding: 0;
+
+        li.tw_photos_plugin-photo{
+          display: inline;
+          display: inline-block;
+          width: 48%;
+          margin: 2px 0.5%;
+          img{
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+          }
+        }
+      }
+      .more{
+        text-align: center;
+        .btn,
+        a.btn{
+          width: 100%;
+          max-width: 100%;
+          white-space:normal !important;
+          word-wrap:break-word;
+        }
+      }
+    }
+  }
+}
+
+.widget_twteammemberswidget{
+ .tw_team-members_plugin-container{
+   .tw_team-members_plugin-container-inner{
+
+    ul.tw_teams_plugin_team-members{
+      li{
+        display: inline;
+        display: inline-block;
+        width: 48%;
+        margin: 2px 0.5%;
+        img{
+          width: 100%;
+          max-width: 100%;
+          height: auto;
+        }
+      }
+    }
+    .tw_teams_plugin_team-members{
+      padding: 0;
+      .panel{
+        border: none;
+        box-shadow: none;
+        .profile-img{
+          padding: 0 !important;
+        }
+      }
+      .thumbnail{
+        .border-radius(0);
+        border: none;
+        margin-bottom: 0px;
+        padding: 0;
+        background: transparent;
+        .profile-img{
+          max-width: 80%;
+          margin: 0 auto;
+        }
+        .caption{
+          text-align: left;
+         h3{
+           margin-top: 5px;
+           margin-bottom: 5px;
+           font-size: 1.2em;
+           color: inherit;
+         }
+         h5{
+           font-size: 0.9em;
+           color: inherit;
+         }
+        }
+      }
+    }
+
+    .more{
+      text-align: center;
+      .btn,
+      a.btn{
+        width: 100%;
+        max-width: 100%;
+        white-space:normal !important;
+        word-wrap:break-word;
+      }
+    }
+   }
+ }
+}
 
 .widget{
   padding: 15px 0;
@@ -360,13 +478,18 @@
       border-bottom: 1px solid @color-line-light;
     }
   }
+
   .widget_tw_blog_widget{
-
-
+    padding-bottom: 30px;
     .blog-container{
       .container();
       .caption{
         h2,h3{
+          text-align: center;
+          margin-top: 15px;
+          margin-bottom: 5px;
+        }
+        .entry-author{
           text-align: center;
         }
         p{
@@ -378,11 +501,93 @@
       }
       .more{
         .btn-primary{
-          min-width:50% !important;
-          max-width: 100% !important;
+          //min-width:50% !important;
+          //max-width: 100% !important;
         }
       }
     }
+  }
+
+
+  .widget_twgallerieswidget,
+  .widget_twphotoswidget{
+    padding-bottom: 30px;
+    .tw_photos_plugin-container{
+      .container();
+      .tw_photos_plugin-container-inner{
+        .tw_photos_plugin-photos{
+          .tw_photos_plugin-photo{
+            .thumbnail{
+              .border-radius(0);
+              border: none;
+              padding: 0;
+              .caption{
+                h2,h3{
+                  text-align: center;
+                  margin-top: 15px;
+                  margin-bottom: 5px;
+                }
+                p{
+                  text-align: justify;
+                }
+
+              }
+            }
+          }
+        }
+        .more{
+          .btn{
+            width: auto;
+            max-width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .widget_twteammemberswidget{
+    padding-bottom: 30px;
+   .tw_team-members_plugin-container{
+     .container();
+     .tw_team-members_plugin-container-inner{
+
+      .tw_teams_plugin_team-members{
+        padding-bottom: 15px;
+        //margin-bottom: 15px;
+        .thumbnail{
+          padding: 0;
+          border: none;
+          .border-radius(0);
+          .caption{
+            text-align: center;
+            h3{
+              margin-top: 15px;
+              margin-bottom: 5px;
+            }
+          }
+        }
+        .panel{
+          padding-bottom: 15px;
+          margin-bottom: 15px;
+          border-bottom: none;
+          box-shadow: none;
+          .caption{
+            h2,h3{
+              margin-top: 15px;
+              margin-bottom: 5px;
+            }
+          }
+        }
+      }
+      .more{
+        .btn,
+        a.btn{
+          width: auto;
+          max-width: 100%;
+        }
+      }
+     }
+   }
   }
 
   .widget_search{
@@ -397,6 +602,7 @@
       .container();
     }
   }
+
   .widget_tw_social_widget{
     .social-widget-container{
       .container();
@@ -410,11 +616,13 @@
       }
     }
   }
+
   .widget_tw_fb_like_box_widget{
     .facebook-widget-container{
       .container();
     }
   }
+
   .widget_wysija{
     .container();
     .widget_wysija{
@@ -422,5 +630,4 @@
       }
     }
   }
-
 }

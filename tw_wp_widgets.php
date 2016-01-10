@@ -71,7 +71,7 @@ function tw_show_contact_info_widget($args, $instance){
 		$enabled_tollfree  = $instance['enable_tollfree'] =='on' ? true : false;
 		$enabled_fax       = $instance['enable_fax']      =='on' ? true : false;
 		$enabled_email     = $instance['enable_email']    =='on' ? true : false;
-    $contact_info  = get_option('tw_theme_contact_options');
+    $contact_info      = tw_get_contact_info();
 
     echo $args['before_widget'];
     $title 		= apply_filters('widget_title', $instance['title']);
@@ -428,7 +428,7 @@ class tw_blog_widget extends WP_Widget {
     }
     ?>
 
-      <div class="blog-container">
+      <div class="blog-container plugin-container">
        <?php if ( $title )
           echo $before_title . $title . $after_title; ?>
           <div id="<?php echo $args['widget_id'];?>-articles" class="articles row" >
@@ -459,7 +459,9 @@ class tw_blog_widget extends WP_Widget {
 
               <div class="caption">
                 <h3 itemprop="headline"><a href="<?php the_permalink(); ?><?php //echo $tw_tracking; ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h3>
+                <div class="entry-author vcard" itemscope="itemscope" itemtype="http://schema.org/Person" itemprop="author"><?php echo __('by','tw'); ?> <span class="fn" itemprop="name"><?php the_author_posts_link();?></span></div>
                 <p class="time"><time class="updated" itemprop="datePublished" datetime="<?php echo get_the_time('Y-m-j'); ?>T<?php echo get_the_time('H:i:s'); ?>" pubdate><?php echo get_the_time('F j, Y'); ?></time></p>
+
                 <?php //if(has_excerpt()): ?>
                 <div class="description" itemprop="description"><?php the_excerpt(); ?></div>
                 <?php //endif;?>

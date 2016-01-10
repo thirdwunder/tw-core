@@ -1333,7 +1333,7 @@ if(!function_exists('tw_is_fb_coments_enabled')){
     $fb_comments = false;
     $social_options = tw_get_social_options();
     if(is_array($social_options) && isset($social_options['enable_fb_comments'])){
-      $fb_comments = !!$social_options['enable_fb_comments'];
+      $fb_comments = ($social_options['comment_options']=='fb_comments' || $social_options['comment_options']=='wp_fb_comments') ? true : false;
     }
     return $fb_comments;
   }
@@ -1440,16 +1440,9 @@ if(!function_exists('tw_get_sharedcount_total')){
  */
 add_action( 'wp_footer', 'tw_fb_script' );
 function tw_fb_script(){
-  $fb_comments = false;
-  $fb_app_id = null;
-  $social_options = tw_get_social_options();
-  if(is_array($social_options) && isset($social_options['enable_fb_comments'])){
-    $fb_comments = !!$social_options['enable_fb_comments'];
-  }
-  if(is_array($social_options) && isset($social_options['fb_app_id']) ){
-    $fb_app_id = trim($social_options['fb_app_id']);
-  }
-  if(!is_null($fb_app_id)):
+  $fb_app_id = get_facebook_app_id();
+  $fb_comments = tw_is_fb_coments_enabled();
+  if($fb_app_id):
 ?>
   <div id="fb-root"></div>
   <script>(function(d, s, id) {

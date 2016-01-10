@@ -363,6 +363,33 @@ blockquote{
   }
 }
 
+/***** Post Nav  ******/
+#extended-post-navigation{
+  margin-bottom: 30px;
+  border: 1px solid @color-line-light;
+  .previous,
+  .next{
+    padding: 15px;
+    min-height: 100px;
+    .transition(all, 0.3s, ease-in-out);
+    &:hover{
+      background-color: #eee;
+      h4{
+        color: @text-color;
+      }
+    }
+    h4{
+      margin: 5px 0 0 0 ;
+    }
+  }
+  .previous{
+
+  }
+  .next{
+    text-align: right;
+  }
+}
+
 /********************
 *** Image Slider  ***
 ********************/
@@ -442,6 +469,38 @@ blockquote{
   and:            http://stackoverflow.com/questions/18548731/bootstrap-3-carousel-fading-to-new-slide-instead-of-sliding-to-new-slide
   Inspired from:  http://codepen.io/Rowno/pen/Afykb
 */
+.carousel-fade {
+  .carousel-inner {
+        .item {
+          .transition(opacity, 0.8s, ease-in-out)
+        }
+
+        .item,
+        .active.left,
+        .active.right {
+            opacity: 0;
+        }
+
+        .active,
+        .next.left,
+        .prev.right {
+            opacity: 1;
+        }
+
+        .next,
+        .prev,
+        .active.left,
+        .active.right {
+            left: 0;
+            transform: translate3d(0, 0, 0) !important;
+        }
+    }
+
+    .carousel-control {
+        z-index: 2;
+    }
+}
+/*
 .carousel-fade{
   .carousel-inner{
     .item {
@@ -470,6 +529,7 @@ blockquote{
     z-index: 2;
   }
 }
+*/
 
 
 /*
@@ -627,7 +687,7 @@ blockquote{
     .contact-social{
       ul{
         list-style: none;
-        padding-left: 0;
+        padding-left: 0 !important;
         li{
           display: inline-block;
           font-size: 2.5em;
@@ -788,6 +848,19 @@ blockquote{
   }
 }
 
+
+.video-wrapper{
+  margin-bottom: 30px;
+  .section-video{
+    text-align:center;
+    .background-full(center center,scroll);
+
+    margin-left: auto;
+    margin-right: auto;
+    .clickable-video();
+  }
+}
+
 /********************
 *** Related Posts ***
 ********************/
@@ -801,6 +874,7 @@ blockquote{
     .related-post-container{
       .related-post{
         .border-radius(0);
+        border: none;
         padding: 0;
         .caption{
           h3{
@@ -1362,7 +1436,9 @@ img{
         padding-left: 0;
         li{
           .social-link-colors();
-
+          &::after{
+            content: '';
+          }
           a{
             &.contact-facebook,
             &.contact-twitter,
