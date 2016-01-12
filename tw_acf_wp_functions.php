@@ -2025,7 +2025,7 @@ if(!function_exists('tw_get_social_networks')){
 
     $instagram  = get_field('tw_instagram_handle','option');
     if($instagram && !empty(trim($instagram))){
-      $social['twitter'] = array(
+      $social['instagram'] = array(
         'username' => $instagram,
         'url' => 'https://www.instagram.com/'.$instagram,
         'icon' => 'fa-instagram',
