@@ -774,7 +774,7 @@ acf_add_local_field_group(array (
 			'name' => 'tw_hp_jumbotron_content',
 			'type' => 'wysiwyg',
 			'instructions' => '',
-			'required' => 1,
+			'required' => 0,
 			'conditional_logic' => array (
 				array (
 					array (
