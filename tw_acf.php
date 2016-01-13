@@ -368,6 +368,47 @@ acf_add_local_field_group(array (
 ));
 
 acf_add_local_field_group(array (
+	'key' => 'tw_theme_mobile_menu_options',
+	'title' => 'Mobile Menu Options',
+	'fields' => array (
+		array (
+			'key' => 'field_56967edc2e7d4',
+			'label' => 'Mobile Menu Search',
+			'name' => 'tw_enable_mobile_menu_search',
+			'type' => 'true_false',
+			'instructions' => __('This will add a search button next to the mobile menu "hamburger" button. Please note that in smaller sized mobile devices, this might cause issues if the logo is too big.','tw'),
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array (
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'message' => 'Enable Mobile Menu Search',
+			'default_value' => 0,
+		),
+	),
+	'location' => array (
+		array (
+			array (
+				'param' => 'options_page',
+				'operator' => '==',
+				'value' => 'tw-general-settings',
+			),
+		),
+	),
+	'menu_order' => 1,
+	'position' => 'normal',
+	'style' => 'default',
+	'label_placement' => 'left',
+	'instruction_placement' => 'field',
+	'hide_on_screen' => '',
+	'active' => 1,
+	'description' => 'Theme Mobile Menu Options',
+));
+
+
+acf_add_local_field_group(array (
 	'key' => 'tw_theme_footer_options',
 	'title' => 'Footer Options',
 	'fields' => array (
@@ -485,7 +526,7 @@ acf_add_local_field_group(array (
 			),
 		),
 	),
-	'menu_order' => 1,
+	'menu_order' => 2,
 	'position' => 'normal',
 	'style' => 'default',
 	'label_placement' => 'left',
@@ -534,6 +575,30 @@ acf_add_local_field_group(array (
 			'readonly' => 0,
 		),
 		array (
+			'key' => 'field_5696886024582',
+			'label' => 'Newsletter Form in Footer',
+			'name' => 'tw_gf_newsletter_form_in_footer',
+			'type' => 'true_false',
+			'instructions' => 'Add a newsletter form in the footer.',
+			'required' => 0,
+			'conditional_logic' => array (
+				array (
+					array (
+						'field' => 'field_568451e580a0b',
+						'operator' => '!=',
+						'value' => '',
+					),
+				),
+			),
+			'wrapper' => array (
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'message' => 'Enable Newsletter Form in the Footer',
+			'default_value' => 1,
+		),
+		array (
 			'key' => 'field_5684524f80a0c',
 			'label' => 'Contact Form',
 			'name' => 'tw_gf_contact_form',
@@ -567,7 +632,7 @@ acf_add_local_field_group(array (
 			),
 		),
 	),
-	'menu_order' => 2,
+	'menu_order' => 3,
 	'position' => 'normal',
 	'style' => 'default',
 	'label_placement' => 'left',

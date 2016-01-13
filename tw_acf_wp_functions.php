@@ -2211,14 +2211,27 @@ if(!function_exists('tw_get_social_options')){
 
 if(!function_exists('tw_email_subscribe_gform')){
   function tw_email_subscribe_gform(){
-    $general_options = tw_get_general_options();
-    $email_subscribe_gform_id = isset($general_options['email_subscribe_gform']) ? $general_options['email_subscribe_gform'] : false;
-    return $email_subscribe_gform_id;
+    $gform_id = get_field('tw_gf_newsletter_form','option');
+    return $gform_id;
   }
 }
 
-if(!function_exists('tw_contact_gform')){
-  function tw_contact_gform(){
+if(!function_exists('tw_get_newsletter_gform')){
+  function tw_newsletter_gform(){
+    $gform_id = get_field('tw_gf_newsletter_form','option');
+    return $gform_id;
+  }
+}
+
+if(!function_exists('tw_is_footer_newsletter_enabled')){
+  function tw_is_footer_newsletter_enabled(){
+    $is_enabled = get_field('tw_gf_newsletter_form_in_footer','option');
+    return $is_enabled;
+  }
+}
+
+if(!function_exists('tw_get_contact_gform')){
+  function tw_get_contact_gform(){
     $general_options = tw_get_general_options();
     $contact_gform_id = isset($general_options['contact_gform']) ? $general_options['contact_gform'] : false;
     return $contact_gform_id;
@@ -2299,6 +2312,13 @@ if(!function_exists('tw_get_apple_icon_144')){
       $icon = $new_icon;
     }
     return $icon;
+  }
+}
+
+if(!function_exists('tw_is_mobile_menu_search_enabled')){
+  function tw_is_mobile_menu_search_enabled(){
+    $mobile_menu_search = get_field('tw_enable_mobile_menu_search', 'option');
+    return $mobile_menu_search;
   }
 }
 
@@ -2402,6 +2422,8 @@ if(!function_exists('tw_get_twitter_api')){
     return false;
   }
 }
+
+
 
 /******************************************************
 ***************** Shared Count API *******************
