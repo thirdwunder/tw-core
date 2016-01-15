@@ -18,6 +18,12 @@ if (!(is_admin() )) {
   }
 }
 
+
+add_action( 'after_setup_theme', 'tw_woocommerce_support' );
+function tw_woocommerce_support() {
+  add_theme_support( 'woocommerce' );
+}
+
 /**
  * Adds prefetch dns meta to head
  */
