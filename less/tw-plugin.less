@@ -36,8 +36,8 @@
     .item{
       //border: 10px solid red;
       .carousel-caption{
-        background-color: @color-inverse-bg;
-        background-color: fade(@color-inverse-bg, 70%);
+        background-color: @gray-darker;
+        background-color: fade(@gray-darker, 70%);
         position: absolute;
         padding: 20px;
         clear: both;
@@ -202,7 +202,7 @@
           }
           color: white;
           .panel-content-inner{
-            text-shadow: 1px 1px 1px @color-line-dark;
+            text-shadow: 1px 1px 1px @gray-light;
           }
         }
         &.dark{
@@ -211,7 +211,7 @@
           }
           color: @text-color;
           .panel-content-inner{
-            text-shadow: 1px 1px 1px @color-line-light;
+            text-shadow: 1px 1px 1px @gray-lighter;
           }
 
         }
@@ -231,7 +231,7 @@
       text-align: center;
       margin-bottom: 25px;
       padding-bottom: 15px;
-      border-bottom: 1px solid @color-line-light;
+      border-bottom: 1px solid @gray-lighter;
     }
 
     .services-container{
@@ -327,8 +327,8 @@
           position: relative;
           width: 100%;
           height: auto;
-          background-color: @color-inverse-bg;
-          //background-color: fade(@color-inverse-bg, 75%);
+          background-color: @gray-darker;
+          //background-color: fade(@gray-darker, 75%);
           left: 0;
           right: 0;
           bottom: 0;
