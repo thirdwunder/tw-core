@@ -269,7 +269,7 @@ if(!function_exists('tw_videopressURL_to_embedCode')){
     $width = '640';
     $height = '385';
 
-    $iframe = '&lt;iframe width="'.$width.'" height="'.$height.'" src="https://videopress.com/embed/' . $id . '?autoplay='.$autoplay.'" frameborder="0" allowfullscreen&gt;&lt;/iframe> <script src="https://videopress.com/videopress-iframe.js"></script>';
+    $iframe = '&lt;iframe width="'.$width.'" height="'.$height.'" src="https://videopress.com/embed/' . $id . '?autoplay='.$autoplay.'" frameborder="0" allowfullscreen&gt;&lt;/iframe> &lt;script src="https://videopress.com/videopress-iframe.js">&lt;/script>';
 
     return $iframe;
   }
