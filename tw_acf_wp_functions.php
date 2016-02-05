@@ -9,7 +9,7 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 ******************************************************/
 
 if (!(is_admin() )) {
-  add_filter( 'clean_url', 'tw_defer_js', 11, 1 );
+  //add_filter( 'clean_url', 'tw_defer_js', 11, 1 );
   function tw_defer_js( $url ){
     if ( FALSE === strpos( $url, '.js' ) ) return $url;
     if ( strpos( $url, 'jquery.js' ) ) return $url;
