@@ -1930,7 +1930,7 @@ if(!function_exists('tw_the_post_thumbnail')){
       $src = wp_get_attachment_image_src($img_id, $img_size);
 
       $img_info = pathinfo($src[0]);
-      $ext =  $type['extension'];
+      $ext =  $img_info['extension'];
       if($ext == 'gif'){
         $src = wp_get_attachment_image_src($img_id, 'full');
       }
