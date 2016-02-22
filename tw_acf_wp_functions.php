@@ -1928,6 +1928,12 @@ if(!function_exists('tw_the_post_thumbnail')){
     if(has_post_thumbnail($post_id) ){
       $img_id = get_post_thumbnail_id($post_id);
       $src = wp_get_attachment_image_src($img_id, $img_size);
+
+      $img_info = pathinfo($src[0]);
+      $ext =  $type['extension'];
+      if($ext == 'gif'){
+        $src = wp_get_attachment_image_src($img_id, 'full');
+      }
     }
     $alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
 
