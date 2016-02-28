@@ -2020,16 +2020,16 @@ if(!function_exists('tw_get_social_networks')){
   function tw_get_social_networks(){
     $social = array();
 
-    $facebook   = get_field('tw_facebook_url','option');
-    if($facebook && !empty(trim($facebook))){
+    $facebook   = trim(get_field('tw_facebook_url','option'));
+    if($facebook && !empty($facebook)){
       $social['facebook'] = array(
         'url' => $facebook,
         'icon' => 'fa-facebook',
       );
     }
 
-    $twitter    = get_field('tw_twitter_handle','option');
-    if($twitter && !empty(trim($twitter))){
+    $twitter    = trim(get_field('tw_twitter_handle','option'));
+    if($twitter && !empty($twitter)){
       $social['twitter'] = array(
         'username' => $twitter,
         'url' => 'https://twitter.com/'.$twitter,
@@ -2037,8 +2037,8 @@ if(!function_exists('tw_get_social_networks')){
       );
     }
 
-    $instagram  = get_field('tw_instagram_handle','option');
-    if($instagram && !empty(trim($instagram))){
+    $instagram  = trim(get_field('tw_instagram_handle','option'));
+    if($instagram && !empty($instagram)){
       $social['instagram'] = array(
         'username' => $instagram,
         'url' => 'https://www.instagram.com/'.$instagram,
@@ -2046,56 +2046,56 @@ if(!function_exists('tw_get_social_networks')){
       );
     }
 
-    $pinterest  = get_field('tw_pinterest_url','option');
-    if($pinterest && !empty(trim($pinterest))){
+    $pinterest  = trim(get_field('tw_pinterest_url','option'));
+    if($pinterest && !empty($pinterest)){
       $social['pinterest'] = array(
         'url' => $pinterest,
         'icon' => 'fa-pinterest',
       );
     }
 
-    $tumblr     = get_field('tw_tumblr_url','option');
-    if($tumblr && !empty(trim($tumblr))){
+    $tumblr     = trim(get_field('tw_tumblr_url','option'));
+    if($tumblr && !empty($tumblr)){
       $social['tumblr'] = array(
         'url' => $tumblr,
         'icon' => 'fa-tumblr',
       );
     }
 
-    $linkedin   = get_field('tw_linkedin_url','option');
-    if($linkedin && !empty(trim($linkedin))){
+    $linkedin   = trim(get_field('tw_linkedin_url','option'));
+    if($linkedin && !empty($linkedin)){
       $social['linkedin'] = array(
         'url' => $linkedin,
         'icon' => 'fa-linkedin',
       );
     }
 
-    $slideshare = get_field('tw_slideshare_url','option');
-    if($slideshare && !empty(trim($slideshare))){
+    $slideshare = trim(get_field('tw_slideshare_url','option'));
+    if($slideshare && !empty($slideshare)){
       $social['slideshare'] = array(
         'url' => $slideshare,
         'icon' => 'fa-slideshare',
       );
     }
 
-    $googleplus = get_field('tw_googleplus_url','option');
-    if($googleplus && !empty(trim($googleplus))){
+    $googleplus = trim(get_field('tw_googleplus_url','option'));
+    if($googleplus && !empty($googleplus)){
       $social['googleplus'] = array(
         'url' => $googleplus,
         'icon' => 'fa-google-plus',
       );
     }
 
-    $youtube    = get_field('tw_youtube_url','option');
-    if($youtube && !empty(trim($youtube))){
+    $youtube    = trim(get_field('tw_youtube_url','option'));
+    if($youtube && !empty($youtube)){
       $social['youtube'] = array(
         'url' => $youtube,
         'icon' => 'fa-youtube',
       );
     }
 
-    $vimeo     = get_field('tw_vimeo_url','option');
-    if($vimeo && !empty(trim($vimeo))){
+    $vimeo     = trim(get_field('tw_vimeo_url','option'));
+    if($vimeo && !empty($vimeo)){
       $social['vimeo'] = array(
         'url' => $vimeo,
         'icon' => 'fa-vimeo-square',
@@ -2126,23 +2126,23 @@ if(!function_exists('tw_get_contact_info')){
   function tw_get_contact_info(){
     $contact_info = array();
 
-    $phone      = get_field('tw_phone','option');
-    if($phone && !empty(trim($phone)) ){
+    $phone      = trim(get_field('tw_phone','option'));
+    if($phone && !empty($phone)) {
       $contact_info['phone'] = $phone;
     }
 
-    $toll_free  = get_field('tw_toll_free_phone','option');
-    if($toll_free && !empty(trim($toll_free)) ){
+    $toll_free  = trim(get_field('tw_toll_free_phone','option'));
+    if($toll_free && !empty($toll_free)) {
       $contact_info['toll_free'] = $toll_free;
     }
 
-    $fax        = get_field('tw_fax','option');
-    if($fax && !empty(trim($fax)) ){
+    $fax        = trim(get_field('tw_fax','option'));
+    if($fax && !empty($fax)) {
       $contact_info['fax'] = $fax;
     }
 
-    $email      = get_field('tw_email','option');
-    if($email && !empty(trim($email)) ){
+    $email      = trim(get_field('tw_email','option'));
+    if($email && !empty($email)) {
       $contact_info['email'] = $email;
     }
 
@@ -2152,32 +2152,32 @@ if(!function_exists('tw_get_contact_info')){
       $contact_info['phone_in_menu'] = $phone_in_menu;
     }
 
-    $addr_1   = get_field('tw_address_1','option');
-    if($addr_1 && !empty(trim($addr_1)) ){
+    $addr_1   = trim(get_field('tw_address_1','option'));
+    if($addr_1 && !empty($addr_1)) {
       $contact_info['address_1'] = $addr_1;
     }
-    $addr_2   = get_field('tw_address_2','option');
-    if($addr_2 && !empty(trim($addr_2)) ){
+    $addr_2   = trim(get_field('tw_address_2','option'));
+    if($addr_2 && !empty($addr_2)) {
       $contact_info['address_2'] = $addr_2;
     }
 
-    $city     = get_field('tw_city','option');
-    if($city && !empty(trim($city)) ){
+    $city     = trim(get_field('tw_city','option'));
+    if($city && !empty($city)) {
       $contact_info['city'] = $city;
     }
 
-    $state    = get_field('tw_state','option');
-    if($state && !empty(trim($state)) ){
+    $state    = trim(get_field('tw_state','option'));
+    if($state && !empty($state)) {
       $contact_info['state'] = $state;
     }
 
-    $postcode = get_field('tw_postcode','option');
-    if($postcode && !empty(trim($postcode)) ){
+    $postcode = trim(get_field('tw_postcode','option'));
+    if($postcode && !empty($postcode)) {
       $contact_info['postcode'] = $postcode;
     }
 
-    $country  = get_field('tw_country','option');
-    if($country && !empty(trim($country)) ){
+    $country  = trim(get_field('tw_country','option'));
+    if($country && !empty($country)) {
       $contact_info['country'] = $country;
     }
 
@@ -2375,10 +2375,10 @@ if(!function_exists('tw_is_fb_coments_enabled')){
   function tw_is_fb_coments_enabled(){
     $fb_comments = false;
     $enable_fb =  get_field('tw_enable_facebook_app','option');
-    $fb_app_id =  get_field('tw_facebook_app_id','option');
+    $fb_app_id =  trim(get_field('tw_facebook_app_id','option'));
     $comment_options = get_field('tw_commenting_options','option');
 
-    if($enable_fb && !empty(trim($fb_app_id)) &&  ($comment_options=='fb_comments' || $comment_options=='wp_fb_comments' )){
+    if($enable_fb && !empty($fb_app_id) &&  ($comment_options=='fb_comments' || $comment_options=='wp_fb_comments' )){
       $fb_comments = true;
     }
     return $fb_comments;
