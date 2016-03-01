@@ -2497,7 +2497,7 @@ add_action( 'wp_footer', 'tw_fb_script' );
 function tw_fb_script(){
   $fb_app_id = get_facebook_app_id();
   $fb_comments = tw_is_fb_coments_enabled();
-  if($fb_app_id && (is_singular('post') || is_front_page())):
+  if($fb_app_id && is_singular('post') || is_front_page()):
 ?>
   <div id="fb-root"></div>
   <script>(function(d, s, id) {
