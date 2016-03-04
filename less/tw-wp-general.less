@@ -41,10 +41,19 @@ blockquote{
     margin-right: 20px;
     margin-top: 0px;
   }
+  &::after{
+    font-family: @font-fontawesome;
+    font-size: 2em;
+    content: @fa-var-quote-right;
+    position: absolute;
+    bottom: 55px;
+    right: 30px;
+  }
   p{
     font-size: 1.3em;
     line-height: 1.4em;
     padding-left: 50px;
+    padding-right: 50px;
   }
   footer{
     text-align: right;
