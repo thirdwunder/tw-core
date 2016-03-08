@@ -4,37 +4,29 @@
 ******************************************************/
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-
-if( ! is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
-
-  // Customize ACF path
-  add_filter('acf/settings/path', 'tw_acf_settings_path');
-  function tw_acf_settings_path( $path ) {
-    $path = get_template_directory() . '/plugins/advanced-custom-fields-pro/';
-    return $path;
-  }
-
-  // Customize ACF dir
-  add_filter('acf/settings/dir', 'tw_acf_settings_dir');
-  function tw_acf_settings_dir( $dir ) {
-    $dir = get_template_directory_uri() . '/plugins/advanced-custom-fields-pro/';
-    return $dir;
-  }
-
-  // Hide ACF field group menu item
-  //add_filter('acf/settings/show_admin', '__return_false');
-
-  // Include ACF
-  include_once( get_template_directory() . '/plugins/advanced-custom-fields-pro/acf.php' );
+// Customize ACF path
+add_filter('acf/settings/path', 'tw_acf_settings_path');
+function tw_acf_settings_path( $path ) {
+  $path = get_template_directory() . '/plugins/advanced-custom-fields-pro/';
+  return $path;
 }
 
+// Customize ACF dir
+add_filter('acf/settings/dir', 'tw_acf_settings_dir');
+function tw_acf_settings_dir( $dir ) {
+  $dir = get_template_directory_uri() . '/plugins/advanced-custom-fields-pro/';
+  return $dir;
+}
+// Hide ACF field group menu item
+//add_filter('acf/settings/show_admin', '__return_false');
+
+// Include ACF
+include_once( get_template_directory() . '/plugins/advanced-custom-fields-pro/acf.php' );
 
 // Include ACF Font Awesome Field
-/*
 if(!function_exists('register_fields_font_awesome')){
   include_once( get_template_directory() . '/plugins/advanced-custom-fields-font-awesome/acf-font-awesome.php' );
 }
-*/
 
 
 if( function_exists('acf_add_options_page') ) {
@@ -518,7 +510,7 @@ acf_add_local_field_group(array (
 			),
 			'default_value' => 'Designed & Developed by <a href="http://www.thirdwunder.com" target="_blank" title="Third Wunder | Marketing What Matters">Third Wunder</a>',
 			'placeholder' => '',
-			'maxlength' => 500,
+			'maxlength' => 100,
 			'rows' => '',
 			'new_lines' => 'wpautop',
 			'readonly' => 0,
@@ -1444,30 +1436,6 @@ acf_add_local_field_group(array (
 			'message' => '',
 			'default_value' => 0,
 		),
-
-      //Google API Key Field
-      array (
-         'key' => 'field_5730e51713166',
-         'label' => 'Google Map API Key',
-         'name' => 'tw_google_map_api_key',
-         'type' => 'text',
-         'instructions' => 'Please Input Your Google Map API Key, If You Do Not Have One, Click <a href="https://www.google.com/work/mapsearth/products/mapsapi.html?utm_source=cpc&utm_medium=bng&utm_campaign=2016-geo-na-endor-paidsearch-bing-crossreg-bmm&utm_content=usca%7Cen%7Chybr%7C1001877%7C%7Cbk%7Cbrand%7C%7Cbmm">Here</a>.',
-         'required' => 1,
-         'conditional_logic' => 0,
-         'wrapper' => array (
-            'width' => '',
-            'class' => '',
-            'id' => '',
-         ),
-         'default_value' => '',
-         'placeholder' => '',
-         'prepend' => '',
-         'append' => '',
-         'maxlength' => '',
-         'readonly' => 0,
-         'disabled' => 0,
-      ),
-      //
 		array (
 			'key' => 'field_568065cadb763',
 			'label' => 'Google Map',
