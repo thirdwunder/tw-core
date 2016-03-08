@@ -7,25 +7,25 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 // Customize ACF path
 add_filter('acf/settings/path', 'tw_acf_settings_path');
 function tw_acf_settings_path( $path ) {
-  $path = get_stylesheet_directory() . '/plugins/advanced-custom-fields-pro/';
+  $path = get_template_directory() . '/plugins/advanced-custom-fields-pro/';
   return $path;
 }
 
 // Customize ACF dir
 add_filter('acf/settings/dir', 'tw_acf_settings_dir');
 function tw_acf_settings_dir( $dir ) {
-  $dir = get_stylesheet_directory_uri() . '/plugins/advanced-custom-fields-pro/';
+  $dir = get_template_directory_uri() . '/plugins/advanced-custom-fields-pro/';
   return $dir;
 }
 // Hide ACF field group menu item
 //add_filter('acf/settings/show_admin', '__return_false');
 
 // Include ACF
-include_once( get_stylesheet_directory() . '/plugins/advanced-custom-fields-pro/acf.php' );
+include_once( get_template_directory() . '/plugins/advanced-custom-fields-pro/acf.php' );
 
 // Include ACF Font Awesome Field
 if(!function_exists('register_fields_font_awesome')){
-  include_once( get_stylesheet_directory() . '/plugins/advanced-custom-fields-font-awesome/acf-font-awesome.php' );
+  include_once( get_template_directory() . '/plugins/advanced-custom-fields-font-awesome/acf-font-awesome.php' );
 }
 
 
