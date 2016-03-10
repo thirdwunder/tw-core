@@ -24,9 +24,11 @@ function tw_acf_settings_dir( $dir ) {
 include_once( get_template_directory() . '/plugins/advanced-custom-fields-pro/acf.php' );
 
 // Include ACF Font Awesome Field
+/*
 if(!function_exists('register_fields_font_awesome')){
   include_once( get_template_directory() . '/plugins/advanced-custom-fields-font-awesome/acf-font-awesome.php' );
 }
+*/
 
 
 if( function_exists('acf_add_options_page') ) {
