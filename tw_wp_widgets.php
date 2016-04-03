@@ -14,6 +14,7 @@ class tw_contact_info_widget extends WP_Widget{
 		$instance['enable_tollfree']= strip_tags($new_instance['enable_tollfree']);
 		$instance['enable_fax']     = strip_tags($new_instance['enable_fax']);
 		$instance['enable_email']   = strip_tags($new_instance['enable_email']);
+		$instance['enable_social']   = strip_tags($new_instance['enable_social']);
     return $instance;
   }
 
@@ -24,6 +25,7 @@ class tw_contact_info_widget extends WP_Widget{
 		$enabled_tollfree  = esc_attr($instance['enable_tollfree']);
 		$enabled_fax       = esc_attr($instance['enable_fax']);
 		$enabled_email     = esc_attr($instance['enable_email']);
+		$enabled_social    = esc_attr($instance['enable_social']);
 		?>
 		<p>
         <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
@@ -49,6 +51,10 @@ class tw_contact_info_widget extends WP_Widget{
       <input class="checkbox" type="checkbox" <?php checked($enabled_email, 'on'); ?> id="<?php echo $this->get_field_id('enable_email'); ?>" name="<?php echo $this->get_field_name('enable_email'); ?>" />
       <label for="<?php echo $this->get_field_id('enable_email'); ?>"><?php _e('Show Email','tw'); ?></label>
 		</p>
+		<p>
+      <input class="checkbox" type="checkbox" <?php checked($enabled_social, 'on'); ?> id="<?php echo $this->get_field_id('enable_social'); ?>" name="<?php echo $this->get_field_name('enable_social'); ?>" />
+      <label for="<?php echo $this->get_field_id('enable_social'); ?>"><?php _e('Show Social','tw'); ?></label>
+		</p>
 		<?php
   }
 
@@ -71,7 +77,9 @@ function tw_show_contact_info_widget($args, $instance){
 		$enabled_tollfree  = $instance['enable_tollfree'] =='on' ? true : false;
 		$enabled_fax       = $instance['enable_fax']      =='on' ? true : false;
 		$enabled_email     = $instance['enable_email']    =='on' ? true : false;
+		$enabled_social    = $instance['enable_social']    =='on' ? true : false;
     $contact_info      = tw_get_contact_info();
+    $social_info       = tw_get_social_networks();
 
     echo $args['before_widget'];
     $title 		= apply_filters('widget_title', $instance['title']);
@@ -119,6 +127,21 @@ function tw_show_contact_info_widget($args, $instance){
               <ul>
             </div><!-- contact-phone -->
             <?php endif;?>
+
+            <?php if($enabled_social && is_array($social_info) ): ?>
+              <div class="contact-social">
+                <ul>
+                  <?php foreach($social_info as $network=>$details): ?>
+                    <li class="width-<?php echo $count; ?>">
+                      <a class="contact-<?php echo $network; ?>" href="<?php echo $details['url']; ?>" target="_blank" title="<?php echo ucfirst($network); ?>">
+                          <i class="fa <?php echo $details['icon']; ?>"></i>
+                      </a>
+                    </li>
+                  <?php endforeach; ?>
+                </ul>
+              </div>
+            <?php endif;?>
+
         </div>
 
       </div><!-- contact-info-widget-container -->
