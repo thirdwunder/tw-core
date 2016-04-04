@@ -4,24 +4,30 @@
 ******************************************************/
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-// Customize ACF path
-add_filter('acf/settings/path', 'tw_acf_settings_path');
-function tw_acf_settings_path( $path ) {
-  $path = get_template_directory() . '/plugins/advanced-custom-fields-pro/';
-  return $path;
+
+if( is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
+
+  // Customize ACF path
+  add_filter('acf/settings/path', 'tw_acf_settings_path');
+  function tw_acf_settings_path( $path ) {
+    $path = get_template_directory() . '/plugins/advanced-custom-fields-pro/';
+    return $path;
+  }
+
+  // Customize ACF dir
+  add_filter('acf/settings/dir', 'tw_acf_settings_dir');
+  function tw_acf_settings_dir( $dir ) {
+    $dir = get_template_directory_uri() . '/plugins/advanced-custom-fields-pro/';
+    return $dir;
+  }
+
+  // Hide ACF field group menu item
+  //add_filter('acf/settings/show_admin', '__return_false');
+
+  // Include ACF
+  include_once( get_template_directory() . '/plugins/advanced-custom-fields-pro/acf.php' );
 }
 
-// Customize ACF dir
-add_filter('acf/settings/dir', 'tw_acf_settings_dir');
-function tw_acf_settings_dir( $dir ) {
-  $dir = get_template_directory_uri() . '/plugins/advanced-custom-fields-pro/';
-  return $dir;
-}
-// Hide ACF field group menu item
-//add_filter('acf/settings/show_admin', '__return_false');
-
-// Include ACF
-include_once( get_template_directory() . '/plugins/advanced-custom-fields-pro/acf.php' );
 
 // Include ACF Font Awesome Field
 /*
