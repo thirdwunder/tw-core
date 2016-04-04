@@ -5,7 +5,7 @@
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 
-if( is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
+if( ! is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 
   // Customize ACF path
   add_filter('acf/settings/path', 'tw_acf_settings_path');
