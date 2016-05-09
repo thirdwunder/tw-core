@@ -1444,6 +1444,30 @@ acf_add_local_field_group(array (
 			'message' => '',
 			'default_value' => 0,
 		),
+
+      //Google API Key Field
+      array (
+         'key' => 'field_5730e51713166',
+         'label' => 'Google Map API Key',
+         'name' => 'tw_google_map_api_key',
+         'type' => 'text',
+         'instructions' => 'Please Input Your Google Map API Key, If You Do Not Have One, Click <a href="https://www.google.com/work/mapsearth/products/mapsapi.html?utm_source=cpc&utm_medium=bng&utm_campaign=2016-geo-na-endor-paidsearch-bing-crossreg-bmm&utm_content=usca%7Cen%7Chybr%7C1001877%7C%7Cbk%7Cbrand%7C%7Cbmm">Here</a>.',
+         'required' => 1,
+         'conditional_logic' => 0,
+         'wrapper' => array (
+            'width' => '',
+            'class' => '',
+            'id' => '',
+         ),
+         'default_value' => '',
+         'placeholder' => '',
+         'prepend' => '',
+         'append' => '',
+         'maxlength' => '',
+         'readonly' => 0,
+         'disabled' => 0,
+      ),
+      //
 		array (
 			'key' => 'field_568065cadb763',
 			'label' => 'Google Map',
