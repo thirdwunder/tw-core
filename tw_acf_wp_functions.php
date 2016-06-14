@@ -1675,7 +1675,7 @@ if(!function_exists('tw_pagination')){
 ******************************************************/
 if(!function_exists('tw_credit')){
   function tw_credit(){
-    $credit =  'Designed & Developed by <a href="http://www.thirdwunder.com/" title="Third Wunder">Third Wunder</a>';
+    $credit =  __('Designed & Developed by <a href="http://www.thirdwunder.com/" title="Third Wunder">Third Wunder</a>','tw');
     $new_credit = trim(get_field('tw_footer_credit','option'));
     if(!empty($new_credit)){
       $credit = $new_credit;

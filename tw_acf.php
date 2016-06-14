@@ -518,7 +518,7 @@ acf_add_local_field_group(array (
 			),
 			'default_value' => 'Designed & Developed by <a href="http://www.thirdwunder.com" target="_blank" title="Third Wunder | Marketing What Matters">Third Wunder</a>',
 			'placeholder' => '',
-			'maxlength' => 100,
+			'maxlength' => 500,
 			'rows' => '',
 			'new_lines' => 'wpautop',
 			'readonly' => 0,
