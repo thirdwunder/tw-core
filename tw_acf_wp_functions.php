@@ -242,8 +242,8 @@ if(!function_exists('tw_register_sidebars')){
     if($enable_primary_sidebar){
       register_sidebar(array(
       	'id' => 'primary',
-      	'name' => 'Primary Sidebar',
-      	'description' => 'Primary Widget Area',
+      	'name' => __('Primary Sidebar', 'tw'),
+      	'description' => __('Primary Widget Area','tw'),
       	'before_widget' => '<div id="%1$s" class="widget %2$s">',
       	'after_widget' => '</div>',
       	'before_title' => '<h4 class="widget-title">',
@@ -253,8 +253,8 @@ if(!function_exists('tw_register_sidebars')){
     if($enable_homepage_sidebar){
       register_sidebar(array(
       	'id' => 'homepage',
-      	'name' => 'Homepage Widget Area',
-      	'description' => 'Homepage Widget Area. Widgets here will show in the widgetized homepage template.',
+      	'name' => __('Homepage Widget Area','tw'),
+      	'description' => __('Homepage Widget Area. Widgets here will show in the widgetized homepage template.','tw'),
       	'before_widget' => '<div id="%1$s" class="widget %2$s">',
       	'after_widget' => '</div>',
       	'before_title' => '<h2 class="widget-title">',
@@ -265,8 +265,8 @@ if(!function_exists('tw_register_sidebars')){
      for($i=1; $i<=$footer_widgets; $i++){
       register_sidebar(array(
       	'id' => 'footer-'.$i,
-      	'name' => 'Footer Widget Area '.$i,
-      	'description' => '',
+      	'name' => sprintf(__('Footer Widget Area %s','tw'), $i) ,
+      	'description' => __('Foter widget areas','tw'),
       	'before_widget' => '<div id="%1$s" class="widget %2$s">',
       	'after_widget' => '</div>',
       	'before_title' => '<h4 class="widget-title">',
@@ -277,6 +277,7 @@ if(!function_exists('tw_register_sidebars')){
   }
   add_action( 'widgets_init', 'tw_register_sidebars' );
 }
+
 
 
 /******************************************************
