@@ -206,6 +206,7 @@ if(!function_exists('tw_theme_support')){
  */
 if(!function_exists('tw_post_formats')){
   function tw_post_formats(){
+    $enabled_post_formats = array();
     $post_formats = array(
   			'aside',   // title less blurb
   			'gallery', // gallery of images
