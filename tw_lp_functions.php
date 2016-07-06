@@ -1,4 +1,5 @@
 <?php
+define('INBOUND_DEBUG_GF_AJAX' , true );
 
 if(!function_exists('lp_rebuild_old_data_configurations_to_suit_new_convention')){
 add_filter('lp_extension_data','lp_rebuild_old_data_configurations_to_suit_new_convention');
