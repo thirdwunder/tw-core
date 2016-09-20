@@ -14,6 +14,7 @@ if (!(is_admin() )) {
     if ( FALSE === strpos( $url, '.js' ) ) return $url;
     if ( strpos( $url, 'jquery.js' ) ) return $url;
     if ( strpos( $url, 'gravityforms' ) ) return $url;
+    if ( strpos( $url, 'owl' ) ) return $url;
 
     // return "$url' defer ";
     return "$url' defer onload='";
