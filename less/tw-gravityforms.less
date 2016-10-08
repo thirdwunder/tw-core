@@ -299,9 +299,12 @@
     &.has_first_name.has_last_name {
       .name_first,
       .name_last{
-        //width: 48.5% !important;
-        //display: inline;
-        //display: inline-block;
+        width: 48.5% !important;
+        display: inline;
+        display: inline-block;
+      }
+      .name_first{
+        margin-right: 1.5%; 
       }
     }
 
@@ -454,8 +457,11 @@ td.ui-datepicker-other-month{
       }
 
       .ginput_container{
-        label{
-          .sr-only();
+        &.has_first_name,
+        &.has_last_name{
+          label{
+            .sr-only();
+          }
         }
       }
 
