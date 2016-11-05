@@ -21,6 +21,7 @@ if(class_exists('wp_bootstrap_navwalker')){
       $phone_enabled = isset($contact_options['enable_phone_in_menu']) && $contact_options['enable_phone_in_menu']!=='no' ? $contact_options['enable_phone_in_menu'] : false;
       $phone_number = isset($contact_options[$phone_enabled]) ? $contact_options[$phone_enabled] : false;
       $phone_number_clean = $phone_number && function_exists('tw_clean_phone_number') ? tw_clean_phone_number($phone_number) : false;
+      $has_mobile_search = tw_is_mobile_menu_search_enabled();
 
   		/**
   		 * Dividers, Headers or Disabled
@@ -65,13 +66,33 @@ if(class_exists('wp_bootstrap_navwalker')){
         		}
       		}
     		}
+      }elseif(strcasecmp($item->attr_title, 'search' ) == 0 && $has_mobile_search){
+        $class_names = $value = '';
+  			$classes = empty( $item->classes ) ? array() : $item->classes;
+  			$classes[] = 'dropdown';
+  			$classes[] = 'menu-item-' . $item->ID;
+  			$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
+  			
+        $output .= $indent . '<li itemprop="button" class="'.$class_names.'">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-search"></i></a>
+        <ul id="main-desktop-search" class="dropdown-menu">
+          <li>
+          <form class="form-inline hidden-xs hidden-sm hidden-md" role="search" method="get" id="mobile-searchform" action="'. home_url( '/' ).'">
+              <div class="form-group">
+                  <label class="screen-reader-text sr-only" for="s">'.__('Search for','tw').':</label>
+                  <div class="input-group">
 
+                    <input class="form-control" type="text" value="" name="s" id="s" placeholder="'.__('Search','tw').'" />
+                    <div class="input-group-btn">
+                          <button class="btn btn-default" type="submit" id="searchsubmit" ><i class="fa fa-search"></i></button>
+                    </div>
+                  </div>
+              </div>
 
-
-
-
-
-
+          </form>
+          </li>
+        </ul>
+      </li>';
   		} else {
 
   			$class_names = $value = '';
@@ -136,7 +157,7 @@ if(class_exists('wp_bootstrap_navwalker')){
   			$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
   			$item_output .= ( $args->has_children && 0 === $depth ) ? ' <i class="fa fa-fw fa-caret-down"></i></a>' : '</a>';
   			$item_output .= $args->after;
-
+        
   			$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
   		}
   	}
