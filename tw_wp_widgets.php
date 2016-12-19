@@ -2,7 +2,7 @@
 
 add_action('widgets_init', create_function('', 'return register_widget("tw_contact_info_widget");'));
 class tw_contact_info_widget extends WP_Widget{
-  function tw_contact_info_widget() {
+  function __construct() {
     parent::__construct(false, $name = 'TW Contact Info Widget');
   }
 
@@ -157,7 +157,7 @@ function tw_show_contact_info_widget($args, $instance){
 class tw_social_widget extends WP_Widget {
 
   /** constructor -- name this the same as the class above */
-  function tw_social_widget() {
+  function __construct() {
     parent::__construct(false, $name = 'TW Social Widget');
   }
 
@@ -287,7 +287,7 @@ function tw_show_social_widget($args, $instance){
 class tw_fb_like_box_widget extends WP_Widget {
 
   /** constructor -- name this the same as the class above */
-  function tw_fb_like_box_widget() {
+  function __construct() {
       parent::__construct(false, $name = 'TW Facebook Like Box Widget');
   }
 
@@ -386,7 +386,7 @@ add_action('widgets_init', create_function('', 'return register_widget("tw_fb_li
  */
 class tw_blog_widget extends WP_Widget {
   /** constructor -- name this the same as the class above */
-  function tw_blog_widget() {
+  function __construct() {
       parent::__construct(false, $name = 'TW Blog Widget');
   }
   /** @see WP_Widget::widget -- do not rename this */
