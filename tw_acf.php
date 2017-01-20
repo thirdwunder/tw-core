@@ -333,7 +333,24 @@ acf_add_local_field_group(array (
 			'message' => 'Enable Primary Sidebar',
 			'default_value' => 1,
 		),
-		array (
+      array (
+			'key' => 'tw_enable_full_width_sidebar',
+			'label' => 'Full Width Widgets',
+			'name' => 'tw_enable_full_width_sidebar',
+			'type' => 'true_false',
+			'instructions' => 'Add a full width widget area for the Homepage Template',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array (
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'message' => 'Enable Full Width Widgets',
+			'default_value' => 1,
+		),
+
+      array (
 			'key' => 'field_568079d256f5b',
 			'label' => 'Slider Transition',
 			'name' => 'tw_slider_transition',
@@ -1579,7 +1596,27 @@ acf_add_local_field_group(array (
 			'readonly' => 0,
 			'disabled' => 0,
 		),
-		array (
+      array (
+         'key' => 'tw_instagram_page_url',
+         'label' => __('Instagram Page URL','tw'),
+         'name' => 'tw_instagram_page_url',
+         'type' => 'text',
+         'instructions' => '',
+         'required' => 0,
+         'conditional_logic' => 0,
+         'wrapper' => array (
+            'width' => '50',
+            'class' => '',
+            'id' => '',
+         ),
+         'default_value' => '',
+         'placeholder' => 'https://instagram.com/thirdwunder/',
+         'prepend' => '',
+         'append' => '',
+         'maxlength' => '',
+      ),
+
+      array (
 			'key' => 'field_56805a9234e7f',
 			'label' => 'Pinterest URL',
 			'name' => 'tw_pinterest_url',
@@ -1782,7 +1819,7 @@ acf_add_local_field_group(array (
 			'name' => 'tw_commenting_options',
 			'type' => 'radio',
 			'instructions' => 'Choose the type of commenting you would like.
-Facebook comments needs to have a valid Facebook App ID. ',
+ Facebook comments needs to have a valid Facebook App ID. ',
 			'required' => 1,
 			'conditional_logic' => array (
 				array (
@@ -1985,6 +2022,75 @@ acf_add_local_field_group(array (
 	'active' => 1,
 	'description' => 'Twitter API',
 ));
+/****** Instagram API Setting ******/
+acf_add_local_field_group(array (
+	'key' => 'tw_theme_instagram_settings',
+	'title' => 'Instagram API Settings',
+	'fields' => array (
+		array (
+			'key' => 'tw_enable_instagram_api',
+			'label' => 'Instagram API',
+			'name' => 'tw_enable_instagram_api',
+			'type' => 'true_false',
+			'instructions' => 'Choose this if you have a Instagram account and want to display a Instagram feed widget in the site sidebars,',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array (
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'message' => 'Enable Instagram API',
+			'default_value' => 0,
+		),
+      array (
+			'key' => 'tw_instagram_access_token',
+			'label' => __('Access Token','tw'),
+			'name' => 'tw_instagram_access_token',
+			'type' => 'text',
+			'instructions' => '',
+			'required' => 1,
+			'conditional_logic' => array (
+				array (
+					array (
+						'field' => 'tw_enable_instagram_api',
+						'operator' => '==',
+						'value' => '1',
+					),
+				),
+			),
+			'wrapper' => array (
+				'width' => '70',
+				'class' => '',
+				'id' => '',
+			),
+			'default_value' => '',
+			'placeholder' => '',
+			'prepend' => '',
+			'append' => '',
+			'maxlength' => '',
+		),
+
+	),
+	'location' => array (
+		array (
+			array (
+				'param' => 'options_page',
+				'operator' => '==',
+				'value' => 'acf-options-social-information',
+			),
+		),
+	),
+	'menu_order' => 2,
+	'position' => 'normal',
+	'style' => 'default',
+	'label_placement' => 'left',
+	'instruction_placement' => 'field',
+	'hide_on_screen' => '',
+	'active' => 1,
+	'description' => 'Instagram API',
+));
+
 
 /****************************************************************
 ************** Advanced ******************************************
@@ -2030,7 +2136,7 @@ acf_add_local_field_group(array (
 				'id' => '',
 			),
 			'default_value' => 'We couldn\'t find the page what you were looking for!
-Try a search to find what you were looking for!',
+ Try a search to find what you were looking for!',
 			'tabs' => 'all',
 			'toolbar' => 'full',
 			'media_upload' => 0,

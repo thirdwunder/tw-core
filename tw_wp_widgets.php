@@ -1,9 +1,10 @@
 <?php
+date_default_timezone_set ('America/New_York');
 
 add_action('widgets_init', create_function('', 'return register_widget("tw_contact_info_widget");'));
 class tw_contact_info_widget extends WP_Widget{
   function tw_contact_info_widget() {
-    parent::__construct(false, $name = 'TW Contact Info Widget');
+    parent::__construct(false, $name = 'Wunder Contact Info Widget');
   }
 
   function update($new_instance, $old_instance) {
@@ -158,7 +159,7 @@ class tw_social_widget extends WP_Widget {
 
   /** constructor -- name this the same as the class above */
   function tw_social_widget() {
-    parent::__construct(false, $name = 'TW Social Widget');
+    parent::__construct(false, $name = 'Wunder Social Widget');
   }
 
   /** @see WP_Widget::update -- do not rename this */
@@ -288,7 +289,7 @@ class tw_fb_like_box_widget extends WP_Widget {
 
   /** constructor -- name this the same as the class above */
   function tw_fb_like_box_widget() {
-      parent::__construct(false, $name = 'TW Facebook Like Box Widget');
+      parent::__construct(false, $name = 'Wunder Facebook Like Box Widget');
   }
 
   /** @see WP_Widget::widget -- do not rename this */
@@ -387,7 +388,7 @@ add_action('widgets_init', create_function('', 'return register_widget("tw_fb_li
 class tw_blog_widget extends WP_Widget {
   /** constructor -- name this the same as the class above */
   function tw_blog_widget() {
-      parent::__construct(false, $name = 'TW Blog Widget');
+      parent::__construct(false, $name = 'Wunder Blog Widget');
   }
   /** @see WP_Widget::widget -- do not rename this */
   function widget($args, $instance) {
@@ -553,5 +554,153 @@ class tw_blog_widget extends WP_Widget {
   }
 }
 add_action('widgets_init', create_function('', 'return register_widget("tw_blog_widget");'));
+
+
+/**
+ * Instagram recent post Widget
+ */
+
+// function get_instagram_username(){
+//   return get_field('tw_instagram_handle','option');
+// }
+//
+// function get_instagram_page_link(){
+//   return get_field('tw_instagram_page_url','option');
+// }
+
+function tw_get_instagram_access_token(){
+  $instagram_access_token = false;
+  $is_enabled = get_field('tw_enable_instagram_api', 'option');
+  if($is_enabled){
+   //  $instagram_api = array();
+    $instagram_access_token      = get_field('tw_instagram_access_token', 'option');
+   //  $instagram_api['oauth_access_token_secret'] = get_field('tw_instagram_access_token_secret', 'option');
+   //  $instagram_api['consumer_key']              = get_field('tw_instagram_consumer_key', 'option');
+   //  $instagram_api['consumer_secret']           = get_field('tw_instagram_consumer_secret', 'option');
+  }
+  return $instagram_access_token;
+}
+
+  $instagram_api_creds = tw_get_instagram_access_token();
+  if(count($instagram_api_creds)!==1){
+    $instagram_api_creds = false;
+  }
+
+if(false!==$instagram_api_creds){
+
+   class tw_instagram_widget extends WP_Widget{
+
+      function tw_instagram_widget(){
+         parent::__construct(false, $name = 'Wunder Instagram Widget');
+      }
+
+      function update($new_instance, $old_instance){
+         $instance = $old_instance;
+         $instance['title']        = strip_tags($new_instance['title']);
+         return $instance;
+      }
+
+      function form($instance){
+         $title = esc_attr($instance['title']);
+         ?>
+         <p>
+            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title','tw'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+         </p>
+         <?php
+      }
+
+      function widget($args, $instance){
+         extract( $args );
+         $args['title'] = empty($instance['title']) ? '' : apply_filters('widget_title', $instance['title']);
+         tw_instagram_display_widget($args);
+      }
+
+   }
+
+   add_action('widgets_init', create_function('', 'return register_widget("tw_instagram_widget");'));
+
+   function fetchApiData($url){
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+      $result = curl_exec($ch);
+      curl_close($ch);
+      return $result;
+   }
+   function tw_instagram_display_widget($args){
+      $social_info = tw_get_social_networks();
+      $username = $social_info['instagram']['username'];
+      $page_link = $social_info['instagram']['url'];
+
+      $accessToken = tw_get_instagram_access_token();
+
+
+      $tw_instagram_feed = get_option( 'tw_instagram_feed');
+
+      if( (! $tw_instagram_feed) || (date('Y-m-d H:i:s',strtotime('-6 hour') > $tw_instagram_feed['date'] ))){
+         $url = "https://api.instagram.com/v1/users/self/media/recent/?access_token=".$accessToken."&count=6";
+
+         $result = fetchApiData($url);
+         $result = json_decode($result);
+
+         $tw_instagram_feed = array();
+         $tw_instagram_feed['date'] = date('Y-m-d H:i:s');
+         $tw_instagram_feed['feed'] = $result;
+
+         update_option( 'tw_instagram_feed', $tw_instagram_feed, $autoload = null );
+
+      }else{
+         $result = $tw_instagram_feed['feed'];
+      }
+
+
+
+      echo $args['before_widget'];
+      ?>
+      <!-- Widget HTML shows for the frontend -->
+      <div class="instagram-container container">
+         <h2 class="instagram_widget_title">
+            <span>
+               <?php if(!empty($args['title'])){ echo $args['before_title'] . esc_html( $args['title'] ) . $args['after_title']; }?>
+               <a class="instagram-username" href="<?php echo $page_link;?>" target="_blank">&nbsp;@<?php echo $username; ?></a>
+
+            </span>
+
+         </h2>
+
+         <div id="instagram-feed-<?php echo $args['widget_id'];?>" class="instagram-feed">
+            <?php if(count($result)>0): ?>
+            <div class="feeds row">
+               <?php foreach($result->data as $post):
+                  $photo_url = $post->images->thumbnail->url;
+                  $media_link = $post->link;
+               ?>
+               <div class="feed col-xs-6 col-sm-4 col-md-2">
+                  <a href="<?php echo $media_link; ?>" target="_blank">
+                     <img class="img-responsive" src="<?php echo $photo_url;?>" alt="<?php $post->user->username;?>">
+                  </a>
+               </div>
+               <?php endforeach; ?>
+            </div>
+            <?php else: ?>
+            <div class="alert alert-warning">
+               <p><?php _e('Ooops. No Images found.','tw');?></p>
+            </div>
+
+         </div><!-- instagram-timeline -->
+         <?php endif; ?>
+
+      </div><!-- instagram-container -->
+
+      <?php echo $args['after_widget'];
+   }
+
+}
+
+
+?>
+
 
 ?>

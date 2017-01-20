@@ -8,7 +8,7 @@ if(class_exists('TwitterAPIExchange')){
   if(false!==$twitter_api_creds){
 
     class tw_twitter_widget extends WP_Widget{
-      function tw_twitter_widget(){
+      function __construct(){
         parent::__construct(false, $name = 'TW Twitter Widget');
       }
       function update($new_instance, $old_instance){

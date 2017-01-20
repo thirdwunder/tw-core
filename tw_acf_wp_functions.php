@@ -239,7 +239,7 @@ if(!function_exists('tw_register_sidebars')){
     $enable_primary_sidebar   = get_field('tw_enable_primary_sidebar','option');
     $enable_homepage_sidebar  = get_field('tw_enable_homepage_widgets','option');
     $footer_widgets           = intval(get_field('tw_footer_widget_areas','option'));
-
+    $enable_full_width_sidebar = get_field('tw_enable_full_width_sidebar','option');
     if($enable_primary_sidebar){
       register_sidebar(array(
       	'id' => 'primary',
@@ -275,6 +275,18 @@ if(!function_exists('tw_register_sidebars')){
       ));
       }
     }
+    if($enable_full_width_sidebar){
+      register_sidebar(array(
+       'id' => 'full_width_widget',
+       'name' => __('Full Width Widget Area %s','tw') ,
+       'description' => '',
+       'before_widget' => '<div id="%1$s" class="full-width-widget %2$s">',
+       'after_widget' => '</div>',
+       'before_title' => '<h4 class="widget-title">',
+       'after_title' => '</h4>',
+     ));
+    }
+
   }
   add_action( 'widgets_init', 'tw_register_sidebars' );
 }
@@ -810,8 +822,8 @@ acf_add_local_field_group(array (
 			'name' => 'tw_hp_jumbotron_text_colour',
 			'type' => 'radio',
 			'instructions' => 'Choose the content text colour.<br/>
-Dark for a light or bright background.<br/>
-Light for a dark or dim background.',
+                           Dark for a light or bright background.<br/>
+                           Light for a dark or dim background.',
 			'required' => 1,
 			'conditional_logic' => array (
 				array (
@@ -1100,7 +1112,23 @@ Light for a dark or dim background.',
 			'disabled' => 0,
 			'readonly' => 0,
 		),
-	),
+      array (
+			'key' => 'tw_hp_homepage_contact_map',
+			'label' => 'Enable Homepage Contact Map',
+			'name' => 'tw_hp_homepage_contact_map',
+			'type' => 'true_false',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array (
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+         'message' => 'Enable Homepage Contact Map',
+         'default_value' => 0,
+		),
+   ),
 	'location' => array (
 		array (
 			array (
