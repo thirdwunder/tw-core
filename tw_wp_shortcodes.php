@@ -15,7 +15,7 @@ function tw_blockquote($atts, $content = null) {
   $atts = shortcode_atts(array(
           'position' => 'center',
         ), $atts);
-  return '<blockquote class="'.$atts['position'].'">'.$content.'</blockquote>';
+  return '<blockquote class="'.$atts['position'].'"><p>'.$content.'</p></blockquote>';
 }
 
 
