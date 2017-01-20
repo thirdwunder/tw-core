@@ -701,6 +701,3 @@ if(false!==$instagram_api_creds){
 
 
 ?>
-
-
-?>
