@@ -3,6 +3,7 @@ date_default_timezone_set ('America/New_York');
 
 add_action('widgets_init', create_function('', 'return register_widget("tw_contact_info_widget");'));
 class tw_contact_info_widget extends WP_Widget{
+
   function tw_contact_info_widget() {
     parent::__construct(false, $name = 'Wunder Contact Info Widget');
   }
@@ -158,6 +159,7 @@ function tw_show_contact_info_widget($args, $instance){
 class tw_social_widget extends WP_Widget {
 
   /** constructor -- name this the same as the class above */
+
   function tw_social_widget() {
     parent::__construct(false, $name = 'Wunder Social Widget');
   }
@@ -387,6 +389,7 @@ add_action('widgets_init', create_function('', 'return register_widget("tw_fb_li
  */
 class tw_blog_widget extends WP_Widget {
   /** constructor -- name this the same as the class above */
+
   function tw_blog_widget() {
       parent::__construct(false, $name = 'Wunder Blog Widget');
   }
