@@ -1448,7 +1448,7 @@ acf_add_local_field_group(array (
       //Google API Key Field
       array (
          'key' => 'field_5730e51713166',
-         'label' => 'Google Map API Key',
+           'label' => 'Google Map API Key',
          'name' => 'tw_google_map_api_key',
          'type' => 'text',
          'instructions' => 'Please Input Your Google Map API Key, If You Do Not Have One, Click <a href="https://www.google.com/work/mapsearth/products/mapsapi.html?utm_source=cpc&utm_medium=bng&utm_campaign=2016-geo-na-endor-paidsearch-bing-crossreg-bmm&utm_content=usca%7Cen%7Chybr%7C1001877%7C%7Cbk%7Cbrand%7C%7Cbmm">Here</a>.',
@@ -1984,6 +1984,75 @@ acf_add_local_field_group(array (
 	'hide_on_screen' => '',
 	'active' => 1,
 	'description' => 'Twitter API',
+));
+
+/****** Instagram API Setting ******/
+acf_add_local_field_group(array (
+	'key' => 'tw_theme_instagram_settings',
+	'title' => 'Instagram API Settings',
+	'fields' => array (
+		array (
+			'key' => 'tw_enable_instagram_api',
+			'label' => 'Instagram API',
+			'name' => 'tw_enable_instagram_api',
+			'type' => 'true_false',
+			'instructions' => 'Choose this if you have a Instagram account and want to display a Instagram feed widget in the site sidebars,',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array (
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'message' => 'Enable Instagram API',
+			'default_value' => 0,
+		),
+      array (
+			'key' => 'tw_instagram_access_token',
+			'label' => __('Access Token','tw'),
+			'name' => 'tw_instagram_access_token',
+			'type' => 'text',
+			'instructions' => '',
+			'required' => 1,
+			'conditional_logic' => array (
+				array (
+					array (
+						'field' => 'tw_enable_instagram_api',
+						'operator' => '==',
+						'value' => '1',
+					),
+				),
+			),
+			'wrapper' => array (
+				'width' => '70',
+				'class' => '',
+				'id' => '',
+			),
+			'default_value' => '',
+			'placeholder' => '',
+			'prepend' => '',
+			'append' => '',
+			'maxlength' => '',
+		),
+
+	),
+	'location' => array (
+		array (
+			array (
+				'param' => 'options_page',
+				'operator' => '==',
+				'value' => 'acf-options-social-information',
+			),
+		),
+	),
+	'menu_order' => 2,
+	'position' => 'normal',
+	'style' => 'default',
+	'label_placement' => 'left',
+	'instruction_placement' => 'field',
+	'hide_on_screen' => '',
+	'active' => 1,
+	'description' => 'Instagram API',
 ));
 
 /****************************************************************
