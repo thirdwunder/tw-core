@@ -1,0 +1,450 @@
+/********************
+****** Widgets ******
+********************/
+.sidebar{
+  .widget-area{
+    .widget{
+      border-bottom: 1px solid @gray-lighter;
+      h4{
+        border-bottom: 1px solid @gray-lighter;
+        padding: 5px 0 10px 0;
+      }
+
+      ul{
+        list-style: none;
+        padding-left: 5px;
+        li{
+          margin: 3px 0;
+        }
+      }
+    }
+  }
+}
+
+.footer-widgets{
+  .widget-area{
+    .widget{
+      color: @white-base;
+      h4{
+        color: @white-base;
+        border-bottom: 1px solid @gray-light;
+        padding: 5px 0 10px 0;
+      }
+      a{
+        color: @link-color;
+        &:hover{
+          color: @link-hover-color;
+        }
+      }
+    }
+
+    .widget_recent_entries{
+      li{
+        border-bottom: 1px solid @gray-light;
+      }
+    }
+  }
+}
+
+.widget_search{
+  .widget-title{
+    display: none;
+  }
+  #searchform{
+    .form-group{
+      width: 100%;
+      .input-group{
+        width: 100%;
+      }
+    }
+  }
+
+}
+
+.widget_twphotoswidget,
+.widget_tw_twitter_widget,
+.widget_tw_blog_widget,
+.widget_tw_fb_like_box_widget,
+.widget_tw_social_widget,
+.widget_pages,
+.widget_categories,
+.widget_tag_cloud,
+.widget_archive,
+.widget_calendar,
+.widget_recent_entries,
+.widget_recent_comments,
+.widget_rss,
+.widget_meta,
+.widget_wysija,
+.widget_tw_contact_info_widget{
+  .widget-title{
+    &::before{
+      font-family: @font-fontawesome;
+      margin-right: 5px;
+    }
+  }
+}
+
+.widget_tw_twitter_widget{
+  .widget-title{
+    &::before{
+      content: @fa-var-twitter;
+      color: @color-twitter;
+    }
+  }
+  .twitter-timeline{
+    ul.tweets{
+      li.tweet{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px 0;
+        border-bottom: 1px solid @gray-lighter;
+        .tweet-text{
+          font-size: 0.9em;
+        }
+        .tweet-created_at{
+          font-size: 0.8em;
+          text-align: right;
+          font-style: italic;
+        }
+
+        &:last-child{
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  .more{
+    text-align: center;
+    .btn{
+      width: 100%;
+    }
+  }
+}
+.widget_tw_fb_like_box_widget{
+  .widget-title{
+    &::before{
+      content: @fa-var-facebook-square;
+      color: @color-facebook;
+    }
+  }
+}
+.widget_tw_social_widget{
+  .contact-social{
+    .social-icons-list();
+    ul{
+      padding-left: 0;
+    }
+  }
+}
+.widget_pages{
+  .widget-title{
+    &::before{
+      content: @fa-var-file;
+    }
+  }
+}
+.widget_meta{
+  .widget-title{
+    &::before{
+      content: @fa-var-wrench;
+    }
+  }
+}
+.widget_categories{
+  .widget-title{
+    &::before{
+      content: @fa-var-bookmark;
+    }
+  }
+  .postform{
+    .form-control();
+  }
+
+}
+.widget_tag_cloud{
+  .widget-title{
+    &::before{
+      content: @fa-var-tags;
+    }
+  }
+}
+.widget_archive{
+  .widget-title{
+    &::before{
+      content: @fa-var-archive;
+    }
+  }
+}
+.widget_calendar{
+  .widget-title{
+    &::before{
+      content: @fa-var-calendar;
+    }
+  }
+
+  .calendar_wrap{
+    #wp-calendar,
+    table{
+      width: 100%;
+      caption{
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+  }
+
+  #wp-calendar{
+    td, th{
+      text-align: center;
+
+    }
+    td{
+
+    }
+    #today{
+      background: #cccccc;
+      .border-radius(100em);
+      color: white;
+      a{
+        color: white;
+      }
+    }
+    #prev{
+      text-align: left;
+    }
+    #next{
+      text-align: right;
+    }
+  }
+}
+.widget_recent_entries{
+  .widget-title{
+    &::before{
+      content: @fa-var-clock-o;
+    }
+  }
+  li{
+    border-bottom: 1px solid @gray-lighter;
+    padding: 0 0 5px 0;
+    margin-bottom: 5px;
+
+    .post-date{
+      display: block;
+      font-size: 0.6em !important;
+      &::before{
+        font-family: @font-fontawesome;
+/*         content: @fa-var-clock-o; */
+        margin-right: 5px;
+      }
+    }
+  }
+
+}
+.widget_recent_comments{
+  .widget-title{
+    &::before{
+      content: @fa-var-comments;
+    }
+  }
+}
+.widget_rss{
+  .widget-title{
+    a.rsswidget img{
+      display: none;
+    }
+    &::before{
+      content: @fa-var-rss;
+    }
+  }
+  ul{
+    li{
+      margin-bottom: 5px !important;
+      padding-bottom: 5px !important;
+
+      cite{
+        width: 100%;
+        font-style: italic;
+        font-size: 0.8em !important;
+        &::before{
+          content: '-';
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+
+  .rss-date{
+    display: block;
+    font-size: 0.6em;
+    margin: 3px 0;
+    &::before{
+      font-family: @font-fontawesome;
+/*       content: @fa-var-clock-o; */
+      margin-right: 5px;
+    }
+  }
+
+}
+.widget_tw_contact_info_widget{
+  .contact-info-widget-container{
+    .contact-phone{
+      ul{
+        margin: 15px 0;
+        padding: 0;
+        li{
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
+
+.widget{
+  padding: 15px 0;
+  ul{
+    list-style: none;
+    padding-left: 5px;
+
+    ul.children{
+      padding-left: 10px;
+      li{
+        border-left: 1px dotted @gray-light;
+        padding-left: 10px;
+      }
+    }
+
+    &.fa-ul{
+      margin-left: 1.5em;
+    }
+  }
+}
+
+.widget_tw_blog_widget{
+  .thumbnail{
+    .caption{
+      h2, h3, p{
+        text-align: left;
+      }
+      p.time{
+        font-size: 0.8em;
+      }
+
+    }
+  }
+
+  .more{
+    text-align: center;
+  }
+}
+
+.widget-area{
+  .widget_tw_blog_widget{
+    .thumbnail{
+      .caption{
+        h2, h3{
+          margin-top: 5px;
+          font-size: 1.2em;
+        }
+        p{
+          display: none;
+          visibility: hidden;
+          &.time{
+            display: block;
+            visibility: visible;
+            text-align: left;
+          }
+        }
+      }
+    }
+    .more{
+      .btn-primary{
+        width: 100%;
+        .btn-xs();
+      }
+    }
+  }
+}
+
+#homepage-widgets{
+  .widget{
+    .widget-title{
+      text-align: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid @gray-lighter;
+    }
+  }
+
+  .widget_tw_blog_widget{
+    padding-bottom: 30px;
+    .blog-container{
+      .container();
+      .caption{
+        h2,h3{
+          text-align: center;
+          margin-top: 15px;
+          margin-bottom: 5px;
+        }
+        .entry-author{
+          text-align: center;
+        }
+        p{
+          text-align: justify;
+        }
+        p.time{
+          text-align: center;
+        }
+      }
+      .more{
+        .btn-primary{
+          //min-width:50% !important;
+          //max-width: 100% !important;
+        }
+      }
+    }
+  }
+
+  .widget_search{
+    .search-form-container{
+      .container();
+      text-align: center;
+    }
+  }
+
+  .widget_tag_cloud{
+    .tagcloud{
+      .container();
+    }
+  }
+
+  .widget_tw_social_widget{
+    .social-widget-container{
+      .container();
+      p{
+        text-align: center;
+        .lead();
+      }
+      .contact-social{
+        text-align: center;
+        font-size: 3em;
+      }
+    }
+  }
+
+  .widget_tw_fb_like_box_widget{
+    .facebook-widget-container{
+      .container();
+    }
+  }
+
+  .widget_wysija{
+    .container();
+    .widget_wysija{
+      .wysija-paragraph{
+      }
+    }
+  }
+}
