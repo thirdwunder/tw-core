@@ -197,6 +197,24 @@ if(class_exists('wp_bootstrap_navwalker')){
   			$output .= $indent . '<li role="presentation" class="dropdown-header">' . esc_attr( $item->title );
   		} else if ( strcasecmp($item->attr_title, 'disabled' ) == 0 ) {
   			$output .= $indent . '<li role="presentation" class="disabled"><a href="#">' . esc_attr( $item->title ) . '</a>';
+  		} else if ( strcasecmp($item->attr_title, 'wpml' ) == 0 && function_exists('icl_get_languages') ){
+    		
+    		$languages = icl_get_languages('skip_missing=0&orderby=code');
+    		if(!empty($languages)){
+
+      		$class_names = $value = '';
+    			$classes = empty( $item->classes ) ? array() : $item->classes;
+    			$classes[] = 'menu-item-' . $item->ID;
+
+    			$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
+
+      		foreach($languages as $l){
+        		if($l['active'] == 0){
+              $output .= $indent . '<li role="presentation" class="'.$class_names.'"><a href="'.$l['url'].'">' . strtoupper($l['language_code']) . '</a>';
+        		}
+      		}
+    		}
+    		
   		} else {
 
   			$class_names = $value = '';
