@@ -98,15 +98,16 @@ function tw_show_contact_info_widget($args, $instance){
             <?php if($enabled_address):?>
             <div class="contact-address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
               <?php if(isset($contact_info['address_1']) && $contact_info['address_1']!=='' ):?>
-                <span itemprop="streetAddress">
+                <span class="streetAddress" itemprop="streetAddress">
                   <?php echo $contact_info['address_1'];?>
                   <?php if(isset($contact_info['address_2']) && $contact_info['address_2']!=='' ):?>,<br/><?php echo $contact_info['address_2']; ?> <?php endif;?>
                 </span><br/>
               <?php endif;?>
-              <?php if(isset($contact_info['city']) && $contact_info['city']!=='' ):?><span itemprop="addressLocality"><?php echo $contact_info['city'];?></span><?php endif;?>
-              <?php if(isset($contact_info['postcode'])  && $contact_info['postcode']!=='' ):?><span itemprop="postalCode"><?php echo $contact_info['postcode'];?></span><?php endif;?>
-              <?php if(isset($contact_info['state'])  && $contact_info['state']!=='' ):?><span itemprop="addressRegion"><?php echo $contact_info['state'];?></span><?php endif;?>
-              <?php if(isset($contact_info['country'])  && $contact_info['country']!=='' ):?><br/><span itemprop="addressCountry"><?php echo $contact_info['country'];?></span><?php endif;?>
+              <?php if(isset($contact_info['city']) && $contact_info['city']!=='' ):?><span class="city" itemprop="addressLocality"><?php echo $contact_info['city'];?></span><?php endif;?>
+              
+              <?php if(isset($contact_info['state'])  && $contact_info['state']!=='' ):?><span class="state" itemprop="addressRegion"><?php echo $contact_info['state'];?></span><?php endif;?>
+ 	      <?php if(isset($contact_info['postcode'])  && $contact_info['postcode']!=='' ):?><span class="postcode" itemprop="postalCode"><?php echo $contact_info['postcode'];?></span><?php endif;?>
+              <?php if(isset($contact_info['country'])  && $contact_info['country']!=='' ):?><br/><span class="country" itemprop="addressCountry"><?php echo $contact_info['country'];?></span><?php endif;?>
             </div><!-- contact-address-->
             <?php endif;?>
 
