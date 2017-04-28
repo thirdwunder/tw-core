@@ -104,7 +104,7 @@ function tw_show_contact_info_widget($args, $instance){
                 </span><br/>
               <?php endif;?>
               <?php if(isset($contact_info['city']) && $contact_info['city']!=='' ):?><span class="city" itemprop="addressLocality"><?php echo $contact_info['city'];?></span><?php endif;?>
-
+              
               <?php if(isset($contact_info['state'])  && $contact_info['state']!=='' ):?><span class="state" itemprop="addressRegion"><?php echo $contact_info['state'];?></span><?php endif;?>
  	      <?php if(isset($contact_info['postcode'])  && $contact_info['postcode']!=='' ):?><span class="postcode" itemprop="postalCode"><?php echo $contact_info['postcode'];?></span><?php endif;?>
               <?php if(isset($contact_info['country'])  && $contact_info['country']!=='' ):?><br/><span class="country" itemprop="addressCountry"><?php echo $contact_info['country'];?></span><?php endif;?>
