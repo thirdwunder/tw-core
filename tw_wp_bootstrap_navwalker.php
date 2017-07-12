@@ -82,7 +82,7 @@ if(class_exists('wp_bootstrap_navwalker')){
                   <label class="screen-reader-text sr-only" for="s">'.__('Search for','tw').':</label>
                   <div class="input-group">
 
-                    <input class="form-control" type="text" value="" name="s" id="s" placeholder="'.__('Search','tw').'" autofocus />
+                    <input class="form-control main-menu-search" type="text" value="" name="s" id="s" placeholder="'.__('Search','tw').'" autofocus />
                     <div class="input-group-btn">
                           <button class="btn btn-default" type="submit" id="searchsubmit" ><i class="fa fa-search"></i></button>
                     </div>
